@@ -4,7 +4,7 @@
 |-|-|
 |*2024/02/22*|*2024/02/22*|
 
-> To add this script to your Unity project, simply import the [Unity Package](./FollowObject.unitypackage) into the assets folder, or create a new C# script and paste in the source code.
+> To add this script to your Unity project, simply import the [Unity Package](./FollowObject.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](specs.md) below.
 
 ## Description
 
@@ -16,7 +16,7 @@
 ---
 ## Source Code
 ``` cs
-// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Object/specs.md
+// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Transform/specs.md
 using UnityEngine;
 
 public class FollowObject : MonoBehaviour
