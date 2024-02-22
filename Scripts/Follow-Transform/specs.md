@@ -4,14 +4,18 @@
 |-|-|
 |*2024/02/22*|*2024/02/22*|
 
-> To add this script to your Unity project, simply import the [Unity Package](./FollowObject.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](specs.md) below.
-
-## Description
-
+> To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the souce code below.
 
 ---
-## Documentation
+**Follow Transform** is a simple script that makes an object move towards a specified transform's position every frame. You may set an offset, which dictates the target postion relative to the object this script is attached to. Movement stops if the trasform being followed has it's position within a certain radius.
 
+---
+| Datatype | Variable Name | Summary |
+|-|-|-|
+| `Transform` | `followTransform` | The transform the attached object will move towards.
+| `Vector3 ` | `targetOffset ` | The relative position that this script wants `followTransform` to be at.  |
+| `float ` | `deadZoneRadius ` | The radius around `targetOffset` in which `followTransform` can move freely without being followed. |
+| `float ` | `followSpeed ` | The speed at which the object follows the target. |
 
 ---
 ## Source Code
