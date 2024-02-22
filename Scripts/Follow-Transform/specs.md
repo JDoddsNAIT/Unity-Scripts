@@ -8,7 +8,7 @@
 
 Documentation
 ---
-**Follow Transform** is a simple script that makes an object move towards a specified transform's position every frame. You may set an offset, which dictates the target postion relative to the object this script is attached to. Movement stops if the trasform being followed has it's position within a certain radius.
+**Follow Transform** is a simple script that makes an object move towards a specified **transform's position** every frame. You may set an **offset**, which dictates the target postion relative to the object this script is attached to. Movement stops if the trasform being followed has it's position within a certain **radius**.
 
 ### Gizmos
 - A line from the target transform's position to the edge of the dead zone to visualize the direction of movement and where the target transform is.  
