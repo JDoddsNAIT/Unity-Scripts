@@ -13,7 +13,7 @@ Documentation
 ---
 | Datatype | Variable Name | Summary |
 |-|-|-|
-| `Transform` | `followTransform` | The transform the attached object will move towards.
+| `Transform` | `followTransform` | A transform the attached object will move towards.
 | `Vector3 ` | `targetOffset ` | The relative position that this script wants `followTransform` to be at.  |
 | `float ` | `deadZoneRadius ` | The radius around `targetOffset` in which `followTransform` can move freely without being followed. |
 | `float ` | `followSpeed ` | The speed at which the object follows the target. |
