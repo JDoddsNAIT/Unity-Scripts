@@ -6,6 +6,7 @@
 
 > To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the souce code below.
 
+Documentation
 ---
 **Follow Transform** is a simple script that makes an object move towards a specified transform's position every frame. You may set an offset, which dictates the target postion relative to the object this script is attached to. Movement stops if the trasform being followed has it's position within a certain radius.
 
