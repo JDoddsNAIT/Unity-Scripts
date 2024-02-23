@@ -3,7 +3,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*yyyy/mm/dd*|*yyyy/mm/dd*|
+|*yyyy/mm/dd*|*----/--/--*|
 
 - [Name](#name)
   - [🛠️ Requirements](#️-requirements)
