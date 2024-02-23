@@ -42,7 +42,7 @@ This script makes use of the following components:
 ---
 # Source Code
 ``` cs
-// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Transform/specs.md
+// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Transform/
 using UnityEngine;
 
 public class FollowObject : MonoBehaviour
