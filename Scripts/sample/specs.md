@@ -10,7 +10,7 @@
 ## Documentation
 > *A short description of what the script does and how the user can manipulate it*
 ---
-| Datatype | Variable Name | Summary |
+| Datatype | Name | Summary |
 |-|-|-|
 | `datatype ` | `variableName ` | Summary |
 ---

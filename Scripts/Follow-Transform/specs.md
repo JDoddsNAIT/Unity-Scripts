@@ -16,7 +16,7 @@ Documentation
 - All gizmos are green when the transform is outside the dead zone and red when inside.
 
 ---
-| Datatype | Variable Name | Summary |
+| Datatype | Name | Summary |
 |-|-|-|
 | `Transform` | `followTransform` | A transform the attached object will move towards.
 | `Vector3 ` | `targetOffset ` | The relative position that this script wants `followTransform` to be at.  |
