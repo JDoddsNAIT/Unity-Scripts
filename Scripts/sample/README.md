@@ -18,7 +18,7 @@
 ## 🛠️ Requirements
 
 This script makes use of the following components:
-- [ ] [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
+- [`Transform`][transform]
 
 ---
 # Documentation
@@ -39,3 +39,6 @@ This script makes use of the following components:
 ``` cs
 // Coming soon!
 ```
+
+
+[transform]: https://docs.unity3d.com/ScriptReference/Transform.html

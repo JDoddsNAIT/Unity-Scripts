@@ -17,7 +17,7 @@
 ## 🛠️ Requirements
 
 This script makes use of the following components:
--  [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
+- [`Transform`][transform]
 
 ---
 # Documentation
@@ -29,10 +29,10 @@ This script makes use of the following components:
 
 | Datatype | Name | Summary |
 |-|-|-|
-| `Transform` | `followTransform` | A transform the attached object will move towards.
-| `Vector3 ` | `targetOffset ` | The relative position that this script wants `followTransform` to be at.  |
-| `float ` | `deadZoneRadius ` | The radius around `targetOffset` in which `followTransform` can move freely without being followed. |
-| `float ` | `followSpeed ` | The speed at which the object follows the target. |
+| [`Transform`][transform] | `followTransform` | A transform the attached object will move towards.
+| [`Vector3`][vector3] | `targetOffset` | The relative position that this script wants `followTransform` to be at.  |
+| `float` | `deadZoneRadius` | The radius around `targetOffset` in which `followTransform` can move freely without being followed. |
+| `float` | `followSpeed` | The speed at which the object follows the target. |
 
 ## ⚙️ Gizmos
 - A line from the target transform's position to the edge of the dead zone to visualize the direction of movement and where the target transform is.  
@@ -85,3 +85,7 @@ public class FollowObject : MonoBehaviour
     }
 }
 ```
+
+
+[transform]: https://docs.unity3d.com/ScriptReference/Transform.html
+[vector3]: https://docs.unity3d.com/ScriptReference/Vector3.html

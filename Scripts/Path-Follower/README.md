@@ -18,7 +18,7 @@
 ## 🛠️ Requirements
 
 This script makes use of the following components:
-- [ ] [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
+- [`Transform`][transform]
 
 ---
 # Documentation
@@ -30,11 +30,11 @@ This script makes use of the following components:
 
 | Datatype | Name | Summary |
 |-|-|-|
-| `List<Vector3> ` | `waypoints ` | The ordered list of positions the object will move to. |
-| `float ` | `moveTime ` | The time in seconds taken to move between each position in `waypoints`. |
-| `bool ` | `closedLoop ` | Whether or not the object will return to it's starting position at the end of the path. |
-| `bool ` | `reverse ` | Whether or not the object will reverse direction |
-| `void ` | `StartPath() ` | Initiates the object's movement along the path. |
+| [`List<Vector3>`][vector3] | `waypoints` | The ordered list of positions the object will move to. |
+| `float` | `moveTime` | The time in seconds taken to move between each position in `waypoints`. |
+| `bool` | `closedLoop` | Whether or not the object will return to it's starting position at the end of the path. |
+| `bool` | `reverse` | Whether or not the object will reverse direction |
+| `void` | `StartPath()` | Initiates the object's movement along the path. |
 
 ## ⚙️ Gizmos
 
@@ -45,3 +45,6 @@ This script makes use of the following components:
 ``` cs
 // Coming Soon!
 ```
+
+[transform]: https://docs.unity3d.com/ScriptReference/Transform.html
+[vector3]: https://docs.unity3d.com/ScriptReference/Vector3.html
