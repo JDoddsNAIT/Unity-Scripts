@@ -7,17 +7,17 @@
 
 > :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
 
-> - [Name](#name)
->   - [Requirements](#requirements)
-> - [Documentation](#documentation)
->   - [Script 1](#script-1)
->     - [Description](#description)
->     - [Signatures](#signatures)
->     - [Gizmos](#gizmos)
->   - [Script 2](#script-2)
->     - [Description](#description-1)
->     - [Signatures](#signatures-1)
->     - [Gizmos](#gizmos-1)
+- [Name](#name)
+  - [Requirements](#requirements)
+- [Documentation](#documentation)
+  - [Script 1](#script-1)
+    - [Description](#description)
+    - [Signatures](#signatures)
+    - [Gizmos](#gizmos)
+  - [Script 2](#script-2)
+    - [Description](#description-1)
+    - [Signatures](#signatures-1)
+    - [Gizmos](#gizmos-1)
 
 ## Requirements
 
