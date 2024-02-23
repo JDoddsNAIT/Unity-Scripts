@@ -22,7 +22,7 @@
 ## 🛠️ Requirements
 
 This script makes use of the following components and assets:
-- [ ] [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html) (Component)
+- [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html) (Component)
 
 ---
 # Documentation
