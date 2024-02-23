@@ -6,22 +6,22 @@
 |*yyyy/mm/dd*|*yyyy/mm/dd*|
 
 - [Name](#name)
-  - [Requirements](#requirements)
+  - [🛠️ Requirements](#️-requirements)
 - [Documentation](#documentation)
   - [Script 1](#script-1)
-    - [Description](#description)
-    - [Signatures](#signatures)
-    - [Gizmos](#gizmos)
+    - [📖 Description](#-description)
+    - [✒️ Signatures](#️-signatures)
+    - [⚙️ Gizmos](#️-gizmos)
   - [Script 2](#script-2)
-    - [Description](#description-1)
-    - [Signatures](#signatures-1)
-    - [Gizmos](#gizmos-1)
+    - [📖 Description](#-description-1)
+    - [✒️ Signatures](#️-signatures-1)
+    - [⚙️ Gizmos](#️-gizmos-1)
 
 > :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
 
-## Requirements
+## 🛠️ Requirements
 
-This script requires use of the following components and assets:
+This script makes use of the following components and assets:
 - [ ] [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html) (Component)
 
 ---
@@ -31,30 +31,29 @@ This script requires use of the following components and assets:
 
 ## Script 1
 
-### Description
+### 📖 Description
 > *A short description of what the script does and how the user can manipulate it.*
 
-### Signatures
+### ✒️ Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `datatype ` | `variableName ` | Summary |
+| `datatype ` | `name ` | Summary |
 
-### Gizmos
+### ⚙️ Gizmos
 
 > *List what gizmos show up and what they mean.*
 
----
 ## Script 2
 
-### Description
+### 📖 Description
 > *A short description of what the script does and how the user can manipulate it.*
 
-### Signatures
+### ✒️ Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `datatype ` | `variableName ` | Summary |
+| `datatype ` | `name ` | Summary |
 
-### Gizmos
+### ⚙️ Gizmos
 
 > *List what gizmos show up and what they mean.*
 

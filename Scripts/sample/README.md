@@ -6,31 +6,31 @@
 |*yyyy/mm/dd*|*yyyy/mm/dd*|
 
 - [Name](#name)
-  - [Requirements](#requirements)
+  - [🛠️ Requirements](#️-requirements)
 - [Documentation](#documentation)
-  - [Description](#description)
-  - [Signatures](#signatures)
-  - [Gizmos](#gizmos)
+  - [📖Description](#description)
+  - [✒️Signatures](#️signatures)
+  - [⚙️ Gizmos](#️-gizmos)
 - [Source Code](#source-code)
 
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
 
-## Requirements
+## 🛠️ Requirements
 
-This script requires use of the following components:
+This script makes use of the following components:
 - [ ] [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
 
 ---
 # Documentation
 
-## Description
+## 📖Description
 > *A short description of what the script does and how the user can manipulate it.*
 
-## Signatures
+## ✒️Signatures
 | Datatype | Name | Summary |
 |-|-|-|
 | `datatype` | `variableName` | Summary |
-## Gizmos
+## ⚙️ Gizmos
 
 > *List what gizmos show up and what they mean.*
 
