@@ -5,8 +5,6 @@
 |-|-|
 |*yyyy/mm/dd*|*yyyy/mm/dd*|
 
-> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
-
 - [Name](#name)
   - [Requirements](#requirements)
 - [Documentation](#documentation)
@@ -18,6 +16,8 @@
     - [Description](#description-1)
     - [Signatures](#signatures-1)
     - [Gizmos](#gizmos-1)
+
+> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
 
 ## Requirements
 

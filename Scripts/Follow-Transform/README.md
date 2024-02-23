@@ -4,8 +4,6 @@
 |-|-|
 |*2024/02/22*|*2024/02/22*|
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
-
 - [Follow Transform](#follow-transform)
   - [Requirements](#requirements)
 - [Documentation](#documentation)
@@ -13,6 +11,8 @@
   - [Signatures](#signatures)
   - [Gizmos](#gizmos)
 - [Source Code](#source-code)
+
+> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
 
 ## Requirements
 
