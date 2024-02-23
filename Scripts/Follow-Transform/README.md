@@ -12,7 +12,7 @@
   - [⚙️ Gizmos](#️-gizmos)
 - [Source Code](#source-code)
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
+> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
 
