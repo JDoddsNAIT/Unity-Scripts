@@ -5,8 +5,6 @@
 |-|-|
 |*yyyy/mm/dd*|*yyyy/mm/dd*|
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
-
 - [Name](#name)
   - [Requirements](#requirements)
 - [Documentation](#documentation)
@@ -14,6 +12,8 @@
   - [Signatures](#signatures)
   - [Gizmos](#gizmos)
 - [Source Code](#source-code)
+
+> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./) into the assets folder, or create a new C# script and paste in the [source code](./specs.md#source-code) below.
 
 ## Requirements
 
