@@ -12,21 +12,22 @@
 ---
 | Datatype | Name | Summary |
 |-|-|-|
-| `List<Transform> ` | `waypoints ` | The the ordered list of of properties the object will |
-| `float ` | `moveTime ` | The time taken to move between each position in `waypoints`. |
+| `List<Vector3> ` | `waypoints ` | The ordered list of positions the object will move to. |
+| `float ` | `moveTime ` | The time in seconds taken to move between each position in `waypoints`. |
 | `bool ` | `closedLoop ` | Whether or not the object will return to it's starting position at the end of the path. |
 | `bool ` | `reverse ` | Whether or not the object will reverse direction |
-| `void ` | `Start() ` | Initiates the object's movement along the path. |
+| `void ` | `StartPath() ` | Initiates the object's movement along the path. |
 
 ---
 ## Source Code
 ``` cs
 // View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Path-Follower/specs.md
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour
 {
-
+    
 }
 ```
