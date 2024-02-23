@@ -39,7 +39,7 @@ This script requires use of the following components:
 ## Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `datatype ` | `variableName ` | Summary |
+| `datatype` | `variableName` | Summary |
 ## Gizmos
 
 > *List what gizmos show up and what they mean.*
