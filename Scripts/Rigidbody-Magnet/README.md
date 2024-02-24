@@ -1,9 +1,8 @@
-> *This script is not yet available.*
 # 🧲 Rigibody Magnet 🧲
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/02/24*|*----/--/--*|
+|*2024/02/24*|*2024/02/24*|
 
 - [🧲 Rigibody Magnet 🧲](#-rigibody-magnet-)
   - [🛠️ Requirements](#️-requirements)
@@ -44,7 +43,93 @@ This script makes use of the following components:
 
 ## 💾 Source Code
 ``` cs
+// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Rigidbody-Magnet
+using System.Collections.Generic;
+using UnityEngine;
 
+public class RigidbodyMagnet : MonoBehaviour
+{
+    public List<string> affectedTags;
+    public float forceOfAttraction;
+    public float range;
+
+    private Rigidbody myRigidbody;
+
+    void Update()
+    {
+        List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+
+        foreach (Rigidbody body in affectedBodies)
+        {
+            Vector3 bodyDistanceFromThis = myRigidbody.position - body.position;
+            Vector3 forceDirection = bodyDistanceFromThis.normalized;
+            body.AddForce(forceDirection * forceOfAttraction);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (enabled)
+        {
+            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+            if (affectedBodies.Count > 0)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+            Gizmos.DrawWireSphere(GetComponent<Rigidbody>().position, range);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (enabled)
+        {
+            Gizmos.color = Color.green;
+
+            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+
+            foreach (Rigidbody body in affectedBodies)
+            {
+                Vector3 bodyDistanceFromThis = myRigidbody.position - body.position;
+                Vector3 forceDirection = bodyDistanceFromThis.normalized;
+                Gizmos.DrawRay(body.position, forceDirection * forceOfAttraction);
+            }
+        }
+    }
+
+    private List<Rigidbody> FindBodiesWithTags(List<string> tags, out Rigidbody thisRigidbody)
+    {
+        thisRigidbody = GetComponent<Rigidbody>();
+
+        List<GameObject> targets = new List<GameObject>();
+        foreach (string tag in tags)
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(tag);
+            targets.AddRange(gameObjects);
+            targets.Remove(this.gameObject);
+        }
+
+        List<Rigidbody> targetBodies = new List<Rigidbody>();
+        foreach (GameObject gameObject in targets)
+        {
+            if (gameObject.TryGetComponent(out Rigidbody testBody) == false)
+            {
+                Debug.Log($"Added Rigidbody component to GameObject \"{gameObject.name}\".");
+                testBody = gameObject.AddComponent<Rigidbody>();
+            }
+
+            if (Vector3.Distance(thisRigidbody.position, testBody.position) <= range)
+            {
+                targetBodies.Add(testBody);
+            }
+        }
+        return targetBodies;
+    }
+}
 ```
 ---
 > :paperclip: Done looking? Check out more scripts [here.](../)
