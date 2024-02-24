@@ -38,7 +38,7 @@ This script makes use of the following components and assets:
 ## ✒️ Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `datatype ` | `name ` | Summary |
+| `datatype` | `name` | Summary |
 
 ## ⚙️ Gizmos
 
@@ -57,7 +57,7 @@ This script makes use of the following components and assets:
 ## ✒️ Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `datatype ` | `name ` | Summary |
+| `datatype` | `name` | Summary |
 
 ## ⚙️ Gizmos
 
