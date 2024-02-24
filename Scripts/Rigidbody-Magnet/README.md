@@ -3,7 +3,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/02/23*|*----/--/--*|
+|*2024/02/24*|*----/--/--*|
 
 - [🧲 Rigibody Magnet 🧲](#-rigibody-magnet-)
   - [🛠️ Requirements](#️-requirements)
