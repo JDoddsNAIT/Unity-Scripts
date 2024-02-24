@@ -18,12 +18,14 @@
   - [⚙️ Gizmos](#️-gizmos-1)
   - [💾 Source Code](#-source-code-1)
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./rigidbodyMagnet.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
+> :paperclip: To add these scripts to your Unity project, simply import the [Unity Package](./rigidbodyMagnet.unitypackage) into the assets folder, or create **2** new C# scripts and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
 
 This script makes use of the following components:
-  - [`Rigidbody`][rigidbody]
+- [`Rigidbody`][rigidbody]
+
+> :paperclip: All scripts in this package are mutually exclusive and can be used independantly.
 
 ## 📖Description
 
