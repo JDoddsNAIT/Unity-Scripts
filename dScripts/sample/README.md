@@ -23,7 +23,7 @@
 
 ## 🛠️ Requirements
 
-This script makes use of the following components and assets:
+These scripts make use of the following components and assets:
 - [`Transform`][transform] (Component)
 
 ## 📖 Description
