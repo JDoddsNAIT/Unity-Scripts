@@ -34,6 +34,7 @@ This script makes use of the following components:
 | `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a Rigidbody component automatically. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
 | `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
+
 ## ⚙️ Gizmos
 
 - A red wire sphere that turns green when an object is within range.
