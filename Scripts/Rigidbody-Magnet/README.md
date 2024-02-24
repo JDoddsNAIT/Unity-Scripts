@@ -26,6 +26,8 @@ This script makes use of the following components:
 
 > :paperclip: *In participating regions for a limited time. Conditions may apply. Always remember to read and follow the label. Batteries not included.*
 
+
+
 ---
 # Documentation
 
@@ -34,7 +36,7 @@ This script makes use of the following components:
 |-|-|-|
 | `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
-| `float` | `range` | The radius in which affected objects will have th `forceOfAttraction` applied. |
+| `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
 ## ⚙️ Gizmos
 
 - A red wire sphere that turns green when an object is within range.
