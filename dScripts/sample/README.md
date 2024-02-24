@@ -19,7 +19,7 @@
   - [⚙️ Gizmos](#️-gizmos-1)
   - [💾 Source Code](#-source-code-1)
 
-> :paperclip:< This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
+> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
 
 ## 🛠️ Requirements
 
