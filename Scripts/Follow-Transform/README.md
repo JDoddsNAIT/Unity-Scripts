@@ -85,7 +85,7 @@ public class FollowObject : MonoBehaviour
 }
 ```
 ---
-> :paperclip: Done looking? Check out more scripts [here](../../).
+> :paperclip: Done looking? Check out more scripts [here](../).
 
 [transform]: https://docs.unity3d.com/ScriptReference/Transform.html
 [vector3]: https://docs.unity3d.com/ScriptReference/Vector3.html

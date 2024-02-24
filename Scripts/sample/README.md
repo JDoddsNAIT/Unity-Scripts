@@ -40,6 +40,6 @@ This script makes use of the following components:
 // Coming soon!
 ```
 ---
-> :paperclip: Done looking? Check out more scripts [here.](../../)
+> :paperclip: Done looking? Check out more scripts [here.](../)
 
 [transform]: https://docs.unity3d.com/ScriptReference/Transform.html
