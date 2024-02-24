@@ -21,11 +21,9 @@ This script makes use of the following components:
 
 ## 📖Description
 
-**🧲 Rigidbody Magnet** is the **one simple trick** that makes you 🥵irresistible! Just supply a list of tags, set a distance and force, and all those ❤️‍🔥hot❤️‍🔥 rigidbodies will come 🪽flying at you **instantly**! They'll be so in 💞love, they wont ***ever*** want to let go! And if you call *right now*, you'll get an additional ***TWO*** of these **🧲 Rigidbody Magnets** absolutely **💸FREE!💸** Just pay shipping and processing! But you gotta call now! 
+**🧲 Rigidbody Magnet** is the **one simple trick** that makes you 🥵irresistible! Just supply a list of tags, set a distance and force, and all those ❤️‍🔥hot❤️‍🔥 rigidbodies will come 🪽flying at you **instantly**! They'll be so in 💞love, they wont ***ever*** want to let go! And if you call *right now*, you'll get an additional ***TWO*** of these **🧲 Rigidbody Magnets** absolutely **💸FREE!💸** Just pay shipping and processing! But you gotta 📞call now! 
 
 > :paperclip: *In participating regions for a limited time. Conditions may apply. Always remember to read and follow the label. Batteries not included.*
-
-
 
 ---
 # Documentation
@@ -33,7 +31,7 @@ This script makes use of the following components:
 ## ✒️Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. |
+| `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a Rigidbody component automatically. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
 | `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
 ## ⚙️ Gizmos
