@@ -1,4 +1,4 @@
-# 🧲 Rigidbody Magnet 🧲
+# 🧲 **Rigidbody Magnet** 🧲
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
