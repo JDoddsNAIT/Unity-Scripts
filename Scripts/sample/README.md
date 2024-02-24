@@ -34,7 +34,6 @@ This script makes use of the following components:
 
 > *List what gizmos show up and what they mean.*
 
----
 ## 💾 Source Code
 ``` cs
 // Coming soon!
