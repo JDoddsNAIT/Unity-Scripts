@@ -23,10 +23,10 @@
 ## 🛠️ Requirements
 
 This script makes use of the following components:
-- [`Rigidbody`](https://docs.unity3d.com/ScriptReference/Rigidbody.html) - ([Rigidbody Magnet (3D)](#rigidbody-magnet-3d))
-- [`Rigidbody2D`](https://docs.unity3d.com/ScriptReference/Rigidbody2D.html) - ([Rigidbody Magnet (2D)](#rigidbody-magnet-2d))
-- [`Collider`](https://docs.unity3d.com/ScriptReference/Collider.html) (Optional) - ([Rigidbody Magnet (3D)](#rigidbody-magnet-3d))
-- [`Collider2D`](https://docs.unity3d.com/ScriptReference/Collider2D.html) (Optional) - ([Rigidbody Magnet (2D)](#rigidbody-magnet-2d))
+- [`Rigidbody`](https://docs.unity3d.com/ScriptReference/Rigidbody.html) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
+- [`Rigidbody2D`](https://docs.unity3d.com/ScriptReference/Rigidbody2D.html) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
+- [`Collider`](https://docs.unity3d.com/ScriptReference/Collider.html) (Optional) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
+- [`Collider2D`](https://docs.unity3d.com/ScriptReference/Collider2D.html) (Optional) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
 
 > :paperclip: All scripts in this package are mutually exclusive and can be used independantly.
 
