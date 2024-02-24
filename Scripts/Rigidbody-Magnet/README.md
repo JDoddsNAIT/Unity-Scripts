@@ -38,7 +38,7 @@ This script makes use of the following components:
 ## ⚙️ Gizmos
 
 - A red wire sphere that turns green when an object is within range.
-- A green ray on each affected object that appears visualizing the force vetor being applied.
+- A green ray on each affected object visualizing the force vetor being applied.
 
 ## 💾 Source Code
 ``` cs
