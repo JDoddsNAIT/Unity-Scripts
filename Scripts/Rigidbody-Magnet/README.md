@@ -1,10 +1,10 @@
-# 🧲 Rigibody Magnet 🧲
+# 🧲 Rigidbody Magnet 🧲
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
 |*2024/02/24*|*2024/02/24*|
 
-- [🧲 Rigibody Magnet 🧲](#-rigibody-magnet-)
+- [🧲 Rigidbody Magnet 🧲](#-rigidbody-magnet-)
   - [🛠️ Requirements](#️-requirements)
   - [📖Description](#description)
 - [Documentation](#documentation)
