@@ -4,7 +4,7 @@
 |-|-|
 |*2024/02/24*|*2024/02/24*|
 
-- [🧲 Rigidbody Magnet 🧲](#-rigidbody-magnet-)
+- [🧲 **Rigidbody Magnet** 🧲](#-rigidbody-magnet-)
   - [🛠️ Requirements](#️-requirements)
   - [📖Description](#description)
 - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
@@ -68,7 +68,7 @@ public class RigidbodyMagnet : MonoBehaviour
 
     private Rigidbody myRigidbody;
 
-    void Update()
+    void FixedUpdate()
     {
         List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
 
@@ -176,7 +176,7 @@ public class RigidbodyMagnet2D : MonoBehaviour
 
     private Rigidbody2D myRigidbody;
 
-    void Update()
+    void FixedUpdate()
     {
         List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
 
