@@ -49,6 +49,7 @@ Attracts tagged 3D objects within range towards the object this script is attach
 | `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a Rigidbody component automatically. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
 | `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
+| `bool` | `showGizmos` | Whether or not to draw gizmos. Is `true` by default.
 
 ## ⚙️ Gizmos
 
@@ -150,6 +151,7 @@ Attracts tagged 2D objects within range towards the object this script is attach
 | `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a Rigidbody component automatically. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
 | `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
+| `bool` | `showGizmos` | Whether or not to draw gizmos. Is `true` by default. |
 
 ## ⚙️ Gizmos
 
