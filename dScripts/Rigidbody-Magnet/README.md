@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/02/24*|*2024/02/24*|
+|*2024/02/24*|*2024/03/01*|
 
 - [🧲 **Rigidbody Magnet** 🧲](#-rigidbody-magnet-)
   - [🛠️ Requirements](#️-requirements)
@@ -22,7 +22,8 @@
 
 ## 🛠️ Requirements
 
-This script makes use of the following components:
+These scripts make use of the following components:
+- [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
 - [`Rigidbody`](https://docs.unity3d.com/ScriptReference/Rigidbody.html) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
 - [`Rigidbody2D`](https://docs.unity3d.com/ScriptReference/Rigidbody2D.html) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
 - [`Collider`](https://docs.unity3d.com/ScriptReference/Collider.html) (Optional) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
@@ -65,16 +66,15 @@ public class RigidbodyMagnet : MonoBehaviour
     public List<string> affectedTags;
     public float forceOfAttraction;
     public float range;
-
-    private Rigidbody myRigidbody;
+    public bool showGizmos = true;
 
     void FixedUpdate()
     {
-        List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+        List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags);
 
         foreach (Rigidbody body in affectedBodies)
         {
-            Vector3 bodyDistanceFromThis = myRigidbody.position - body.position;
+            Vector3 bodyDistanceFromThis = transform.position - body.position;
             Vector3 forceDirection = bodyDistanceFromThis.normalized;
             body.AddForce(forceDirection * forceOfAttraction);
         }
@@ -82,43 +82,37 @@ public class RigidbodyMagnet : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (enabled)
+        if (showGizmos)
         {
-            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
-            if (affectedBodies.Count > 0)
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-            }
-            Gizmos.DrawWireSphere(GetComponent<Rigidbody>().position, range);
+            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags);
+            
+            Gizmos.color = affectedBodies.Count > 0 ?
+                Color.green : Color.red;
+            
+            Gizmos.DrawWireSphere(transform.position, range);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (enabled)
+        if (showGizmos)
         {
             Gizmos.color = Color.green;
 
-            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+            List<Rigidbody> affectedBodies = FindBodiesWithTags(affectedTags);
 
             foreach (Rigidbody body in affectedBodies)
             {
-                Vector3 bodyDistanceFromThis = myRigidbody.position - body.position;
+                Vector3 bodyDistanceFromThis = transform.position - body.position;
                 Vector3 forceDirection = bodyDistanceFromThis.normalized;
                 Gizmos.DrawRay(body.position, forceDirection * forceOfAttraction);
             }
         }
     }
 
-    private List<Rigidbody> FindBodiesWithTags(List<string> tags, out Rigidbody thisRigidbody)
+    private List<Rigidbody> FindBodiesWithTags(List<string> tags)
     {
-        thisRigidbody = GetComponent<Rigidbody>();
-
-        List<GameObject> targets = new List<GameObject>();
+        List<GameObject> targets = new();
         foreach (string tag in tags)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(tag);
@@ -126,7 +120,7 @@ public class RigidbodyMagnet : MonoBehaviour
             targets.Remove(this.gameObject);
         }
 
-        List<Rigidbody> targetBodies = new List<Rigidbody>();
+        List<Rigidbody> targetBodies = new();
         foreach (GameObject gameObject in targets)
         {
             if (gameObject.TryGetComponent(out Rigidbody testBody) == false)
@@ -135,7 +129,7 @@ public class RigidbodyMagnet : MonoBehaviour
                 testBody = gameObject.AddComponent<Rigidbody>();
             }
 
-            if (Vector3.Distance(thisRigidbody.position, testBody.position) <= range)
+            if (Vector3.Distance(transform.position, testBody.position) <= range)
             {
                 targetBodies.Add(testBody);
             }
@@ -173,16 +167,15 @@ public class RigidbodyMagnet2D : MonoBehaviour
     public List<string> affectedTags;
     public float forceOfAttraction;
     public float range;
-
-    private Rigidbody2D myRigidbody;
+    public bool showGizmos = true;
 
     void FixedUpdate()
     {
-        List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+        List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags);
 
         foreach (Rigidbody2D body in affectedBodies)
         {
-            Vector2 bodyDistanceFromThis = myRigidbody.position - body.position;
+            Vector2 bodyDistanceFromThis = (Vector2)transform.position - body.position;
             Vector2 forceDirection = bodyDistanceFromThis.normalized;
             body.AddForce(forceDirection * forceOfAttraction);
         }
@@ -190,43 +183,37 @@ public class RigidbodyMagnet2D : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (enabled)
+        if (showGizmos)
         {
-            List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
-            if (affectedBodies.Count > 0)
-            {
-                Gizmos.color = Color.green;
-            }
-            else
-            {
-                Gizmos.color = Color.red;
-            }
+            List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags);
+
+            Gizmos.color = affectedBodies.Count > 0 ?
+                Color.green : Color.red;
+            
             Gizmos.DrawWireSphere(GetComponent<Rigidbody2D>().position, range);
         }
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (enabled)
+        if (showGizmos)
         {
             Gizmos.color = Color.green;
 
-            List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags, out myRigidbody);
+            List<Rigidbody2D> affectedBodies = FindBodiesWithTags(affectedTags);
 
             foreach (Rigidbody2D body in affectedBodies)
             {
-                Vector2 bodyDistanceFromThis = myRigidbody.position - body.position;
+                Vector2 bodyDistanceFromThis = (Vector2)transform.position - body.position;
                 Vector2 forceDirection = bodyDistanceFromThis.normalized;
                 Gizmos.DrawRay(body.position, forceDirection * forceOfAttraction);
             }
         }
     }
 
-    private List<Rigidbody2D> FindBodiesWithTags(List<string> tags, out Rigidbody2D thisRigidbody)
+    private List<Rigidbody2D> FindBodiesWithTags(List<string> tags)
     {
-        thisRigidbody = GetComponent<Rigidbody2D>();
-
-        List<GameObject> targets = new List<GameObject>();
+        List<GameObject> targets = new();
         foreach (string tag in tags)
         {
             GameObject[] gameObjects = GameObject.FindGameObjectsWithTag(tag);
@@ -234,7 +221,7 @@ public class RigidbodyMagnet2D : MonoBehaviour
             targets.Remove(this.gameObject);
         }
 
-        List<Rigidbody2D> targetBodies = new List<Rigidbody2D>();
+        List<Rigidbody2D> targetBodies = new();
         foreach (GameObject gameObject in targets)
         {
             if (gameObject.TryGetComponent(out Rigidbody2D testBody) == false)
@@ -243,7 +230,7 @@ public class RigidbodyMagnet2D : MonoBehaviour
                 testBody = gameObject.AddComponent<Rigidbody2D>();
             }
 
-            if (Vector2.Distance(thisRigidbody.position, testBody.position) <= range)
+            if (Vector2.Distance(transform.position, testBody.position) <= range)
             {
                 targetBodies.Add(testBody);
             }
