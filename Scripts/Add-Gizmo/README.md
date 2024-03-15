@@ -12,7 +12,7 @@
   - [⚙️ Gizmos](#️-gizmos)
   - [💾 Source Code](#-source-code)
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
+> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./addgizmo.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
 
@@ -39,7 +39,66 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 
 ## 💾 Source Code
 ``` cs
-// Coming soon!
+// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo
+using UnityEngine;
+
+public class AddGizmo : MonoBehaviour
+{
+    public enum Shape
+    {
+        Sphere,
+        WireSphere,
+        Cube,
+        WireCube,
+        Ray,
+    }
+
+    public bool onSelected;
+    public Shape gizmo;
+    public Color color = Color.white;
+    public Vector3 position;
+    public Vector3 size;
+
+    private void OnDrawGizmos()
+    {
+        if (enabled && !onSelected)
+        {
+            DrawGizmo();
+        }
+    }
+    private void OnDrawGizmosSelected()
+    {
+        if (enabled && onSelected)
+        {
+            DrawGizmo();
+        }
+    }
+
+    private void DrawGizmo()
+    {
+        Vector3 gizmoPosition = transform.position + position;
+        Gizmos.color = color;
+        switch (gizmo)
+        {
+            case Shape.Sphere:
+                Gizmos.DrawSphere(gizmoPosition, size.magnitude);
+                break;
+            case Shape.WireSphere:
+                Gizmos.DrawWireSphere(gizmoPosition, size.magnitude);
+                break;
+            case Shape.Cube:
+                Gizmos.DrawCube(gizmoPosition, size);
+                break;
+            case Shape.WireCube:
+                Gizmos.DrawWireCube(gizmoPosition, size);
+                break;
+            case Shape.Ray:
+                Gizmos.DrawRay(gizmoPosition, size);
+                break;
+        }
+    }
+}
+
 ```
 ---
 > :paperclip: Done looking? Check out more scripts [here.](../)
