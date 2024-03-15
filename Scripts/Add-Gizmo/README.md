@@ -30,7 +30,7 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 ## ✒️Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `bool` | `onSelect` | If true, the gizmo will only be drawn when the object is selected. |
+| `bool` | `onSelected` | If true, the gizmo will only be drawn when the object is selected. |
 | `enum` | `gizmo` | The kind of gizmo that will be drawn. |
 | `Color` | `color` | The gizmo's color, white by default. |
 | `Vector3` | `position` | The relative position of the gizmo. |
