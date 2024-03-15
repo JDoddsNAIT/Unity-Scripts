@@ -1,10 +1,10 @@
-# Add Gizmo
+# ⚙️Add Gizmo⚙️
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
 |*2024/03/15*|*2024/03/15*|
 
-- [Add Gizmo](#add-gizmo)
+- [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
   - [📖Description](#description)
 - [Documentation](#documentation)
@@ -15,6 +15,7 @@
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./addgizmo.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
+> :warning: This script was written in Unity version `2022.3.20f1`
 
 This script makes use of the following components:
 - [`Transform`][transform]
@@ -24,6 +25,7 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 
 ---
 # Documentation
+
 
 ## ✒️Signatures
 | Datatype | Name | Summary |

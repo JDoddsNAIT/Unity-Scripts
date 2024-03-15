@@ -21,6 +21,7 @@
 > :paperclip: To add these scripts to your Unity project, simply import the [Unity Package](./rigidbodyMagnet.unitypackage) into the assets folder, or create **2** new C# scripts and paste in the [source code](#-source-code) below.
 
 ## 🛠️ Requirements
+> :warning: This script was written in Unity version `2022.3.16f1`
 
 These scripts make use of the following components:
 - [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)

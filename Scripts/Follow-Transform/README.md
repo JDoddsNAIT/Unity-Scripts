@@ -15,6 +15,7 @@
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
+> :warning: This script was written in Unity version `2022.3.16f1`
 
 This script makes use of the following components:
 - [`Transform`][transform]
