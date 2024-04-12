@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/03/15*|*2024/03/15*|
+|*2024/03/15*|*2024/04/12*|
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
@@ -41,9 +41,9 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 
 ## 💾 Source Code
 ``` cs
-// View documentation at https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo
 using UnityEngine;
 
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo")]
 public class AddGizmo : MonoBehaviour
 {
     public enum Shape
@@ -57,6 +57,7 @@ public class AddGizmo : MonoBehaviour
 
     public bool onSelected;
     public Shape gizmo;
+    [Space]
     public Color color = Color.white;
     public Vector3 position;
     public Vector3 size;
