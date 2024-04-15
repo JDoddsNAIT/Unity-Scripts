@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/03/15*|*2024/04/12*|
+|*2024/03/15*|*2024/04/15*|
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
@@ -59,6 +59,7 @@ public class AddGizmo : MonoBehaviour
     public Shape gizmo;
     [Space]
     public Color color = Color.white;
+    public Space space = Space.Self;
     public Vector3 position;
     public Vector3 size;
 
@@ -79,7 +80,7 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
-        Vector3 gizmoPosition = transform.position + position;
+        Vector3 gizmoPosition = space == Space.Self ? transform.position + position : position;
         Gizmos.color = color;
         switch (gizmo)
         {
@@ -96,7 +97,8 @@ public class AddGizmo : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, size);
                 break;
             case Shape.Ray:
-                Gizmos.DrawRay(gizmoPosition, size);
+                Vector3 gizmoSize = space == Space.Self ? Matrix4x4.Rotate(transform.rotation) * size : size;
+                Gizmos.DrawRay(gizmoPosition, gizmoSize);
                 break;
         }
     }
