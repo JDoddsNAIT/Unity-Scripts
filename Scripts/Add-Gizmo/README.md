@@ -33,7 +33,7 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 | `bool` | `onSelected` | If true, the gizmo will only be drawn when the object is selected. |
 | `enum` | `gizmo` | The kind of gizmo that will be drawn. |
 | `Color` | `color` | The gizmo's color, white by default. |
-| `Space` | `space` | What space to use when drawing the gizmo.
+| `enum` | `space` | What space to use when drawing the gizmo.
 | `Vector3` | `position` | The relative position of the gizmo. |
 | `Vector3` | `size` | The size of the gizmo. the `Sphere` and `WireSphere` gizmos will use the magnitude for their radius. |
 ## ⚙️ Gizmos
