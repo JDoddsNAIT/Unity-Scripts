@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/03/15*|*2024/04/15*|
+|*2024/03/15*|*2024/04/29*|
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
