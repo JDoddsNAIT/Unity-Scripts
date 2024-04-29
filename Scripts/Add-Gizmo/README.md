@@ -26,6 +26,11 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 ---
 # Documentation
 
+> :paperclip: Note: Using `Space.Self` may cause the following exception to be thrown:
+> 
+> `Quaternion To Matrix conversion failed because input Quaternion is invalid`
+> 
+> This exception is likely due to a rounding error outside of my control, and **does not seem** to impact the script's functionality.
 
 ## ✒️Signatures
 | Datatype | Name | Summary |
