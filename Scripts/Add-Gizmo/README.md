@@ -81,16 +81,7 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
-        Vector3 gizmoPosition;
-        if (space == Space.Self)
-        {
-            gizmoPosition = transform.position + (Vector3)(Matrix4x4.Rotate(transform.rotation) * position);
-        }
-        else
-        {
-            gizmoPosition = position;
-        }
-
+        Vector3 gizmoPosition = space == Space.Self ? transform.position + transform.rotation * position : position;
         Gizmos.color = color;
         switch (gizmo)
         {
@@ -107,7 +98,7 @@ public class AddGizmo : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, size);
                 break;
             case Shape.Ray:
-                Vector3 gizmoSize = space == Space.Self ? Matrix4x4.Rotate(transform.rotation) * size : size;
+                Vector3 gizmoSize = space == Space.Self ? transform.rotation * size : size;
                 Gizmos.DrawRay(gizmoPosition, gizmoSize);
                 break;
         }
