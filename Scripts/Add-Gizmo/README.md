@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/03/15*|*2024/04/15*|
+|*2024/03/15*|*2024/04/29*|
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
@@ -56,13 +56,13 @@ public class AddGizmo : MonoBehaviour
         Ray,
     }
 
-    public bool onSelected;
     public Shape gizmo;
-    public Color color = Color.white;
+    public Color color = Color.red;
+    public bool onSelected;
     [Space]
     public Space space = Space.Self;
     public Vector3 position;
-    public Vector3 size;
+    public Vector3 size = Vector3.right;
 
     private void OnDrawGizmos()
     {
@@ -81,7 +81,16 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
-        Vector3 gizmoPosition = space == Space.Self ? transform.position + position : position;
+        Vector3 gizmoPosition;
+        if (space == Space.Self)
+        {
+            gizmoPosition = transform.position + (Vector3)(Matrix4x4.Rotate(transform.rotation) * position);
+        }
+        else
+        {
+            gizmoPosition = position;
+        }
+
         Gizmos.color = color;
         switch (gizmo)
         {
