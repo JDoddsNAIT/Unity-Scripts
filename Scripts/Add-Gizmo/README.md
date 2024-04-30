@@ -6,8 +6,8 @@
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
-  - [📖Description](#description)
 - [Documentation](#documentation)
+  - [📖Description](#description)
   - [✒️Signatures](#️signatures)
   - [⚙️ Gizmos](#️-gizmos)
   - [💾 Source Code](#-source-code)
@@ -15,16 +15,16 @@
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./addgizmo.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
-> :warning: This script was written in Unity version `2022.3.20f1`
 
 This script makes use of the following components:
 - [`Transform`][transform]
 
-## 📖Description
-Easily add a gizmo to your game object. You can choose between a **Sphere**, **Cube**, **WireSphere**, **WireCube**, or **Ray** in the dropdown menu. You can set it's **position**, **size**, and **color**, as well as if the gizmo will only draw when **the object is selected**. Gizmos will only be drawn if the script is **enabled**.
-
+> :warning: This script was written in Unity version `2022.3.20f1`
 ---
 # Documentation
+
+## 📖Description
+Easily add a gizmo to your game object. You can choose between a **Sphere**, **Cube**, **WireSphere**, **WireCube**, or **Ray** in the dropdown menu. You can set it's **position**, **size**, and **color**, as well as if the gizmo will only draw when **the object is selected**. Gizmos will only be drawn if the script is **enabled**.
 
 > :paperclip: Note: Using `Space.Self` may cause the following exception to be thrown:
 > 
@@ -66,8 +66,8 @@ public class AddGizmo : MonoBehaviour
     public bool onSelected;
     [Space]
     public Space space = Space.Self;
-    public Vector3 position;
     public Vector3 size = Vector3.right;
+    public Vector3 position;
 
     private void OnDrawGizmos()
     {
@@ -86,24 +86,25 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
-        Vector3 gizmoPosition = space == Space.Self ? transform.position + transform.rotation * position : position;
+        Vector3 gizmoPosition = transform.position + transform.rotation * position;
+        Vector3 gizmoSize = space == Space.Self ? transform.localScale + size : size;
         Gizmos.color = color;
         switch (gizmo)
         {
             case Shape.Sphere:
-                Gizmos.DrawSphere(gizmoPosition, size.magnitude);
+                Gizmos.DrawSphere(gizmoPosition, gizmoSize.magnitude);
                 break;
             case Shape.WireSphere:
-                Gizmos.DrawWireSphere(gizmoPosition, size.magnitude);
+                Gizmos.DrawWireSphere(gizmoPosition, gizmoSize.magnitude);
                 break;
             case Shape.Cube:
-                Gizmos.DrawCube(gizmoPosition, size);
+                Gizmos.DrawCube(gizmoPosition, gizmoSize);
                 break;
             case Shape.WireCube:
-                Gizmos.DrawWireCube(gizmoPosition, size);
+                Gizmos.DrawWireCube(gizmoPosition, gizmoSize);
                 break;
             case Shape.Ray:
-                Vector3 gizmoSize = space == Space.Self ? transform.rotation * size : size;
+                gizmoSize = space == Space.Self ? transform.rotation * gizmoSize : gizmoSize;
                 Gizmos.DrawRay(gizmoPosition, gizmoSize);
                 break;
         }
