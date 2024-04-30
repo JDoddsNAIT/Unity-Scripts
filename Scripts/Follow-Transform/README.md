@@ -6,8 +6,8 @@
 
 - [Follow Transform](#follow-transform)
   - [🛠️ Requirements](#️-requirements)
-  - [📖 Description](#-description)
 - [Documentation](#documentation)
+  - [📖 Description](#-description)
   - [✒️ Signatures](#️-signatures)
   - [⚙️ Gizmos](#️-gizmos)
   - [💾 Source Code](#-source-code)
@@ -15,16 +15,17 @@
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./followTransform.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
-> :warning: This script was written in Unity version `2022.3.16f1`
 
 This script makes use of the following components:
 - [`Transform`][transform]
 
-## 📖 Description
-**Follow Transform** is a simple script that makes an object move towards a specified **transform's position** every frame. You may set an **offset**, which dictates the target postion relative to the object this script is attached to. Movement stops if the transform being followed has it's position within a certain **radius**.
+> :warning: This script was written in Unity version `2022.3.16f1`
 
 ---
 # Documentation
+
+## 📖 Description
+**Follow Transform** is a simple script that makes an object move towards a specified **transform's position** every frame. You may set an **offset**, which dictates the target postion relative to the object this script is attached to. Movement stops if the transform being followed has it's position within a certain **radius**.
 
 ## ✒️ Signatures
 

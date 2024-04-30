@@ -7,8 +7,8 @@
 
 - [Name](#name)
   - [🛠️ Requirements](#️-requirements)
-  - [📖Description](#description)
 - [Documentation](#documentation)
+  - [📖Description](#description)
   - [✒️Signatures](#️signatures)
   - [⚙️ Gizmos](#️-gizmos)
   - [💾 Source Code](#-source-code)
@@ -16,16 +16,17 @@
 > :paperclip: To add this script to your Unity project, simply import the [Unity Package](./) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
 
 ## 🛠️ Requirements
-> :warning: This script was written in Unity version `2022.3.16f1`
 
 This script makes use of the following components:
 - [`Transform`][transform]
 
-## 📖Description
-> *A short description of what the script does and how the user can manipulate it.*
+> :warning: This script was written in Unity version `2022.3.16f1`
 
 ---
 # Documentation
+
+## 📖Description
+> *A short description of what the script does and how the user can manipulate it.*
 
 ## ✒️Signatures
 | Datatype | Name | Summary |
