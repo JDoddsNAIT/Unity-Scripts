@@ -24,7 +24,7 @@
 ## 🛠️ Requirements
 
 These scripts make use of the following components and assets:
-- [`Transform`][transform] (Component)
+- :link:[`Transform`][transform] (Component)
 
 ## 📖 Description
 > *A short description of what the script does and how the user can manipulate it.*

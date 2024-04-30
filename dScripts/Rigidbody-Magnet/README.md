@@ -18,17 +18,17 @@
   - [⚙️ Gizmos](#️-gizmos-1)
   - [💾 Source Code](#-source-code-1)
 
-> :paperclip: To add these scripts to your Unity project, simply import the [Unity Package](./rigidbodyMagnet.unitypackage) into the assets folder, or create **2** new C# scripts and paste in the [source code](#-source-code) below.
+> :paperclip: To add these scripts to your Unity project, simply import the [Unity Package](./rigidbodyMagnet.unitypackage) into the assets folder. You can select what scripts to import from the Unity editor.
 
 ## 🛠️ Requirements
 > :warning: This script was written in Unity version `2022.3.16f1`
 
 These scripts make use of the following components:
-- [`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
-- [`Rigidbody`](https://docs.unity3d.com/ScriptReference/Rigidbody.html) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
-- [`Rigidbody2D`](https://docs.unity3d.com/ScriptReference/Rigidbody2D.html) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
-- [`Collider`](https://docs.unity3d.com/ScriptReference/Collider.html) (Optional) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
-- [`Collider2D`](https://docs.unity3d.com/ScriptReference/Collider2D.html) (Optional) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
+- :link:[`Transform`](https://docs.unity3d.com/ScriptReference/Transform.html)
+- :link:[`Rigidbody`](https://docs.unity3d.com/ScriptReference/Rigidbody.html) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
+- :link:[`Rigidbody2D`](https://docs.unity3d.com/ScriptReference/Rigidbody2D.html) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
+- :link:[`Collider`](https://docs.unity3d.com/ScriptReference/Collider.html) (Optional) - [Rigidbody Magnet (3D)](#rigidbody-magnet-3d)
+- :link:[`Collider2D`](https://docs.unity3d.com/ScriptReference/Collider2D.html) (Optional) - [Rigidbody Magnet (2D)](#rigidbody-magnet-2d)
 
 > :paperclip: All scripts in this package are mutually exclusive and can be used independantly.
 
@@ -47,7 +47,7 @@ Attracts tagged 3D objects within range towards the object this script is attach
 ## ✒️Signatures
 | Datatype | Name | Summary |
 |-|-|-|
-| `List<string>` | `affectedTags` | Objects that have a rigidbody component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a Rigidbody component automatically. |
+| `List<string>` | `affectedTags` | Objects that have a `Rigidbody` component and have a tag within this list will be affected by the `forceOfAttraction`. Objects with one of these tags will be given a `Rigidbody` component automatically. |
 | `float` | `forceOfAttraction` | The amount of force applied to each affected object. |
 | `float` | `range` | The radius in which affected objects will have the `forceOfAttraction` applied. |
 | `bool` | `showGizmos` | Whether or not to draw gizmos. Is `true` by default.
@@ -55,7 +55,7 @@ Attracts tagged 3D objects within range towards the object this script is attach
 ## ⚙️ Gizmos
 
 - A red wire sphere that turns green when an object is within range.
-- A green ray on each affected object visualizing the force vetor being applied.
+- A green ray on each affected object visualizing the force `Vector` being applied.
 
 ## 💾 Source Code
 ``` cs

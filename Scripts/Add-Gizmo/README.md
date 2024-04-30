@@ -12,22 +12,24 @@
   - [⚙️ Gizmos](#️-gizmos)
   - [💾 Source Code](#-source-code)
 
-> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./addgizmo.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#source-code) below.
+> :paperclip: To add this script to your Unity project, simply import the [Unity Package](./addgizmo.unitypackage) into the assets folder, or create a new C# script and paste in the [source code](#-source-code) below.
 
 ## 🛠️ Requirements
 
 This script makes use of the following components:
-- [`Transform`][transform]
+- :link:[`Transform`][transform]
 
 > :warning: This script was written in Unity version `2022.3.20f1`
+
 ---
 # Documentation
 
 ## 📖Description
 Easily add a gizmo to your game object. You can choose between a **Sphere**, **Cube**, **WireSphere**, **WireCube**, or **Ray** in the dropdown menu. You can set it's **position**, **size**, and **color**, as well as if the gizmo will only draw when **the object is selected**. Gizmos will only be drawn if the script is **enabled**.
 
-> :paperclip: Note: Using `Space.Self` may cause the following exception to be thrown:
+> :warning: Notice:
 > 
+>  Using `Space.Self` may cause the following exception to be thrown: 
 > `Quaternion To Matrix conversion failed because input Quaternion is invalid`
 > 
 > This exception is likely due to a rounding error outside of my control, and **does not seem** to significantly impact the script's functionality.
@@ -38,9 +40,9 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 | `bool` | `onSelected` | If true, the gizmo will only be drawn when the object is selected. |
 | `enum` | `gizmo` | The kind of gizmo that will be drawn. |
 | `Color` | `color` | The gizmo's color, white by default. |
-| `enum` | `space` | What space to use when drawing the gizmo.
+| `enum` | `space` | What space to use when drawing the gizmo. Using `Space.Self` will add the `Transform`'s `localScale` to `size`.
+| `Vector3` | `size` | The size of the gizmo. The `Sphere` and `WireSphere` gizmos will use the magnitude for their radius. |
 | `Vector3` | `position` | The relative position of the gizmo. |
-| `Vector3` | `size` | The size of the gizmo. the `Sphere` and `WireSphere` gizmos will use the magnitude for their radius. |
 ## ⚙️ Gizmos
 
 - Either a Sphere, WireSphere, Cube, WireCube, or Ray with a color, size, and position of your choosing.
@@ -104,7 +106,7 @@ public class AddGizmo : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, gizmoSize);
                 break;
             case Shape.Ray:
-                gizmoSize = space == Space.Self ? transform.rotation * gizmoSize : gizmoSize;
+                gizmoSize = space == Space.Self ? transform.rotation * size : size;
                 Gizmos.DrawRay(gizmoPosition, gizmoSize);
                 break;
         }
