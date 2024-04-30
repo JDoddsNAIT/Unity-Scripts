@@ -30,7 +30,7 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 > 
 > `Quaternion To Matrix conversion failed because input Quaternion is invalid`
 > 
-> This exception is likely due to a rounding error outside of my control, and **does not seem** to impact the script's functionality.
+> This exception is likely due to a rounding error outside of my control, and **does not seem** to significantly impact the script's functionality.
 
 ## ✒️Signatures
 | Datatype | Name | Summary |
