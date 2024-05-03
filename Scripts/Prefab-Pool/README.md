@@ -1,4 +1,3 @@
-> *This is a template file for referance only.*
 # 🎱 Prefab Pool 🎱
 
 | 📆 Date Added | 📆 Updated On |
