@@ -19,7 +19,7 @@
 This script makes use of the following components:
 - This script uses no other components.
 
-> :warning: This script was written in Unity version `2022.3.16f1`
+> :warning: This script was written in Unity version `2022.3.20f1`
 
 ---
 # Documentation
