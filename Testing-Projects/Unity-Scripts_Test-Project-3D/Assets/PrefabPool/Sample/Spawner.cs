@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
     [Min(0)] public float spawnDelay;
 
     private bool spawnNextObject = true;
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -22,7 +22,10 @@ public class Spawner : MonoBehaviour
     private IEnumerator SpawnObject(float spawnDelay)
     {
         GameObject obj = pool.Next;
-        obj.transform.position = this.transform.position;
+        if (obj != null)
+        {
+            obj.transform.position = this.transform.position;
+        }
         yield return new WaitForSeconds(spawnDelay);
         spawnNextObject = true;
     }
