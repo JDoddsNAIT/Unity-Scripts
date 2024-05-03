@@ -37,7 +37,7 @@ This script allows you to implement object pooling. Object pooling is a techniqu
 | `GameObject[]` | `ActivePool` | Returns an array of all objects in `Pool` that are active in the hierarchy. |
 | `bool` | `IsActive` | Returns true if any objects in the `Pool` are active in the hierarchy. |
 | `bool` | `IsEmpty` | Returns true if all objects in the `Pool` are active in the hierarchy. |
-| `GameObject` | `Next` | Returns the next inactive object in the `Pool`. Logs a warning if no object is found. |
+| `GameObject` | `Next` | Returns and activates the next inactive object in the `Pool`. Logs a warning if no object is found. |
 
 ## ⚙️ Gizmos
 
