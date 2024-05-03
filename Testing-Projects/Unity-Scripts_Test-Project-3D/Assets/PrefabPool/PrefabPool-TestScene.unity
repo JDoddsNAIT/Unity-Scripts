@@ -543,7 +543,7 @@ MonoBehaviour:
   gizmo: 4
   color: {r: 0, g: 0, b: 1, a: 1}
   onSelected: 0
-  space: 1
+  space: 0
   size: {x: 0, y: 0, z: 2}
   position: {x: 0, y: 0, z: -1}
 --- !u!114 &2078812171
@@ -561,7 +561,7 @@ MonoBehaviour:
   gizmo: 4
   color: {r: 0, g: 1, b: 0, a: 1}
   onSelected: 0
-  space: 1
+  space: 0
   size: {x: 0, y: 2, z: 0}
   position: {x: 0, y: -1, z: 0}
 --- !u!114 &2078812172
@@ -579,7 +579,7 @@ MonoBehaviour:
   gizmo: 4
   color: {r: 1, g: 0, b: 0, a: 1}
   onSelected: 0
-  space: 1
+  space: 0
   size: {x: 2, y: 0, z: 0}
   position: {x: -1, y: 0, z: 0}
 --- !u!4 &2078812173
