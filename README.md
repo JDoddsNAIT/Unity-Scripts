@@ -20,7 +20,7 @@ My repositories uses emojis in many places! If you are confused about the usage 
 
 ### Emojis
 - "📁" is used for folders.
-- "📄" is used for all files, except for markdown files which use "📝".
+- "📄" is used for all files, except for markdown files which use 📝.
 - "⚠️" is used for important information, such as Unity version.
 - "📎" is for small notes and asides.
 - "🔗" is used alongside [links]() to external sites, and :octocat: for repositories.
