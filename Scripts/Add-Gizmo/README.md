@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/03/15*|*2024/04/29*|
+|*2024/03/15*|*2024/05/03*|
 
 - [⚙️Add Gizmo⚙️](#️add-gizmo️)
   - [🛠️ Requirements](#️-requirements)
@@ -40,7 +40,7 @@ Easily add a gizmo to your game object. You can choose between a **Sphere**, **C
 | `bool` | `onSelected` | If true, the gizmo will only be drawn when the object is selected. |
 | `enum` | `gizmo` | The kind of gizmo that will be drawn. |
 | `Color` | `color` | The gizmo's color, white by default. |
-| `enum` | `space` | What space to use when drawing the gizmo. Using `Space.Self` will add the `Transform`'s `localScale` to `size`.
+| `enum` | `space` | What space to use when drawing the gizmo. Using `Space.World` means the gizmo's size is absolute and position will not be affected by rotation. For `Space.Self`, the size and position of the gizmo will be relative to the object's `Transform`.
 | `Vector3` | `size` | The size of the gizmo. The `Sphere` and `WireSphere` gizmos will use the magnitude for their radius. |
 | `Vector3` | `position` | The relative position of the gizmo. |
 ## ⚙️ Gizmos
@@ -67,7 +67,7 @@ public class AddGizmo : MonoBehaviour
     public Color color = Color.red;
     public bool onSelected;
     [Space]
-    public Space space = Space.Self;
+    public Space space = Space.World;
     public Vector3 size = Vector3.right;
     public Vector3 position;
 
@@ -88,8 +88,19 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
-        Vector3 gizmoPosition = transform.position + transform.rotation * position;
-        Vector3 gizmoSize = space == Space.Self ? transform.localScale + size : size;
+        Vector3 relativePosition = transform.rotation * new Vector3(x: transform.localScale.x * position.x,
+                                                                    y: transform.localScale.y * position.y,
+                                                                    z: transform.localScale.z * position.z);
+        Vector3 relativeSize = new(x: transform.localScale.x * size.x,
+                                   y: transform.localScale.y * size.y,
+                                   z: transform.localScale.z * size.z);
+
+        Vector3 gizmoPosition = space == Space.Self
+            ? transform.position + relativePosition
+            : transform.position + position;
+        Vector3 gizmoSize = space == Space.Self
+            ? relativeSize
+            : size;
         Gizmos.color = color;
         switch (gizmo)
         {
@@ -106,7 +117,7 @@ public class AddGizmo : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, gizmoSize);
                 break;
             case Shape.Ray:
-                gizmoSize = space == Space.Self ? transform.rotation * size : size;
+                gizmoSize = space == Space.Self ? transform.rotation * gizmoSize : gizmoSize;
                 Gizmos.DrawRay(gizmoPosition, gizmoSize);
                 break;
         }
