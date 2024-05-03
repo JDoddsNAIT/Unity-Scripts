@@ -27,6 +27,8 @@ This script makes use of the following components:
 ## 📖Description
 This script implements object pooling. Object pooling is a technique used to save memory, as it allocates memory for an amount of objects to be accessed at any time, as opposed to allocating new memory for every object that is created.
 
+This package also contains a `📁Sample` folder, which contains a scene demonstrating object pooling.
+
 ## ✒️Signatures
 | Datatype | Name | Summary |
 |-|-|-|
