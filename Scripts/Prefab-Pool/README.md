@@ -25,7 +25,7 @@ This script makes use of the following components:
 # Documentation
 
 ## 📖Description
-This script allows you to implement object pooling. Object pooling is a technique used to save memory, as is allocates memory for an amount of objects to be accessed at any time, as opposed to allocating memory for every object that is created.
+This script allows you to implement object pooling. Object pooling is a technique used to save memory, as it allocates memory for an amount of objects to be accessed at any time, as opposed to allocating new memory for every object that is created.
 
 ## ✒️Signatures
 | Datatype | Name | Summary |
