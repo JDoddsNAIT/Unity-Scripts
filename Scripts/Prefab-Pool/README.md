@@ -35,8 +35,6 @@ This script implements object pooling. Object pooling is a technique used to sav
 | `Transform` | `PrefabParent` | The parent of all objects in the pool. |
 | `GameObject[]` | `Pool` | Returns the entire pool of objects. |
 | `GameObject[]` | `ActivePool` | Returns an array of all objects in `Pool` that are active in the hierarchy. |
-| `bool` | `IsActive` | Returns true if any objects in the `Pool` are active in the hierarchy. |
-| `bool` | `IsEmpty` | Returns true if all objects in the `Pool` are active in the hierarchy. |
 | `GameObject` | `Next` | Returns and activates the next inactive object in the `Pool`. Logs a warning if no object is found. |
 
 ## ⚙️ Gizmos
