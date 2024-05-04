@@ -19,24 +19,12 @@ public class FollowTransform : MonoBehaviour
 
     private bool ShouldFollow(Vector3 position, Vector3 target)
     {
-        bool shouldFollow;
         Vector3 targetDeviation = target - position;
-        switch (deadZoneShape)
+        return deadZoneShape switch
         {
-            case DeadZoneShape.Cube:
-                shouldFollow = (targetDeviation - deadZone).magnitude > 0;
-                break;
-            default:
-                shouldFollow = targetDeviation.magnitude > deadZone.magnitude;
-                break;
-        }
-        return shouldFollow;
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
+            DeadZoneShape.Cube => Mathf.Abs(targetDeviation.x) > Mathf.Abs(deadZone.x) || Mathf.Abs(targetDeviation.y) > Mathf.Abs(deadZone.y),
+            _ => targetDeviation.magnitude > deadZone.magnitude,
+        };
     }
 
     // Update is called once per frame
