@@ -6,7 +6,7 @@ public class FollowTransform : MonoBehaviour
 {
     public enum DeadZoneShape
     {
-        Sphere, Cube
+        Cube, Sphere
     }
 
     [Min(0)] public float followSpeed;
@@ -17,21 +17,41 @@ public class FollowTransform : MonoBehaviour
     [Space]
     public List<Transform> targets;
 
+    private bool ShouldFollow(Vector3 position, Vector3 target)
+    {
+        bool shouldFollow;
+        Vector3 targetDeviation = target - position;
+        switch (deadZoneShape)
+        {
+            case DeadZoneShape.Cube:
+                shouldFollow = (targetDeviation - deadZone).magnitude > 0;
+                break;
+            default:
+                shouldFollow = targetDeviation.magnitude > deadZone.magnitude;
+                break;
+        }
+        return shouldFollow;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        CalculateTargetAndAverage(out var position, out var target);
+        if (ShouldFollow(position, target))
+        {
+            transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
+        }
     }
 
     private void OnDrawGizmosSelected()
     {
-        CalculateTargetAndDirection(out var gizmoPosition, out var target);
+        CalculateTargetAndAverage(out var gizmoPosition, out var target);
 
         Gizmos.color = Color.yellow;
 
@@ -47,16 +67,15 @@ public class FollowTransform : MonoBehaviour
         }
     }
 
-    private void CalculateTargetAndDirection(out Vector3 targetPosition, out Vector3 targetDirection)
+    private void CalculateTargetAndAverage(out Vector3 targetPosition, out Vector3 averagePosition)
     {
         targetPosition = transform.position + offset;
-        Vector3 averagePosition = Vector3.zero;
+
+        averagePosition = Vector3.zero;
         foreach (var pos in targets)
         {
             averagePosition += pos.position;
         }
         averagePosition /= targets.Count;
-
-        targetDirection = Vector3.Normalize(averagePosition - targetPosition);
     }
 }
