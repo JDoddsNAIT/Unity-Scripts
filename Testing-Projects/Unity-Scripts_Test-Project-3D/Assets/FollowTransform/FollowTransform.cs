@@ -10,16 +10,19 @@ public class FollowTransform : MonoBehaviour
     }
 
     [Min(0)] public float followSpeed;
-    public Vector3 offset;
+    [Min(0)] public float turnSpeed;
     [Space]
+    public Vector3 offset;
     public Vector3 deadZone;
     public DeadZoneShape deadZoneShape = DeadZoneShape.Cube;
     [Space]
     public List<Transform> targets;
 
+    private Vector3 deviation;
+
     private bool ShouldFollow(Vector3 position, Vector3 target)
     {
-        Vector3 deviation = target - position;
+        deviation = target - position;
         return deadZoneShape switch
         {
             DeadZoneShape.Cube => !VectorInRange(-deadZone, deadZone, deviation),
@@ -32,15 +35,24 @@ public class FollowTransform : MonoBehaviour
         CalculateTargetAndAverage(out var position, out var target);
         if (ShouldFollow(position, target))
         {
-            transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
+            transform.SetPositionAndRotation(
+                Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset,
+                Quaternion.RotateTowards(transform.rotation, Quaternion.identity, turnSpeed * Time.deltaTime)
+                );
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.white;
+        Gizmos.DrawRay(transform.position, transform.forward);
     }
 
     private void OnDrawGizmosSelected()
     {
         CalculateTargetAndAverage(out var gizmoPosition, out var target);
 
-        Gizmos.color = Color.yellow;
+        Gizmos.color = ShouldFollow(gizmoPosition, target) ? Color.green : Color.red;
 
         Gizmos.DrawLine(gizmoPosition, target);
         switch (deadZoneShape)
