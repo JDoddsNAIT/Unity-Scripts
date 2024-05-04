@@ -19,15 +19,14 @@ public class FollowTransform : MonoBehaviour
 
     private bool ShouldFollow(Vector3 position, Vector3 target)
     {
-        Vector3 targetDeviation = target - position;
+        Vector3 deviation = target - position;
         return deadZoneShape switch
         {
-            DeadZoneShape.Cube => Mathf.Abs(targetDeviation.x) > Mathf.Abs(deadZone.x) || Mathf.Abs(targetDeviation.y) > Mathf.Abs(deadZone.y),
-            _ => targetDeviation.magnitude > deadZone.magnitude,
+            DeadZoneShape.Cube => !VectorInRange(-deadZone, deadZone, deviation),
+            _ => deviation.magnitude > deadZone.magnitude,
         };
     }
 
-    // Update is called once per frame
     void Update()
     {
         CalculateTargetAndAverage(out var position, out var target);
@@ -50,7 +49,7 @@ public class FollowTransform : MonoBehaviour
                 Gizmos.DrawWireSphere(gizmoPosition, deadZone.magnitude);
                 break;
             case DeadZoneShape.Cube:
-                Gizmos.DrawWireCube(gizmoPosition, deadZone);
+                Gizmos.DrawWireCube(gizmoPosition, deadZone * 2);
                 break;
         }
     }
@@ -66,4 +65,9 @@ public class FollowTransform : MonoBehaviour
         }
         averagePosition /= targets.Count;
     }
+
+    public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
+    public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
+                                                                          && ValueInRange(min.y, max.y, value.y)
+                                                                          && ValueInRange(min.z, max.z, value.z);
 }
