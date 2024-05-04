@@ -9,7 +9,7 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 direction = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 direction = new(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         transform.Translate(moveSpeed * Time.deltaTime * direction);
     }
 }

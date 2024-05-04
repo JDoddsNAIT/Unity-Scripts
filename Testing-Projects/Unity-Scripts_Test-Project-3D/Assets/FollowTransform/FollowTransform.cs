@@ -18,11 +18,8 @@ public class FollowTransform : MonoBehaviour
     [Space]
     public List<Transform> targets;
 
-    private Vector3 deviation;
-
-    private bool ShouldFollow(Vector3 position, Vector3 target)
+    private bool ShouldFollow(Vector3 position, Vector3 target, Vector3 deviation)
     {
-        deviation = target - position;
         return deadZoneShape switch
         {
             DeadZoneShape.Cube => !VectorInRange(-deadZone, deadZone, deviation),
@@ -32,13 +29,14 @@ public class FollowTransform : MonoBehaviour
 
     void Update()
     {
-        CalculateTargetAndAverage(out var position, out var target);
-        if (ShouldFollow(position, target))
+        CalculateTargetAndAverage(out var position, out var target, out var deviation);
+        if (ShouldFollow(position, target, deviation))
         {
-            transform.SetPositionAndRotation(
-                Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset,
-                Quaternion.RotateTowards(transform.rotation, Quaternion.identity, turnSpeed * Time.deltaTime)
-                );
+            transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
+        }
+        if (turnSpeed > 0)
+        {
+            PointTowards(target, turnSpeed, Vector3.forward);
         }
     }
 
@@ -50,9 +48,9 @@ public class FollowTransform : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        CalculateTargetAndAverage(out var gizmoPosition, out var target);
+        CalculateTargetAndAverage(out var gizmoPosition, out var target, out var deviation);
 
-        Gizmos.color = ShouldFollow(gizmoPosition, target) ? Color.green : Color.red;
+        Gizmos.color = ShouldFollow(gizmoPosition, target, deviation) ? Color.green : Color.red;
 
         Gizmos.DrawLine(gizmoPosition, target);
         switch (deadZoneShape)
@@ -66,7 +64,7 @@ public class FollowTransform : MonoBehaviour
         }
     }
 
-    private void CalculateTargetAndAverage(out Vector3 targetPosition, out Vector3 averagePosition)
+    private void CalculateTargetAndAverage(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
     {
         targetPosition = transform.position + offset;
 
@@ -76,6 +74,17 @@ public class FollowTransform : MonoBehaviour
             averagePosition += pos.position;
         }
         averagePosition /= targets.Count;
+
+        deviation = averagePosition - targetPosition;
+    }
+
+    private void PointTowards(Vector3 target, float turnSpeed) => PointTowards(target, turnSpeed, Vector3.right);
+    private void PointTowards(Vector3 target, float turnSpeed, Vector3 startingDirection)
+    {
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            Quaternion.FromToRotation(startingDirection, (target - transform.position).normalized),
+            turnSpeed * Time.deltaTime);
     }
 
     public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
