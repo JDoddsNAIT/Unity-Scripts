@@ -4,6 +4,8 @@
 
 This repository is for my own unity scripts. You can find all kinds of scripts here, all designed to be as modular as possible. Each folder will contain a `📝README.md` file containing the requirements, documentation, and source code, along with a `📄.unitypackage` file for you to import into the Unity editor.
 
+Some packages may also include a `📁Sample` folder, containing assets and an example scene that demonstrates the script's utility.
+
 ## Scripts
 
 There are two kinds of scripts in this repository: **Independant**, and **Dependant**.
@@ -11,8 +13,6 @@ There are two kinds of scripts in this repository: **Independant**, and **Depend
 **Independant** scripts are located in [`📁Scripts/`](./Scripts/), and are singular files that will work on their own without additional assets. Any components that must be attached to the same object as the script will be noted in `📝README.md`, under *Requirements*.
 
 **Dependant** scripts are located in [`📁dScripts/`](./dScripts/). These are scripts that contain or require additional assets. Assets from the :link:[Unity Asset Store](https://assetstore.unity.com) ***will not*** be in the `📄.unitypackage` file, and instead they will be linked to in the `📝README.md` under *Requirements* for you to download yourself. Most assets used will be free.
-
-Some packages may also include a `📁Sample` folder, containing assets for an example scene that demonstrates the script's utility.
 
 > :paperclip: Check out my latest script [here](/Scripts/Prefab-Pool/), hot off the press!
 
