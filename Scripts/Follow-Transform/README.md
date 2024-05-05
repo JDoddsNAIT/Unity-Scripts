@@ -27,8 +27,6 @@ This script makes use of the following components:
 ## 📖 Description
 **Follow Transform** is a simple script that makes an object move towards a specified **transform's position** every frame. You may set an **offset**, which dictates the target postion relative to the object this script is attached to. Movement stops if the transform being followed has it's position within a specified **deadzone**.
 
-> :paperclip: This script can be used to make a camera that follows the player  in both 2D and 3D!
-
 ## ✒️ Signatures
 
 | Datatype | Name | Summary |
