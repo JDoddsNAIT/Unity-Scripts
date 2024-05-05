@@ -8,7 +8,9 @@ public class FollowTransform : MonoBehaviour
         Cube, Sphere
     }
 
+    [Tooltip("Units/sec")]
     [Min(0)] public float followSpeed;
+    [Tooltip("Degs/sec")]
     [Min(0)] public float turnSpeed;
     [Space]
     public Vector3 offset;
@@ -22,7 +24,7 @@ public class FollowTransform : MonoBehaviour
         return deadZoneShape switch
         {
             DeadZoneShape.Cube => !VectorInRange(-deadZone, deadZone, deviation),
-            _ => deviation.magnitude > deadZone.magnitude,
+            _ => deviation.magnitude >= deadZone.magnitude,
         };
     }
 
