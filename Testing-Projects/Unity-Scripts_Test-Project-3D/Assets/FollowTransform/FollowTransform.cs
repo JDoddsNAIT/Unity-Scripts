@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class FollowTransform : MonoBehaviour
     [Space]
     public List<Transform> targets;
 
-    private bool ShouldFollow(Vector3 position, Vector3 target, Vector3 deviation)
+    private bool ShouldFollow(Vector3 deviation)
     {
         return deadZoneShape switch
         {
@@ -30,27 +29,21 @@ public class FollowTransform : MonoBehaviour
     void Update()
     {
         CalculateTargetAndAverage(out var position, out var target, out var deviation);
-        if (ShouldFollow(position, target, deviation))
+        if (ShouldFollow(deviation))
         {
             transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
         }
         if (turnSpeed > 0)
         {
-            PointTowards(target, turnSpeed, Vector3.forward);
+            PointTowards(target, turnSpeed);
         }
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.white;
-        Gizmos.DrawRay(transform.position, transform.forward);
-    }
-
+    
     private void OnDrawGizmosSelected()
     {
         CalculateTargetAndAverage(out var gizmoPosition, out var target, out var deviation);
 
-        Gizmos.color = ShouldFollow(gizmoPosition, target, deviation) ? Color.green : Color.red;
+        Gizmos.color = ShouldFollow(deviation) ? Color.green : Color.red;
 
         Gizmos.DrawLine(gizmoPosition, target);
         switch (deadZoneShape)
@@ -78,13 +71,12 @@ public class FollowTransform : MonoBehaviour
         deviation = averagePosition - targetPosition;
     }
 
-    private void PointTowards(Vector3 target, float turnSpeed) => PointTowards(target, turnSpeed, Vector3.right);
-    private void PointTowards(Vector3 target, float turnSpeed, Vector3 startingDirection)
+    private void PointTowards(Vector3 target, float turnSpeed)
     {
         transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            Quaternion.FromToRotation(startingDirection, (target - transform.position).normalized),
-            turnSpeed * Time.deltaTime);
+            from: transform.rotation,
+            to: Quaternion.LookRotation((target - transform.position).normalized),
+            maxDegreesDelta: turnSpeed * Time.deltaTime);
     }
 
     public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
