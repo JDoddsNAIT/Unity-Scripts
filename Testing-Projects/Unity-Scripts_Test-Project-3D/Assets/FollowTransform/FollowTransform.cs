@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Transform/")]
 public class FollowTransform : MonoBehaviour
 {
     public enum DeadZoneShape
