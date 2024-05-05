@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -11,7 +9,6 @@ public class Controller : MonoBehaviour
     [Min(0)] public float moveSpeed = 2;
     public Axis axis;
 
-    // Update is called once per frame
     void Update()
     {
         float horizontal = Input.GetAxis("Horizontal");

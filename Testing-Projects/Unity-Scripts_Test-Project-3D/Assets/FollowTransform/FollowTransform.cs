@@ -30,7 +30,7 @@ public class FollowTransform : MonoBehaviour
 
     void Update()
     {
-        CalculateTargetAndAverage(out var position, out var target, out var deviation);
+        CalculateDeviation(out var position, out var target, out var deviation);
         if (ShouldFollow(deviation))
         {
             transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
@@ -43,7 +43,7 @@ public class FollowTransform : MonoBehaviour
     
     private void OnDrawGizmosSelected()
     {
-        CalculateTargetAndAverage(out var gizmoPosition, out var target, out var deviation);
+        CalculateDeviation(out var gizmoPosition, out var target, out var deviation);
 
         Gizmos.color = ShouldFollow(deviation) ? Color.green : Color.red;
 
@@ -59,7 +59,7 @@ public class FollowTransform : MonoBehaviour
         }
     }
 
-    private void CalculateTargetAndAverage(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
+    private void CalculateDeviation(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
     {
         targetPosition = transform.position + offset;
 
