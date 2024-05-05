@@ -21,11 +21,11 @@ Some packages may also include a `📁Sample` folder, containing assets for an e
 My repositories uses emojis in many places! If you are confused about the usage of these emojis, this section will outline the formatting rules I use for most of my repositories.
 
 ### Emojis
-- "📁" is used for folders.
-- "📄" is used for all files, except for markdown files which use 📝.
-- "⚠️" is used for important information, such as Unity version.
-- "📎" is for small notes and asides.
-- "🔗" is used alongside [links]() to external sites, and :octocat: for repositories.
+- 📁 is used for folders.
+- 📄 is used for all files, except for markdown files which use 📝.
+- ⚠️ is used for important information, such as Unity version.
+- 📎 is for small notes and asides.
+- 🔗 is used alongside [links]() to external sites, and :octocat: for repositories.
 
 ### Format
 - `Inline code` is used when referring to files, folders, and code.
