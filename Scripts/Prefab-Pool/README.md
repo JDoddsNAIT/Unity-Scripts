@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/05/03*|*2024/05/03*|
+|*2024/05/03*|*2024/05/06*|
 
 - [🎱 Prefab Pool 🎱](#-prefab-pool-)
   - [🛠️ Requirements](#️-requirements)
@@ -36,8 +36,9 @@ This package also contains a `📁Sample` folder, which contains a scene demonst
 | `int` | `PoolSize` | The amount of objects to allocate memory for. |
 | `Transform` | `PrefabParent` | The parent of all objects in the pool. |
 | `GameObject[]` | `Pool` | Returns the entire pool of objects. |
-| `GameObject[]` | `ActivePool` | Returns an array of all objects in `Pool` that are active in the hierarchy. |
-| `GameObject` | `Next` | Returns and activates the next inactive object in the `Pool`. Logs a warning if no object is found. |
+| `GameObject[]` | `ActivePool` | Returns an array of all objects in `Pool` that are active in the hierarchy. Logs a warning if none are found. |
+| `GameObject[]` | `InactivePool` | Returns an array of all objects in the `Pool` that are not active in the hierarchy. Logs a warning if none are found. |
+| `GameObject` | `Next` | Returns and activates the first object in the `InactivePool`. |
 
 ## ⚙️ Gizmos
 

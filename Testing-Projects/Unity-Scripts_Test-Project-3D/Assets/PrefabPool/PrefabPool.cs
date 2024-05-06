@@ -17,21 +17,6 @@ public class PrefabPool : MonoBehaviour
     /// </summary>
     public GameObject[] Pool { get; private set; }
 
-    /// <summary>
-    /// Returns an array of all objects in the <see cref="PrefabPool"/> that are active in the hierarchy.
-    /// </summary>
-    public GameObject[] ActivePool => Pool.Where(prefab => prefab.activeInHierarchy).ToArray();
-
-    /// <summary>
-    /// Returns true if any objects in the <see cref="PrefabPool"/> are active in the hierarchy.
-    /// </summary>
-    public bool IsActive => ActivePool.Length > 0;
-
-    /// <summary>
-    /// Returns true if all objects in the <see cref="PrefabPool"/> are active in the hierarchy.
-    /// </summary>
-    public bool IsEmpty => ActivePool.Length >= poolSize;
-
     private void Awake()
     {
         if (prefab == null)
@@ -50,18 +35,46 @@ public class PrefabPool : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns the next inactive object in <see cref="PrefabPool"/>. Logs a warning if no object is found.
+    /// Returns an array of all objects in the <see cref="PrefabPool"/> that are active in the hierarchy. Logs a warning if none are found.
+    /// </summary>
+    public GameObject[] ActivePool
+    {
+        get
+        {
+            var activePool = Pool.Where(prefab => prefab.activeInHierarchy).ToArray();
+            if (activePool.Length == 0)
+            {
+                Debug.LogWarning($"{prefab.name} pool is empty, null was returned.");
+            }
+            return activePool;
+        }
+    }
+
+    /// <summary>
+    /// Returns an array of all objects in the <see cref="PrefabPool"/> that are not active in the hierarchy. Logs a warning if none are found.
+    /// </summary>
+    public GameObject[] InactivePool
+    {
+        get
+        {
+            var inactivePool = Pool.Where(prefab => !prefab.activeInHierarchy).ToArray();
+            if (inactivePool.Length == 0)
+            {
+                Debug.LogWarning($"{prefab.name} pool is empty, null was returned.");
+            }
+            return inactivePool;
+        }
+    }
+
+    /// <summary>
+    /// Returns and activates the next inactive object in <see cref="PrefabPool"/>.
     /// </summary>
     public GameObject Next
     {
         get
         {
-            GameObject returnObject = Pool.Where(prefab => !prefab.activeInHierarchy).FirstOrDefault();
-            if (returnObject == null)
-            {
-                Debug.LogWarning($"{prefab.name} pool is empty, null was returned.");
-            }
-            else
+            GameObject returnObject = InactivePool.FirstOrDefault();
+            if (returnObject != null)
             {
                 returnObject.SetActive(true);
             }
