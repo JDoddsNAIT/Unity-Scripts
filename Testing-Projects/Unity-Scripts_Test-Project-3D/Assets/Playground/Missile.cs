@@ -16,7 +16,7 @@ public class Missile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(moveSpeed * Time.deltaTime * transform.forward);
+        transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward);
     }
 
     private void OnDrawGizmos()
