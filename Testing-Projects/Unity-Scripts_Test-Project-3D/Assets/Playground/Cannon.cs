@@ -26,14 +26,17 @@ public class Cannon : MonoBehaviour
     {
         if (canShoot)
         {
-            canShoot = false;
-            StartCoroutine(Shoot(shootingDelay));
+            GameObject projectile = pool.Next;
+            if (projectile != null)
+            {
+                StartCoroutine(Shoot(projectile, shootingDelay));
+            }
         }
     }
 
-    private IEnumerator Shoot(float delay)
+    private IEnumerator Shoot(GameObject projectile, float delay)
     {
-        GameObject projectile = pool.Next;
+        canShoot = false;
         projectile.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
         yield return new WaitForSeconds(delay);
         canShoot = true;

@@ -177,6 +177,7 @@ GameObject:
   - component: {fileID: 6828036594208660384}
   - component: {fileID: 6091184907320351366}
   - component: {fileID: 2658996166753311337}
+  - component: {fileID: 2125271238975128718}
   m_Layer: 0
   m_Name: HomingMissile
   m_TagString: Untagged
@@ -194,8 +195,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1030070365593060458}
   m_Father: {fileID: 0}
@@ -215,7 +216,7 @@ MonoBehaviour:
   followSpeed: 0
   turnSpeed: 90
   offset: {x: 0, y: 0, z: 0}
-  deadZone: {x: 1, y: 0, z: 0}
+  deadZone: {x: 0, y: 0, z: 0}
   deadZoneShape: 1
   targets: []
 --- !u!114 &2658996166753311337
@@ -230,7 +231,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d674ff7a4a223524fbdac96febbcfb4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 1
+--- !u!135 &2125271238975128718
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4121648396966090854}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4561864410369629958
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,9 +523,9 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(FollowTransform))]
+[RequireComponent(typeof(FollowTransform), typeof(SphereCollider))]
 public class Missile : MonoBehaviour
 {
     public float moveSpeed = 1;
@@ -11,6 +11,7 @@ public class Missile : MonoBehaviour
     {
         m_FollowTransform = GetComponent<FollowTransform>();
         m_FollowTransform.targets.Add(GameObject.FindGameObjectWithTag("Player").transform);
+
     }
 
     // Update is called once per frame
@@ -23,5 +24,13 @@ public class Missile : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(transform.position, transform.forward);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 }
