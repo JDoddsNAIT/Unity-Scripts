@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 8665383113607975412, guid: c3ebbc30a2e55b24689aeb16928a17f5, type: 3}
   poolSize: 25
-  prefabParent: {fileID: 0}
+  prefabParent: {fileID: 1349710}
 --- !u!4 &1349710
 Transform:
   m_ObjectHideFlags: 0
