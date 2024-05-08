@@ -32,13 +32,13 @@ This script makes use of the following components:
 | Datatype | Name | Summary |
 |-|-|-|
 | `float` | `followSpeed` | The speed at which to follow the target(s), in Units/second. |
-| `float` | `turnSpeed` | The speed at which to turn towards the target(s) at, in Degrees/second. |
-| `Vector3` | `startingAngle` | The object's initial facing angles (in degrees). |
-| `Vector3` | `upwardVector` | The upward direction used for the `LookRotation` method. |
+| `List<Transform>` | `targets` | The transforms to follow. The script will target the average position of every `Transform` in the list. |
 | `Vector3` | `offset` | The relative position on the deadzone's centre. |
 | `Vector3` | `deadZone` | The size of the deadzone. |
 | `enum` | `deadZoneShape` | The shape of the deadzone, either a shepre or cube. |
-| `List<Transform>` | `targets` | The transforms to follow. The script will target the average position of every `Transform` in the list. |
+| `float` | `turnSpeed` | The speed at which to turn towards the target(s) at, in Degrees/second. |
+| `Vector3` | `startingAngle` | The object's initial facing angles (in degrees). |
+| `Vector3` | `upwardVector` | The upward direction used for the `LookRotation` method. If zero, the script will use the `FromToRotation` method instead. |
 
 ## ⚙️ Gizmos
 - A yellow line from the target transform's position to the centre of the dead zone to visualize the direction of movement and where the target transform is.  
