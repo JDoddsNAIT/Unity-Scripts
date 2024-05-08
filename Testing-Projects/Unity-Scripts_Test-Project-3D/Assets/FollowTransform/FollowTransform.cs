@@ -111,4 +111,6 @@ public class FollowTransform : MonoBehaviour
     public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
                                                                           && ValueInRange(min.y, max.y, value.y)
                                                                           && ValueInRange(min.z, max.z, value.z);
+
+    public Quaternion AddQuaternions(Quaternion a, Quaternion b) => Quaternion.Euler(a.eulerAngles + b.eulerAngles);
 }
