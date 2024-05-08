@@ -67,8 +67,7 @@ public class FollowTransform : MonoBehaviour
 
         //Forward and upward
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, StartingAngle * transform.forward);
-        Gizmos.DrawRay(transform.position, transform.forward);
+        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * transform.forward));
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, upwardVector.normalized);
     }
@@ -101,7 +100,9 @@ public class FollowTransform : MonoBehaviour
         {
             rotation = Quaternion.RotateTowards(
                 from: transform.rotation,
-                to: Quaternion.LookRotation((target - transform.position).normalized, upwardVector),
+                to: Quaternion.FromToRotation(
+                    StartingAngle * Vector3.forward,
+                    Quaternion.LookRotation((target - transform.position).normalized, upwardVector) * Vector3.forward),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
         }
         transform.rotation = rotation;
@@ -111,6 +112,4 @@ public class FollowTransform : MonoBehaviour
     public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
                                                                           && ValueInRange(min.y, max.y, value.y)
                                                                           && ValueInRange(min.z, max.z, value.z);
-
-    public Quaternion AddQuaternions(Quaternion a, Quaternion b) => Quaternion.Euler(a.eulerAngles + b.eulerAngles);
 }

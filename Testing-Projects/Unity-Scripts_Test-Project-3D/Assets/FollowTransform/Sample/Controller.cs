@@ -11,8 +11,8 @@ public class Controller : MonoBehaviour
 
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
         Vector3 direction = axis == Axis.Vertical 
             ? new Vector3(horizontal, vertical, 0).normalized
             : new Vector3(horizontal, 0, vertical).normalized;
