@@ -88,27 +88,17 @@ public class FollowTransform : MonoBehaviour
         deviation = averagePosition - targetPosition;
     }
 
-    private void PointTowards(Vector3 target, float turnSpeed)
-    {
-        Quaternion rotation;
-        if (Equals(upwardVector, Vector3.zero))
-        {
-            rotation = Quaternion.RotateTowards(
+    private void PointTowards(Vector3 target, float turnSpeed) => transform.rotation = Equals(upwardVector, Vector3.zero)
+            ? Quaternion.RotateTowards(
                 from: transform.rotation,
                 to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
-                maxDegreesDelta: turnSpeed * Time.deltaTime);
-        }
-        else
-        {
-            rotation = Quaternion.RotateTowards(
+                maxDegreesDelta: turnSpeed * Time.deltaTime)
+            : Quaternion.RotateTowards(
                 from: transform.rotation,
                 to: Quaternion.FromToRotation(
                     StartingAngle * Vector3.forward,
                     Quaternion.LookRotation((target - transform.position).normalized, upwardVector) * Vector3.forward),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
-        }
-        transform.rotation = rotation;
-    }
 
     public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
     public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
