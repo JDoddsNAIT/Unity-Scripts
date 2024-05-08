@@ -15,7 +15,7 @@ public class FollowTransform : MonoBehaviour
     [Tooltip("Degs/sec")]
     [Min(0)] public float turnSpeed;
     public Vector3 startingAngle;
-    public Vector3 upwardVector;
+    public Vector3 upwardVector = Vector3.up;
     [Space]
     public Vector3 offset;
     public Vector3 deadZone;
@@ -68,6 +68,7 @@ public class FollowTransform : MonoBehaviour
         //Forward and upward
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position, StartingAngle * transform.forward);
+        Gizmos.DrawRay(transform.position, transform.forward);
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, upwardVector.normalized);
     }
@@ -88,21 +89,20 @@ public class FollowTransform : MonoBehaviour
 
     private void PointTowards(Vector3 target, float turnSpeed)
     {
-        if (Vector3.Equals(upwardVector, Vector3.zero))
+        if (Equals(upwardVector, Vector3.zero))
         {
             transform.rotation = Quaternion.RotateTowards(
                 from: transform.rotation,
-                to: Quaternion.FromToRotation(StartingAngle, (target - transform.position).normalized),
+                to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
         }
         else
         {
             transform.rotation = Quaternion.RotateTowards(
                 from: transform.rotation,
-                to: upwardVector == Vector3.zero
-                    ? Quaternion.LookRotation((target - transform.position).normalized)
-                    : Quaternion.LookRotation((target - transform.position).normalized, upwardVector),
+                to: Quaternion.LookRotation((target - transform.position).normalized, upwardVector),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
+            transform.Rotate(-startingAngle, Space.Self);
         }
     }
 
