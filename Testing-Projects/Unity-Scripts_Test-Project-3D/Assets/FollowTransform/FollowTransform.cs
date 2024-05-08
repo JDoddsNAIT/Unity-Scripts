@@ -9,6 +9,7 @@ public class FollowTransform : MonoBehaviour
         Cube, Sphere
     }
 
+    [Header("Movement")]
     [Tooltip("Units/sec"), Min(0)]
     public float followSpeed;
     public List<Transform> targets;

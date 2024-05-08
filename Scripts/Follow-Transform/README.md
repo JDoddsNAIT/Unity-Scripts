@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/02/22*|*2024/05/05*|
+|*2024/02/22*|*2024/05/08*|
 
 - [Follow Transform](#follow-transform)
   - [🛠️ Requirements](#️-requirements)
@@ -43,7 +43,7 @@ This script makes use of the following components:
 ## ⚙️ Gizmos
 - A yellow line from the target transform's position to the centre of the dead zone to visualize the direction of movement and where the target transform is.  
 - A wire sphere/cube to visualize the dead zone. Will be green when the target is outside the dead zone and red when inside.
-- A blue ray to visualize the `startingAngle`.
+- A blue ray to visualize the forward direction.
 - A green ray to visualize the `upwardVector`.
 
 ## 💾 Source Code
@@ -59,16 +59,20 @@ public class FollowTransform : MonoBehaviour
         Cube, Sphere
     }
 
-    [Tooltip("Units/sec")]
-    [Min(0)] public float followSpeed;
-    [Tooltip("Degs/sec")]
-    [Min(0)] public float turnSpeed;
-    [Space]
+    [Header("Movement")]
+    [Tooltip("Units/sec"), Min(0)]
+    public float followSpeed;
+    public List<Transform> targets;
     public Vector3 offset;
     public Vector3 deadZone;
     public DeadZoneShape deadZoneShape = DeadZoneShape.Cube;
-    [Space]
-    public List<Transform> targets;
+    [Header("Rotation")]
+    [Tooltip("Degs/sec"), Min(0)]
+    public float turnSpeed;
+    public Vector3 startingAngle;
+    public Vector3 upwardVector = Vector3.up;
+
+    private Quaternion StartingAngle => Quaternion.Euler(startingAngle);
 
     private bool ShouldFollow(Vector3 deviation)
     {
@@ -91,14 +95,15 @@ public class FollowTransform : MonoBehaviour
             PointTowards(target, turnSpeed);
         }
     }
-    
+
     private void OnDrawGizmosSelected()
     {
+        //Deadzone
         CalculateDeviation(out var gizmoPosition, out var target, out var deviation);
 
-        Gizmos.color = ShouldFollow(deviation) ? Color.green : Color.red;
-
+        Gizmos.color = Color.yellow;
         Gizmos.DrawLine(gizmoPosition, target);
+        Gizmos.color = ShouldFollow(deviation) ? Color.green : Color.red;
         switch (deadZoneShape)
         {
             case DeadZoneShape.Sphere:
@@ -108,6 +113,12 @@ public class FollowTransform : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, deadZone * 2);
                 break;
         }
+
+        //Forward and upward
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * transform.forward));
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, upwardVector.normalized);
     }
 
     private void CalculateDeviation(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
@@ -115,21 +126,38 @@ public class FollowTransform : MonoBehaviour
         targetPosition = transform.position + offset;
 
         averagePosition = Vector3.zero;
-        foreach (var pos in targets)
+        if (targets is not null && targets.Count > 0)
         {
-            averagePosition += pos.position;
+            foreach (var pos in targets)
+            {
+                averagePosition += pos.position;
+            }
+            averagePosition /= targets.Count;
         }
-        averagePosition /= targets.Count;
 
         deviation = averagePosition - targetPosition;
     }
 
     private void PointTowards(Vector3 target, float turnSpeed)
     {
-        transform.rotation = Quaternion.RotateTowards(
-            from: transform.rotation,
-            to: Quaternion.LookRotation((target - transform.position).normalized),
-            maxDegreesDelta: turnSpeed * Time.deltaTime);
+        Quaternion rotation;
+        if (Equals(upwardVector, Vector3.zero))
+        {
+            rotation = Quaternion.RotateTowards(
+                from: transform.rotation,
+                to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
+                maxDegreesDelta: turnSpeed * Time.deltaTime);
+        }
+        else
+        {
+            rotation = Quaternion.RotateTowards(
+                from: transform.rotation,
+                to: Quaternion.FromToRotation(
+                    StartingAngle * Vector3.forward,
+                    Quaternion.LookRotation((target - transform.position).normalized, upwardVector) * Vector3.forward),
+                maxDegreesDelta: turnSpeed * Time.deltaTime);
+        }
+        transform.rotation = rotation;
     }
 
     public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
