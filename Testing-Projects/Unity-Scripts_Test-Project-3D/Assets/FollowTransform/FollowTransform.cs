@@ -9,19 +9,17 @@ public class FollowTransform : MonoBehaviour
         Cube, Sphere
     }
 
-    [Tooltip("Units/sec")]
-    [Min(0)] public float followSpeed;
-    [Space]
-    [Tooltip("Degs/sec")]
-    [Min(0)] public float turnSpeed;
-    public Vector3 startingAngle;
-    public Vector3 upwardVector = Vector3.up;
-    [Space]
+    [Tooltip("Units/sec"), Min(0)]
+    public float followSpeed;
+    public List<Transform> targets;
     public Vector3 offset;
     public Vector3 deadZone;
     public DeadZoneShape deadZoneShape = DeadZoneShape.Cube;
-    [Space]
-    public List<Transform> targets;
+    [Header("Rotation")]
+    [Tooltip("Degs/sec"), Min(0)]
+    public float turnSpeed;
+    public Vector3 startingAngle;
+    public Vector3 upwardVector = Vector3.up;
 
     private Quaternion StartingAngle => Quaternion.Euler(startingAngle);
 
@@ -77,11 +75,14 @@ public class FollowTransform : MonoBehaviour
         targetPosition = transform.position + offset;
 
         averagePosition = Vector3.zero;
-        foreach (var pos in targets)
+        if (targets is not null && targets.Count > 0)
         {
-            averagePosition += pos.position;
+            foreach (var pos in targets)
+            {
+                averagePosition += pos.position;
+            }
+            averagePosition /= targets.Count;
         }
-        averagePosition /= targets.Count;
 
         deviation = averagePosition - targetPosition;
     }
