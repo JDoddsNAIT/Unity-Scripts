@@ -89,21 +89,22 @@ public class FollowTransform : MonoBehaviour
 
     private void PointTowards(Vector3 target, float turnSpeed)
     {
+        Quaternion rotation;
         if (Equals(upwardVector, Vector3.zero))
         {
-            transform.rotation = Quaternion.RotateTowards(
+            rotation = Quaternion.RotateTowards(
                 from: transform.rotation,
                 to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
         }
         else
         {
-            transform.rotation = Quaternion.RotateTowards(
+            rotation = Quaternion.RotateTowards(
                 from: transform.rotation,
                 to: Quaternion.LookRotation((target - transform.position).normalized, upwardVector),
                 maxDegreesDelta: turnSpeed * Time.deltaTime);
-            transform.Rotate(-startingAngle, Space.Self);
         }
+        transform.rotation = rotation;
     }
 
     public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
