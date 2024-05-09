@@ -116,7 +116,7 @@ public class FollowTransform : MonoBehaviour
 
         //Forward and upward
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * transform.forward));
+        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * Vector3.forward));
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, upwardVector.normalized);
     }
