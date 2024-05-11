@@ -339,8 +339,8 @@ MonoBehaviour:
   deadZone: {x: 0, y: 0, z: 0}
   deadZoneShape: 1
   turnSpeed: 90
-  startingAngle: {x: 0, y: 90, z: 0}
-  upwardVector: {x: 0, y: 0, z: -1}
+  startingAngle: {x: 0, y: 0, z: 0}
+  useLook: 0
 --- !u!23 &1028806465
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -661,7 +661,7 @@ MonoBehaviour:
   deadZoneShape: 1
   turnSpeed: 90
   startingAngle: {x: 0, y: 0, z: 0}
-  upwardVector: {x: 0, y: 0, z: 0}
+  useLook: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

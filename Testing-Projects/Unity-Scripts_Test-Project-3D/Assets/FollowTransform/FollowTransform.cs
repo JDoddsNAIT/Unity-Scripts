@@ -20,9 +20,9 @@ public class FollowTransform : MonoBehaviour
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
     public Vector3 startingAngle;
-    public Vector3 upwardVector = Vector3.up;
+    public bool useLook;
 
-    private Quaternion StartingAngle => Quaternion.Euler(startingAngle);
+    private Vector3 StartingDirection => Quaternion.Euler(startingAngle) * Vector3.forward;
 
     private bool ShouldFollow(Vector3 deviation)
     {
@@ -42,8 +42,32 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
-            PointTowards(target, turnSpeed);
+            transform.rotation = useLook
+                ? RotateTowardsDirection(transform.forward, target, StartingDirection, turnSpeed * Time.deltaTime)
+                : LookTowardsDirection(transform.forward, target, StartingDirection, turnSpeed * Time.deltaTime);
         }
+    }
+
+    public Quaternion RotateTowardsDirection(Vector3 fromDirection, Vector3 toDirection, Vector3 forwards, float maxDegrees)
+    {
+        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * fromDirection);
+        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) *  toDirection);
+
+        return Quaternion.RotateTowards(
+            from: Quaternion.FromToRotation(forwards, fromDirection),
+            to: Quaternion.FromToRotation(forwards, toDirection),
+            maxDegrees);
+    }
+
+    public Quaternion LookTowardsDirection(Vector3 fromDirection, Vector3 toDirection, Vector3 forwards, float maxDegrees)
+    {
+        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * fromDirection);
+        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * toDirection);
+
+        return Quaternion.RotateTowards(
+            from: Quaternion.FromToRotation(forwards, fromDirection),
+            to: Quaternion.FromToRotation(forwards, Quaternion.LookRotation(toDirection) * Vector3.right),
+            maxDegrees);
     }
 
     private void OnDrawGizmosSelected()
@@ -66,9 +90,7 @@ public class FollowTransform : MonoBehaviour
 
         //Forward and upward
         Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * Vector3.forward));
-        Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, upwardVector.normalized);
+        Gizmos.DrawRay(transform.position, StartingDirection);
     }
 
     private void CalculateDeviation(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
@@ -87,21 +109,9 @@ public class FollowTransform : MonoBehaviour
 
         deviation = averagePosition - targetPosition;
     }
-
-    private void PointTowards(Vector3 target, float turnSpeed) => transform.rotation = Equals(upwardVector, Vector3.zero)
-            ? Quaternion.RotateTowards(
-                from: transform.rotation,
-                to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
-                maxDegreesDelta: turnSpeed * Time.deltaTime)
-            : Quaternion.RotateTowards(
-                from: transform.rotation,
-                to: Quaternion.FromToRotation(
-                    StartingAngle * Vector3.forward,
-                    Quaternion.LookRotation((target - transform.position).normalized, upwardVector) * Vector3.forward),
-                maxDegreesDelta: turnSpeed * Time.deltaTime);
-
-    public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
-    public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
+    
+    public static bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
+    public static bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
                                                                           && ValueInRange(min.y, max.y, value.y)
                                                                           && ValueInRange(min.z, max.z, value.z);
 }
