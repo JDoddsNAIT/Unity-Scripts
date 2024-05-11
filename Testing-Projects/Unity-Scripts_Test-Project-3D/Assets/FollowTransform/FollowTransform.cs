@@ -19,10 +19,9 @@ public class FollowTransform : MonoBehaviour
     [Header("Rotation")]
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
-    public Vector3 startingAngle;
-    public bool useLook;
+    public Vector3 upwardVector;
 
-    private Vector3 StartingDirection => Quaternion.Euler(startingAngle) * Vector3.forward;
+    public bool UseLook => upwardVector == Vector3.zero;
 
     private bool ShouldFollow(Vector3 deviation)
     {
@@ -42,31 +41,25 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
-            transform.rotation = useLook
-                ? RotateTowardsDirection(transform.forward, target, StartingDirection, turnSpeed * Time.deltaTime)
-                : LookTowardsDirection(transform.forward, target, StartingDirection, turnSpeed * Time.deltaTime);
+            transform.rotation = UseLook
+                ? LookTowards(transform.rotation, deviation.normalized, upwardVector, turnSpeed * Time.deltaTime)
+                : RotateTowards(transform.rotation, deviation.normalized, turnSpeed * Time.deltaTime);
         }
     }
 
-    public Quaternion RotateTowardsDirection(Vector3 fromDirection, Vector3 toDirection, Vector3 forwards, float maxDegrees)
+    public static Quaternion RotateTowards(Quaternion from, Vector3 target, float maxDegrees)
     {
-        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * fromDirection);
-        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) *  toDirection);
-
         return Quaternion.RotateTowards(
-            from: Quaternion.FromToRotation(forwards, fromDirection),
-            to: Quaternion.FromToRotation(forwards, toDirection),
+            from: from,
+            to: Quaternion.FromToRotation(Vector3.forward, target),
             maxDegrees);
     }
 
-    public Quaternion LookTowardsDirection(Vector3 fromDirection, Vector3 toDirection, Vector3 forwards, float maxDegrees)
+    public static Quaternion LookTowards(Quaternion from, Vector3 target, Vector3 upward, float maxDegrees)
     {
-        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * fromDirection);
-        Debug.DrawRay(transform.position, Quaternion.Euler(startingAngle) * toDirection);
-
         return Quaternion.RotateTowards(
-            from: Quaternion.FromToRotation(forwards, fromDirection),
-            to: Quaternion.FromToRotation(forwards, Quaternion.LookRotation(toDirection) * Vector3.right),
+            from: from,
+            to: Quaternion.LookRotation(target, upward),
             maxDegrees);
     }
 
@@ -87,10 +80,14 @@ public class FollowTransform : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, deadZone * 2);
                 break;
         }
+    }
 
-        //Forward and upward
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, StartingDirection);
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, upwardVector);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(transform.position, transform.forward);
     }
 
     private void CalculateDeviation(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)

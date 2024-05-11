@@ -37,13 +37,12 @@ This script makes use of the following components:
 | `Vector3` | `deadZone` | The size of the deadzone. |
 | `enum` | `deadZoneShape` | The shape of the deadzone, either a sphere or cube. |
 | `float` | `turnSpeed` | The speed at which to turn towards the target(s) at, in Degrees/second. |
-| `Vector3` | `startingAngle` | The object's initial facing angles (in degrees). |
 | `Vector3` | `upwardVector` | The upward direction used for the `LookRotation` method. If zero, the script will use the `FromToRotation` method instead. |
 
 ## ⚙️ Gizmos
 - A yellow line from the target transform's position to the centre of the dead zone to visualize the direction of movement and where the target transform is.  
 - A wire sphere/cube to visualize the dead zone. Will be green when the target is outside the dead zone and red when inside.
-- A blue ray to visualize the forward direction.
+- A cyan ray to visualize the forward direction.
 - A green ray to visualize the `upwardVector`.
 
 ## 💾 Source Code
@@ -69,10 +68,9 @@ public class FollowTransform : MonoBehaviour
     [Header("Rotation")]
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
-    public Vector3 startingAngle;
-    public Vector3 upwardVector = Vector3.up;
+    public Vector3 upwardVector;
 
-    private Quaternion StartingAngle => Quaternion.Euler(startingAngle);
+    public bool UseLook => upwardVector == Vector3.zero;
 
     private bool ShouldFollow(Vector3 deviation)
     {
@@ -92,8 +90,26 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
-            PointTowards(target, turnSpeed);
+            transform.rotation = UseLook
+                ? LookTowards(transform.rotation, deviation.normalized, upwardVector, turnSpeed * Time.deltaTime)
+                : RotateTowards(transform.rotation, deviation.normalized, turnSpeed * Time.deltaTime);
         }
+    }
+
+    public static Quaternion RotateTowards(Quaternion from, Vector3 target, float maxDegrees)
+    {
+        return Quaternion.RotateTowards(
+            from: from,
+            to: Quaternion.FromToRotation(Vector3.forward, target),
+            maxDegrees);
+    }
+
+    public static Quaternion LookTowards(Quaternion from, Vector3 target, Vector3 upward, float maxDegrees)
+    {
+        return Quaternion.RotateTowards(
+            from: from,
+            to: Quaternion.LookRotation(target, upward),
+            maxDegrees);
     }
 
     private void OnDrawGizmosSelected()
@@ -113,12 +129,14 @@ public class FollowTransform : MonoBehaviour
                 Gizmos.DrawWireCube(gizmoPosition, deadZone * 2);
                 break;
         }
+    }
 
-        //Forward and upward
-        Gizmos.color = Color.blue;
-        Gizmos.DrawRay(transform.position, transform.rotation * (StartingAngle * Vector3.forward));
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, upwardVector.normalized);
+        Gizmos.DrawRay(transform.position, upwardVector);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawRay(transform.position, transform.forward);
     }
 
     private void CalculateDeviation(out Vector3 targetPosition, out Vector3 averagePosition, out Vector3 deviation)
@@ -137,21 +155,9 @@ public class FollowTransform : MonoBehaviour
 
         deviation = averagePosition - targetPosition;
     }
-
-    private void PointTowards(Vector3 target, float turnSpeed) => transform.rotation = Equals(upwardVector, Vector3.zero)
-            ? Quaternion.RotateTowards(
-                from: transform.rotation,
-                to: Quaternion.FromToRotation(StartingAngle * Vector3.forward, (target - transform.position).normalized),
-                maxDegreesDelta: turnSpeed * Time.deltaTime)
-            : Quaternion.RotateTowards(
-                from: transform.rotation,
-                to: Quaternion.FromToRotation(
-                    StartingAngle * Vector3.forward,
-                    Quaternion.LookRotation((target - transform.position).normalized, upwardVector) * Vector3.forward),
-                maxDegreesDelta: turnSpeed * Time.deltaTime);
-
-    public bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
-    public bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
+    
+    public static bool ValueInRange(float min, float max, float value) => value >= min && value <= max;
+    public static bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
                                                                           && ValueInRange(min.y, max.y, value.y)
                                                                           && ValueInRange(min.z, max.z, value.z);
 }
