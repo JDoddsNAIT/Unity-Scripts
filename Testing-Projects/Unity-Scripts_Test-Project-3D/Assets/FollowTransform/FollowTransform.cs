@@ -21,7 +21,7 @@ public class FollowTransform : MonoBehaviour
     public float turnSpeed;
     public Vector3 upwardVector;
 
-    public bool UseLook => upwardVector == Vector3.zero;
+    public bool UseLook => !Vector3.Equals(upwardVector, Vector3.zero);
 
     private bool ShouldFollow(Vector3 deviation)
     {
@@ -41,9 +41,10 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
+            Debug.DrawRay(transform.position, upwardVector, Color.green);
             transform.rotation = UseLook
-                ? LookTowards(transform.rotation, deviation.normalized, upwardVector, turnSpeed * Time.deltaTime)
-                : RotateTowards(transform.rotation, deviation.normalized, turnSpeed * Time.deltaTime);
+                ? LookTowards(transform.rotation, (target - transform.position).normalized, upwardVector, turnSpeed * Time.deltaTime)
+                : RotateTowards(transform.rotation, (target - transform.position).normalized, turnSpeed * Time.deltaTime);
         }
     }
 
