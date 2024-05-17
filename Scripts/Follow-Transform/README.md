@@ -42,7 +42,7 @@ This script makes use of the following components:
 ## ⚙️ Gizmos
 - A yellow line from the target transform's position to the centre of the dead zone to visualize the direction of movement and where the target transform is.  
 - A wire sphere/cube to visualize the dead zone. Will be green when the target is outside the dead zone and red when inside.
-- A cyan ray to visualize the forward direction.
+- A cyan ray to visualize the forward direction. Scales with `moveSpeed`.
 - A green ray to visualize the `upwardVector`.
 
 ## 💾 Source Code

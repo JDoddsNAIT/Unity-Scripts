@@ -10,17 +10,14 @@ public class FollowTransform : MonoBehaviour
 
     [Space]
     public Transform followTarget;
-    
+
     [Header("Movement")]
-    [Tooltip("Units/sec"), Min(0)]
+    [Tooltip("Units/sec")]
     public float moveSpeed;
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
     public Vector3 upAxis;
-    public Vector3 forwardEulers;
-
-    private Quaternion ForwardAngle => Quaternion.Euler(forwardEulers);
-
+    
     [Header("Deadzone")]
     public DeadZoneShape deadzoneShape = DeadZoneShape.Cube;
     public Vector3 deadzoneSize;
@@ -35,7 +32,7 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
-            transform.LookTowards((followTarget.position - transform.position).normalized, upAxis, ForwardAngle, turnSpeed * Time.deltaTime);
+            transform.LookTowards((followTarget.position - transform.position).normalized, upAxis, turnSpeed * Time.deltaTime);
         }
     }
 
@@ -62,7 +59,7 @@ public class FollowTransform : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, upAxis);
         Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(transform.position, ForwardAngle * transform.forward);
+        Gizmos.DrawRay(transform.position, transform.forward * (moveSpeed == 0 ? 1 : moveSpeed + Mathf.Sign(moveSpeed)));
     }
 
     private void CalculatePositions(out Vector3 targetPosition, out bool follow)
@@ -86,16 +83,11 @@ public class FollowTransform : MonoBehaviour
 public static class Utils
 {
     // Transform Extension method
-    public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, Quaternion facingAngle, float maxDegrees)
+    public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, float maxDegrees)
     {
         transform.rotation = Quaternion.RotateTowards(
             from: transform.rotation,
-            to: Quaternion.LookRotation(toDirection, up).Add(facingAngle.Scale(-1f)),
+            to: Quaternion.LookRotation(toDirection, up),
             maxDegrees);
     }
-
-    // Quaternion math
-    public static Quaternion Add(this Quaternion a, Quaternion b) => Quaternion.Euler(a.eulerAngles + b.eulerAngles);
-
-    public static Quaternion Scale(this Quaternion q, float scalar) => Quaternion.Euler(q.eulerAngles * scalar);
 }
