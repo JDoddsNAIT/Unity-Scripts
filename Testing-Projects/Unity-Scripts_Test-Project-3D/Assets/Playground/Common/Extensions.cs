@@ -20,7 +20,7 @@ public static class QuaternionExtensions
     // Quaternion math
     public static Quaternion Add(this Quaternion a, Quaternion b) => Quaternion.Euler(a.eulerAngles + b.eulerAngles);
 
-    public static Quaternion Scale(this Quaternion q, float s) => Quaternion.Euler(q.eulerAngles * s);
+    public static Quaternion Scale(this Quaternion q, float scalar) => Quaternion.Euler(q.eulerAngles * scalar);
 }
 
 //public static class TransformExtensions
