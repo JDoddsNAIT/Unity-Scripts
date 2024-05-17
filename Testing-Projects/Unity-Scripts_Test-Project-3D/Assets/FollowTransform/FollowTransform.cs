@@ -17,6 +17,9 @@ public class FollowTransform : MonoBehaviour
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
     public Vector3 upAxis;
+    public Vector3 forwardEulers;
+
+    private Quaternion ForwardAngle => Quaternion.Euler(forwardEulers);
 
     [Header("Deadzone")]
     public DeadZoneShape deadzoneShape = DeadZoneShape.Cube;
@@ -32,7 +35,7 @@ public class FollowTransform : MonoBehaviour
         }
         if (turnSpeed > 0)
         {
-            transform.LookTowards((followTarget.position - transform.position).normalized, upAxis, turnSpeed * Time.deltaTime);
+            transform.LookTowards((followTarget.position - transform.position).normalized, upAxis, ForwardAngle, turnSpeed * Time.deltaTime);
         }
     }
 
@@ -59,7 +62,7 @@ public class FollowTransform : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, upAxis);
         Gizmos.color = Color.cyan;
-        Gizmos.DrawRay(transform.position, transform.forward);
+        Gizmos.DrawRay(transform.position, ForwardAngle * transform.forward);
     }
 
     private void CalculatePositions(out Vector3 targetPosition, out bool follow)
@@ -80,14 +83,19 @@ public class FollowTransform : MonoBehaviour
                                                                           && ValueInRange(min.z, max.z, value.z);
 }
 
-public static class TransformExtension
+public static class Utils
 {
     // Transform Extension method
-    public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, float maxDegrees)
+    public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, Quaternion facingAngle, float maxDegrees)
     {
         transform.rotation = Quaternion.RotateTowards(
             from: transform.rotation,
-            to: Quaternion.LookRotation(toDirection, up),
+            to: Quaternion.LookRotation(toDirection, up).Add(facingAngle.Scale(-1f)),
             maxDegrees);
     }
+
+    // Quaternion math
+    public static Quaternion Add(this Quaternion a, Quaternion b) => Quaternion.Euler(a.eulerAngles + b.eulerAngles);
+
+    public static Quaternion Scale(this Quaternion q, float scalar) => Quaternion.Euler(q.eulerAngles * scalar);
 }
