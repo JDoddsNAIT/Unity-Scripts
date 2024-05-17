@@ -10,7 +10,7 @@ public class Missile : MonoBehaviour
     void Start()
     {
         m_FollowTransform = GetComponent<FollowTransform>();
-        m_FollowTransform.targets.Add(GameObject.FindGameObjectWithTag("Player").transform);
+        m_FollowTransform.followTarget = GameObject.FindGameObjectWithTag("Player").transform;
 
     }
 

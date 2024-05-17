@@ -18,3 +18,14 @@ public static class QuaternionExtensions
     public static Quaternion LookTowards(this Quaternion from, Vector3 to, float maxDegrees) =>
         Quaternion.RotateTowards(from, Quaternion.LookRotation(to), maxDegrees);
 }
+
+//public static class TransformExtensions
+//{
+//    public static void LookTowards(this Transform transform, Vector3 to, Vector3 up, float maxDegrees)
+//    {
+//        transform.rotation = Quaternion.RotateTowards(
+//            from: transform.rotation,
+//            to: Quaternion.LookRotation(to, up),
+//            maxDegrees);
+//    }
+//}
