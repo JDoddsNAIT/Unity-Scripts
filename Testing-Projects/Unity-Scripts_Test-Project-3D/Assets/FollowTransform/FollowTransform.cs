@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/blob/main/Scripts/Follow-Transform/")]
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Follow-Transform")]
 public class FollowTransform : MonoBehaviour
 {
     public enum DeadZoneShape
@@ -9,54 +8,48 @@ public class FollowTransform : MonoBehaviour
         Cube, Sphere
     }
 
+    [Space]
+    public Transform followTarget;
+    
     [Header("Movement")]
     [Tooltip("Units/sec"), Min(0)]
-    public float followSpeed;
-    public List<Transform> targets;
-    public Vector3 offset;
-    public Vector3 deadZone;
-    public DeadZoneShape deadZoneShape = DeadZoneShape.Cube;
-    [Header("Rotation")]
+    public float moveSpeed;
     [Tooltip("Degs/sec"), Min(0)]
     public float turnSpeed;
-    public Vector3 upwardVector;
+    public Vector3 upAxis;
+
+    [Header("Deadzone")]
+    public DeadZoneShape deadzoneShape = DeadZoneShape.Cube;
+    public Vector3 deadzoneSize;
+    public Vector3 offset;
 
     void Update()
     {
-        CalculatePositions(out var position, out var target, out var follow);
+        CalculatePositions(out var position, out var follow);
         if (follow)
         {
-            transform.position = Vector3.MoveTowards(position, target, followSpeed * Time.deltaTime) - offset;
+            transform.position = Vector3.MoveTowards(position, followTarget.position, moveSpeed * Time.deltaTime) - offset;
         }
         if (turnSpeed > 0)
         {
-            transform.rotation = LookTowards(transform.rotation, (target - transform.position).normalized, upwardVector, turnSpeed * Time.deltaTime);
+            transform.LookTowards((followTarget.position - transform.position).normalized, upAxis, turnSpeed * Time.deltaTime);
         }
-    }
-
-    public static Quaternion LookTowards(Quaternion from, Vector3 to, Vector3 up, float maxDegrees)
-    {
-        return Quaternion.RotateTowards(
-            from: from,
-            to: Quaternion.LookRotation(to, up),
-            maxDegrees);
     }
 
     private void OnDrawGizmosSelected()
     {
-        //Deadzone
-        CalculatePositions(out var gizmoPosition, out var target, out var follow);
+        CalculatePositions(out var gizmoPosition, out var follow);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(gizmoPosition, target);
+        Gizmos.DrawLine(gizmoPosition, followTarget.position);
         Gizmos.color = follow ? Color.green : Color.red;
-        switch (deadZoneShape)
+        switch (deadzoneShape)
         {
             case DeadZoneShape.Sphere:
-                Gizmos.DrawWireSphere(gizmoPosition, deadZone.magnitude);
+                Gizmos.DrawWireSphere(gizmoPosition, deadzoneSize.magnitude);
                 break;
             case DeadZoneShape.Cube:
-                Gizmos.DrawWireCube(gizmoPosition, deadZone * 2);
+                Gizmos.DrawWireCube(gizmoPosition, deadzoneSize * 2);
                 break;
         }
     }
@@ -64,30 +57,20 @@ public class FollowTransform : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position, upwardVector);
+        Gizmos.DrawRay(transform.position, upAxis);
         Gizmos.color = Color.cyan;
         Gizmos.DrawRay(transform.position, transform.forward);
     }
 
-    private void CalculatePositions(out Vector3 targetPosition, out Vector3 averagePosition, out bool follow)
+    private void CalculatePositions(out Vector3 targetPosition, out bool follow)
     {
         targetPosition = transform.position + offset;
 
-        averagePosition = Vector3.zero;
-        if (targets is not null && targets.Count > 0)
+        var deviation = followTarget.position - targetPosition;
+        follow = deadzoneShape switch
         {
-            foreach (var pos in targets)
-            {
-                averagePosition += pos.position;
-            }
-            averagePosition /= targets.Count;
-        }
-
-        var deviation = averagePosition - targetPosition;
-        follow = deadZoneShape switch
-        {
-            DeadZoneShape.Cube => !VectorInRange(-deadZone, deadZone, deviation),
-            _ => deviation.magnitude >= deadZone.magnitude,
+            DeadZoneShape.Cube => !VectorInRange(-deadzoneSize, deadzoneSize, deviation),
+            _ => deviation.magnitude >= deadzoneSize.magnitude,
         };
     }
 
@@ -95,4 +78,16 @@ public class FollowTransform : MonoBehaviour
     public static bool VectorInRange(Vector3 min, Vector3 max, Vector3 value) => ValueInRange(min.x, max.x, value.x)
                                                                           && ValueInRange(min.y, max.y, value.y)
                                                                           && ValueInRange(min.z, max.z, value.z);
+}
+
+public static class TransformExtension
+{
+    // Transform Extension method
+    public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, float maxDegrees)
+    {
+        transform.rotation = Quaternion.RotateTowards(
+            from: transform.rotation,
+            to: Quaternion.LookRotation(toDirection, up),
+            maxDegrees);
+    }
 }
