@@ -59,12 +59,14 @@ public class FollowPath : MonoBehaviour
         {
             MoveAlongPath();
         }
-
     }
 
     private void OnDrawGizmosSelected()
     {
-        
+        var offset = timeOffset % moveTime;
+        path.LerpPath((int)offset % path.points.Length, offset, out var position, out _);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion
 
