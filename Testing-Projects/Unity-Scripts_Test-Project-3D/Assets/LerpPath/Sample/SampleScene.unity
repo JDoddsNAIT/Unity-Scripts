@@ -397,17 +397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a47f3c84df82f13439bc2c0d3a42ab3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeLoop: 1
-  moveOnStart: 1
   reverse: 0
   endAction: 2
+  moveOnStart: 1
   moveTime: 1
-  timeOffset: 0
-  path:
-  - {fileID: 1275364127}
-  - {fileID: 69635053}
-  - {fileID: 1928930239}
-  - {fileID: 511361557}
+  timeOffset: 10.05
+  path: {fileID: 0}
 --- !u!1 &1100987094
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1100987095}
+  - component: {fileID: 1100987096}
   m_Layer: 0
   m_Name: Path
   m_TagString: Untagged
@@ -443,6 +439,24 @@ Transform:
   - {fileID: 511361557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1100987096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1100987094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc097c6bf06642c42b0be5aa5366bd8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  closeLoop: 1
+  points:
+  - {fileID: 1275364127}
+  - {fileID: 69635053}
+  - {fileID: 1928930239}
+  - {fileID: 511361557}
 --- !u!1 &1275364126
 GameObject:
   m_ObjectHideFlags: 0
