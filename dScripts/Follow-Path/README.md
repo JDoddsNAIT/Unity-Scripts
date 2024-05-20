@@ -35,7 +35,7 @@ This script requires the use of `CommonLib`, a namespace that contains utility c
 # FollowPath Script
 
 ## 📖 Description
-Attaching the `FollowPath` script to an object will make it translate along the assigned `path`. You may stop movement by setting the `enabled` member. The `moveTime` property determines how long it will take for the object reach each point in the path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
+Attaching the `FollowPath` script to an object will make it translate along the assigned `path`. You may stop movement by modifying the `enabled` member. The `moveTime` property determines how long it will take for the object reach each point in the path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
 
 ## 🔧 Properties
 | Property | Summary |
@@ -173,7 +173,7 @@ The `Path` script allows you to create a path to follow. To create a path, fill 
 |-|-|
 | `points` | The list of points that make up the path. `FollowPath` will move to each point in order. |
 | `closeLoop` | If checked, the first and last `points` in the path will be connected. |
-| `UseChildren` | Summary |
+| `UseChildren` | Generates a path using child transforms. |
 
 ## ⚙️ Gizmos
 
