@@ -79,7 +79,6 @@ public class FollowPath : MonoBehaviour
         }
         catch (System.IndexOutOfRangeException)
         {
-            Debug.Log($"End of path reached. {pathIndex}");
             switch (endAction)
             {
                 case EndAction.Stop:

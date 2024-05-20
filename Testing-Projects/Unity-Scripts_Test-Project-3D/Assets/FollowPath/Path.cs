@@ -1,11 +1,10 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
 public class Path : MonoBehaviour
 {
-    public bool closeLoop;
     public Transform[] points = new Transform[2];
+    public bool closeLoop;
 
     private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
     public bool PathIsValid()
