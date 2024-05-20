@@ -14,7 +14,7 @@ There are two kinds of scripts in this repository: **Independant**, and **Depend
 
 **Dependant** scripts are located in [`📁dScripts/`](./dScripts/). These are scripts that contain or require additional assets. Assets from the :link:[Unity Asset Store](https://assetstore.unity.com) will be linked to in the `📝README.md` under *Requirements* for you to download yourself.
 
-> :paperclip: Check out my latest script [here](/Scripts/Prefab-Pool/), hot off the press!
+> :paperclip: Check out my latest script [here](/dScripts/Follow-Path), hot off the press!
 
 ## 📃 Format legend
 
