@@ -20,7 +20,7 @@ public class LerpPath : MonoBehaviour
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
     [Space]
-    public Transform[] path;
+    public Transform[] path = new Transform[2];
     #endregion
 
     #region Private members
@@ -28,7 +28,7 @@ public class LerpPath : MonoBehaviour
     private int pathIndex = 0;
     private bool reverse = false;
 
-    private bool PathIsValid => (path.Length >= 2) && !path.Where(p => p == null).Any();
+    private bool PathIsValid => path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
     private readonly string INVALID_PATH = $"Length of {nameof(path)} cannot be less than 2 or contain any nulls.";
     #endregion
 
@@ -63,7 +63,6 @@ public class LerpPath : MonoBehaviour
 
     private void Update()
     {
-        var deltaTime = Time.deltaTime;
         moveTimer = new Timer(moveTime, moveTimer.Time);
         if (!PathIsValid)
         {
@@ -73,11 +72,11 @@ public class LerpPath : MonoBehaviour
         else
         {
             MoveAlongPath();
-            moveTimer.Time += reverse ? -deltaTime : +deltaTime;
+            moveTimer.Time += Time.deltaTime;
 
             if (moveTimer.Alarm)
             {
-                moveTimer.Time = reverse ? moveTime : 0;
+                moveTimer.Time =  0;
                 pathIndex += reverse ? -1 : 1;
             }
         }
