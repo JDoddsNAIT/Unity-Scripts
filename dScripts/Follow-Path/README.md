@@ -18,7 +18,7 @@
   - [⚙️ Gizmos](#️-gizmos-1)
   - [💾 Source Code](#-source-code-1)
 
-> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./) into the assets folder.
+> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./followPath.unitypackage) into the assets folder.
 
 ## 🛠️ Requirements
 
@@ -29,7 +29,7 @@ These scripts make use of the following components and assets:
 ## 📖 Description
 Follow Path allows you to create a `Path` consisting of multiple transforms, and have a object travel between their positions. To use the [`FollowPath`](#followpath-script) script, you must first create a path for it to follow using the [`Path`](#path-script) script.
 
-This script requires the use of `CommonLib`, a namespace that contains utility classes. The latest version of the required classes are included in the `📄.unitypackage` file, under a folder of the same name.
+This script requires the use of `CommonLib`, a namespace that contains utility classes. The latest version of the required classes are included under a folder of the same name in the `📄.unitypackage`.
 
 ---
 # FollowPath Script
