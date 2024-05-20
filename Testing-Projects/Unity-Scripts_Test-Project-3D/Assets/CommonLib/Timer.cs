@@ -8,7 +8,7 @@ namespace JDoddsNAIT.Unity.CommonLib
         public float Time
         {
             readonly get => time;
-            set => time = value >= Length ? Length : value <= 0 ? 0 : value;
+            set => time = Range.Clamp(value, Length);
         }
 
         public Timer(float length) : this() => Length = length;

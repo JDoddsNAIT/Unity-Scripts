@@ -40,7 +40,7 @@ public class FollowPath : MonoBehaviour
         {
             path.PathIsValid();
             moveTimer = new Timer(moveTime, timeOffset % moveTime);
-            pathIndex = (int)timeOffset % path.points.Length;
+            pathIndex = (int)timeOffset % path.Points.Length;
 
             enabled = moveOnStart;
         }
@@ -65,7 +65,7 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        path.LerpPath((int)timeOffset % path.points.Length, timeOffset % moveTime, out var position, out _);
+        path.LerpPath((int)timeOffset % path.Points.Length, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(position, 0.2f);
     }
@@ -89,7 +89,7 @@ public class FollowPath : MonoBehaviour
                     reverse = !reverse;
                     break;
                 case EndAction.Continue:
-                    pathIndex = reverse ? path.points.Length - 1 : 0;
+                    pathIndex = reverse ? path.Points.Length - 1 : 0;
                     break;
                 default:
                     throw;
