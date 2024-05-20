@@ -18,9 +18,10 @@ public class LerpPath : MonoBehaviour
     public bool reverse = false;
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
+    [Space]
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
-    [Space]
+    //[Range(0, 1)] public float startTime = 0.0f;
     public Transform[] path = new Transform[2];
     #endregion
 
@@ -86,14 +87,15 @@ public class LerpPath : MonoBehaviour
     {
         try
         {
+            var nextIndex = closeLoop ? (pathIndex + 1) % path.Length : pathIndex + 1;
             transform.SetPositionAndRotation(
                Vector3.Lerp(
                    a: path[pathIndex].position,
-                   b: path[(pathIndex + 1) % (closeLoop ? path.Length : 0)].position,
+                   b: path[nextIndex].position,
                    t: moveTimer.Value),
                Quaternion.Lerp(
                    a: path[pathIndex].rotation,
-                   b: path[(pathIndex + 1) % (closeLoop ? path.Length : 0)].rotation,
+                   b: path[nextIndex].rotation,
                    t: moveTimer.Value));
 
         }
