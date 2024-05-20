@@ -15,6 +15,7 @@ public class LerpPath : MonoBehaviour
     public bool closeLoop;
     [Tooltip("The path will begin on Start.")]
     public bool moveOnStart = true;
+    public bool reverse = false;
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Tooltip("The time in seconds to travel between each node.")]
@@ -26,7 +27,6 @@ public class LerpPath : MonoBehaviour
     #region Private members
     private Timer moveTimer;
     private int pathIndex = 0;
-    private bool reverse = false;
 
     private bool PathIsValid => path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
     private readonly string INVALID_PATH = $"Length of {nameof(path)} cannot be less than 2 or contain any nulls.";
@@ -90,16 +90,17 @@ public class LerpPath : MonoBehaviour
         {
             transform.SetPositionAndRotation(
                Vector3.Lerp(
-                   a: path[pathIndex].position,
-                   b: path[pathIndex + (reverse ? -1 : 1)].position,
+                   a: path[pathIndex - (reverse ? 1 : 0)].position,
+                   b: path[pathIndex + (reverse ? 0 : 1)].position,
                    t: moveTimer.Value),
                Quaternion.Lerp(
-                   a: path[pathIndex].rotation,
-                   b: path[pathIndex + (reverse ? -1 : 1)].rotation,
+                   a: path[pathIndex - (reverse ? 1 : 0)].rotation,
+                   b: path[pathIndex + (reverse ? 0 : 1)].rotation,
                    t: moveTimer.Value));
         }
         catch (IndexOutOfRangeException)
         {
+            Debug.Log("End of path reached");
             switch (endAction)
             {
                 case EndAction.Stop:
