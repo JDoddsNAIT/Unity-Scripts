@@ -1,6 +1,7 @@
 using JDoddsNAIT.Unity.CommonLib;
 using UnityEngine;
 
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class FollowPath : MonoBehaviour
 {
     public enum EndAction
