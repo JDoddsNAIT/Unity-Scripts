@@ -28,6 +28,7 @@ public class LerpPath : MonoBehaviour
     private Timer moveTimer;
     private int pathIndex = 0;
 
+    private int Reverse => reverse ? -1 : 1;
     private bool PathIsValid => path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
     private readonly string INVALID_PATH = $"Length of {nameof(path)} cannot be less than 2 or contain any nulls.";
     #endregion
@@ -59,6 +60,10 @@ public class LerpPath : MonoBehaviour
                     path[closeLoop ? (i + 1) % path.Length : i - 1].position);
             }
         }
+        else
+        {
+            Debug.LogError(INVALID_PATH);
+        }
     }
 
     private void Update()
@@ -72,13 +77,6 @@ public class LerpPath : MonoBehaviour
         else
         {
             MoveAlongPath();
-            moveTimer.Time += Time.deltaTime;
-
-            if (moveTimer.Alarm)
-            {
-                moveTimer.Time =  0;
-                pathIndex += reverse ? -1 : 1;
-            }
         }
 
     }
@@ -90,17 +88,18 @@ public class LerpPath : MonoBehaviour
         {
             transform.SetPositionAndRotation(
                Vector3.Lerp(
-                   a: path[pathIndex - (reverse ? 1 : 0)].position,
-                   b: path[pathIndex + (reverse ? 0 : 1)].position,
+                   a: path[pathIndex].position,
+                   b: path[(pathIndex + 1) % (closeLoop ? path.Length : 0)].position,
                    t: moveTimer.Value),
                Quaternion.Lerp(
-                   a: path[pathIndex - (reverse ? 1 : 0)].rotation,
-                   b: path[pathIndex + (reverse ? 0 : 1)].rotation,
+                   a: path[pathIndex].rotation,
+                   b: path[(pathIndex + 1) % (closeLoop ? path.Length : 0)].rotation,
                    t: moveTimer.Value));
+
         }
         catch (IndexOutOfRangeException)
         {
-            Debug.Log("End of path reached");
+            Debug.Log($"End of path reached. {pathIndex}");
             switch (endAction)
             {
                 case EndAction.Stop:
@@ -110,10 +109,20 @@ public class LerpPath : MonoBehaviour
                     reverse = !reverse;
                     break;
                 case EndAction.Continue:
-                    pathIndex %= path.Length;
+                    pathIndex = reverse ? path.Length - 1 : 0;
                     break;
                 default:
                     throw;
+            }
+        }
+        finally
+        {
+            moveTimer.Time += Reverse * Time.deltaTime;
+
+            if (moveTimer.Alarm)
+            {
+                moveTimer.Time = reverse ? moveTime : 0;
+                pathIndex += Reverse;
             }
         }
     }
