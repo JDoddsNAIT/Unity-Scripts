@@ -4,42 +4,44 @@ using UnityEngine;
 
 public class Path : MonoBehaviour
 {
-    public List<Transform> _points = new List<Transform>();
-    public Transform[] Points { get => _points.ToArray(); set => _points = value.ToList(); }
+    public List<Transform> points = new();
     public bool closeLoop;
 
-    private readonly string INVALID_PATH = $"Length of {nameof(Points)} cannot be less than 2 or contain any nulls.";
-    public bool PathIsValid()
+    private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
+    public bool PathIsValid
     {
-        var result = Points != null && (Points.Length >= 2) && !Points.Where(p => p == null).Any();
-        if (!result)
+        get
         {
-            Debug.LogError(INVALID_PATH);
+            var result = points != null && (points.Count >= 2) && !points.Where(p => p == null).Any();
+            if (!result)
+            {
+                Debug.LogError(INVALID_PATH);
+            }
+            return result;
         }
-        return result;
     }
 
     public void LerpPath(int index, float t, out Vector3 position, out Quaternion rotation)
     {
-        var nextIndex = closeLoop ? (index + 1) % Points.Length : index + 1;
+        var nextIndex = closeLoop ? (index + 1) % points.Count : index + 1;
         position = Vector3.Lerp(
-               a: Points[index].position,
-               b: Points[nextIndex].position,
+               a: points[index].position,
+               b: points[nextIndex].position,
                t: t);
         rotation = Quaternion.Lerp(
-               a: Points[index].rotation,
-               b: Points[nextIndex].rotation,
+               a: points[index].rotation,
+               b: points[nextIndex].rotation,
                t: t);
     }
 
     private void OnDrawGizmos()
     {
-        if (PathIsValid())
+        if (PathIsValid)
         {
             Gizmos.color = Color.yellow;
-            for (int i = closeLoop ? 0 : 1; i < Points.Length; i++)
+            for (int i = closeLoop ? 0 : 1; i < points.Count; i++)
             {
-                Gizmos.DrawLine(Points[i].position, Points[closeLoop ? (i + 1) % Points.Length : i - 1].position);
+                Gizmos.DrawLine(points[i].position, points[closeLoop ? (i + 1) % points.Count : i - 1].position);
             }
         }
     }
@@ -47,14 +49,14 @@ public class Path : MonoBehaviour
     [ContextMenu("Generate Path from Children")]
     private void UseChildren()
     {
-        var transforms = GetComponentsInChildren<Transform>().Where(t => t != this.transform).ToArray();
-        if (transforms.Length > 0)
+        List<Transform> transforms = GetComponentsInChildren<Transform>(includeInactive: false).Where(t => t != transform).ToList();
+        if (transforms.Count > 0)
         {
-            Points = transforms;
+            points = transforms;
         }
         else
         {
-            Debug.Log("Could not generate path.");
+            Debug.Log("Could not generate path as no children were found");
         }
     }
 }

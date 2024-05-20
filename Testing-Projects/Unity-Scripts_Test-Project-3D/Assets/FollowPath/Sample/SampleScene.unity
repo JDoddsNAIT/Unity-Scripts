@@ -400,9 +400,8 @@ MonoBehaviour:
   path: {fileID: 1100987096}
   moveTime: 1
   timeOffset: 0
-  endAction: 2
-  moveOnStart: 1
-  reverse: 0
+  endAction: 0
+  reverse: 1
 --- !u!1 &1100987094
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +452,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc097c6bf06642c42b0be5aa5366bd8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeLoop: 1
   points:
   - {fileID: 1275364127}
   - {fileID: 1897407560}
@@ -461,6 +459,7 @@ MonoBehaviour:
   - {fileID: 476961020}
   - {fileID: 276811953}
   - {fileID: 1438191363}
+  closeLoop: 1
 --- !u!1 &1275364126
 GameObject:
   m_ObjectHideFlags: 0

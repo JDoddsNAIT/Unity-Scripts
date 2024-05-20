@@ -20,8 +20,6 @@ public class FollowPath : MonoBehaviour
     [Header("Settings")]
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
-    [Tooltip("The path will begin on Start if true.")]
-    public bool moveOnStart = true;
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
     #endregion
@@ -36,13 +34,10 @@ public class FollowPath : MonoBehaviour
     #region Unity Messages
     private void Start()
     {
-        if (path.PathIsValid())
+        if (path.PathIsValid)
         {
-            path.PathIsValid();
             moveTimer = new Timer(moveTime, timeOffset % moveTime);
-            pathIndex = (int)timeOffset % path.Points.Length;
-
-            enabled = moveOnStart;
+            pathIndex = (int)timeOffset % path.points.Count;
         }
         else
         {
@@ -53,7 +48,7 @@ public class FollowPath : MonoBehaviour
     private void Update()
     {
         moveTimer = new Timer(moveTime, moveTimer.Time);
-        if (!path.PathIsValid())
+        if (!path.PathIsValid)
         {
             enabled = false;
         }
@@ -65,7 +60,7 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        path.LerpPath((int)timeOffset % path.Points.Length, timeOffset % moveTime, out var position, out _);
+        path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(position, 0.2f);
     }
@@ -78,18 +73,19 @@ public class FollowPath : MonoBehaviour
             path.LerpPath(pathIndex, moveTimer.Value, out var position, out var rotation);
             transform.SetPositionAndRotation(position, rotation);
         }
-        catch (System.IndexOutOfRangeException)
+        catch (System.ArgumentOutOfRangeException)
         {
             switch (endAction)
             {
                 case EndAction.Stop:
+                    reverse = !reverse;
                     enabled = false;
                     break;
                 case EndAction.Reverse:
                     reverse = !reverse;
                     break;
                 case EndAction.Continue:
-                    pathIndex = reverse ? path.Points.Length - 1 : 0;
+                    pathIndex = reverse ? path.points.Count - 1 : 0;
                     break;
                 default:
                     throw;
@@ -107,4 +103,5 @@ public class FollowPath : MonoBehaviour
         }
     }
 
+    public void Toggle() => enabled = !enabled;
 }

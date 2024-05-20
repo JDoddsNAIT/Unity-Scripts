@@ -41,10 +41,9 @@ Attaching the `FollowPath` script to an object will make it translate along the 
 | Property | Summary |
 |-|-|
 | `path` | The path that the object will follow. |
-| `moveTime` | How long it will take to travel between each point. |
+| `moveTime` | The number of seconds it will take to travel between each point. |
 | `timeOffset` | Allows you to offset the object further along the path. |
-| `endAction` | Determines the behavior when the object reaches the end of the `path`. |
-| `moveOnStart` | If checked, The object will start moving along the path when `Start()` is called. |
+| `endAction` | Determines the behavior when the object reaches the end of the `path`. `Stop` means the object will stop moving, `Reverse` means the direction will be reversed and movement will continue, and `Continue` means the object will loop around the path without stopping. |
 | `reverse` | The object will travel in the opposite direction if checked. |
 
 ## ⚙️ Gizmos
@@ -74,8 +73,6 @@ public class FollowPath : MonoBehaviour
     [Header("Settings")]
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
-    [Tooltip("The path will begin on Start if true.")]
-    public bool moveOnStart = true;
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
     #endregion
@@ -90,13 +87,10 @@ public class FollowPath : MonoBehaviour
     #region Unity Messages
     private void Start()
     {
-        if (path.PathIsValid())
+        if (path.PathIsValid)
         {
-            path.PathIsValid();
             moveTimer = new Timer(moveTime, timeOffset % moveTime);
-            pathIndex = (int)timeOffset % path.points.Length;
-
-            enabled = moveOnStart;
+            pathIndex = (int)timeOffset % path.points.Count;
         }
         else
         {
@@ -107,7 +101,7 @@ public class FollowPath : MonoBehaviour
     private void Update()
     {
         moveTimer = new Timer(moveTime, moveTimer.Time);
-        if (!path.PathIsValid())
+        if (!path.PathIsValid)
         {
             enabled = false;
         }
@@ -119,7 +113,7 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        path.LerpPath((int)timeOffset % path.points.Length, timeOffset % moveTime, out var position, out _);
+        path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(position, 0.2f);
     }
@@ -132,18 +126,19 @@ public class FollowPath : MonoBehaviour
             path.LerpPath(pathIndex, moveTimer.Value, out var position, out var rotation);
             transform.SetPositionAndRotation(position, rotation);
         }
-        catch (System.IndexOutOfRangeException)
+        catch (System.ArgumentOutOfRangeException)
         {
             switch (endAction)
             {
                 case EndAction.Stop:
+                    reverse = !reverse;
                     enabled = false;
                     break;
                 case EndAction.Reverse:
                     reverse = !reverse;
                     break;
                 case EndAction.Continue:
-                    pathIndex = reverse ? path.points.Length - 1 : 0;
+                    pathIndex = reverse ? path.points.Count - 1 : 0;
                     break;
                 default:
                     throw;
@@ -161,6 +156,7 @@ public class FollowPath : MonoBehaviour
         }
     }
 
+    public void Toggle() => enabled = !enabled;
 }
 
 ```
@@ -168,43 +164,49 @@ public class FollowPath : MonoBehaviour
 # Path Script
 
 ## 📖 Description
-The `Path` script allows you to create a path to follow. To create a path, fill the `points` array with `Transforms`. `FollowPath` will traverse these points in order. To connect the first and last points of the array, check the `closeLoop` box.
+The `Path` script allows you to create a path to follow. To create a path, fill the `points` array with `Transforms`. `FollowPath` will traverse these points in order, inheriting their position and rotation. To connect the first and last points of the array, check the `closeLoop` box.
 
-> :paperclip: You can also easily create a path by setting all the `Transforms` as children of the script in the heirarchy, the selecting "Generate Path" in the context menu.
+> :paperclip: You can also easily create a path by setting all the `Transforms` as children of the script in the heirarchy, the selecting "Generate Path" in the context menu. (Access the context menu by right-clicking the component.)
 
 ## ✒️ Signatures
 | Property | Summary |
 |-|-|
-| `name` | Summary |
+| `points` | The list of points that make up the path. `FollowPath` will move to each point in order. |
+| `closeLoop` | If checked, the first and last `points` in the path will be connected. |
+| `UseChildren` | Summary |
 
 ## ⚙️ Gizmos
 
-> *List what gizmos show up and what they mean.*
+Yellow lines conneting each point to visualize the path.
 
 ## 💾 Source Code
 ```cs
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Path : MonoBehaviour
 {
-    public Transform[] points = new Transform[2];
+    public List<Transform> points = new();
     public bool closeLoop;
 
     private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
-    public bool PathIsValid()
+    public bool PathIsValid
     {
-        var result = points != null && (points.Length >= 2) && !points.Where(p => p == null).Any();
-        if (!result)
+        get
         {
-            Debug.LogError(INVALID_PATH);
+            var result = points != null && (points.Count >= 2) && !points.Where(p => p == null).Any();
+            if (!result)
+            {
+                Debug.LogError(INVALID_PATH);
+            }
+            return result;
         }
-        return result;
     }
 
     public void LerpPath(int index, float t, out Vector3 position, out Quaternion rotation)
     {
-        var nextIndex = closeLoop ? (index + 1) % points.Length : index + 1;
+        var nextIndex = closeLoop ? (index + 1) % points.Count : index + 1;
         position = Vector3.Lerp(
                a: points[index].position,
                b: points[nextIndex].position,
@@ -217,12 +219,12 @@ public class Path : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (PathIsValid())
+        if (PathIsValid)
         {
             Gizmos.color = Color.yellow;
-            for (int i = closeLoop ? 0 : 1; i < points.Length; i++)
+            for (int i = closeLoop ? 0 : 1; i < points.Count; i++)
             {
-                Gizmos.DrawLine(points[i].position, points[closeLoop ? (i + 1) % points.Length : i - 1].position);
+                Gizmos.DrawLine(points[i].position, points[closeLoop ? (i + 1) % points.Count : i - 1].position);
             }
         }
     }
@@ -230,14 +232,14 @@ public class Path : MonoBehaviour
     [ContextMenu("Generate Path from Children")]
     private void UseChildren()
     {
-        var transforms = GetComponentsInChildren<Transform>().Where(t => t != this.transform).ToArray();
-        if (transforms.Length > 0)
+        List<Transform> transforms = GetComponentsInChildren<Transform>(includeInactive: false).Where(t => t != transform).ToList();
+        if (transforms.Count > 0)
         {
             points = transforms;
         }
         else
         {
-            Debug.Log("Could not generate path.");
+            Debug.Log("Could not generate path as no children were found");
         }
     }
 }
