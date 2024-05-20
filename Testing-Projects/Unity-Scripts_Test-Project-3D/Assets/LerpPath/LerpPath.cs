@@ -64,9 +64,9 @@ public class LerpPath : MonoBehaviour
                     path[i].position,
                     path[closeLoop ? (i + 1) % path.Length : i - 1].position);
 
-                if (new RangeD(i, i + 1).Contains(timeOffset % moveTime))
+                if (new Range(i, i + 1).Contains(timeOffset % moveTime))
                 {
-                    
+                    Gizmos.DrawSphere(Vector3.Lerp(path[i].position, path[(i + 1) % path.Length].position, timeOffset % moveTime), 0.2f);
                 }
             }
         }
