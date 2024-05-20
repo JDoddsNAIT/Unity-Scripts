@@ -18,18 +18,17 @@ public class Path : MonoBehaviour
         return result;
     }
 
-    public Tuple<Vector3, Quaternion> LerpPosition(int index, float t)
+    public void LerpPath(int index, float t, out Vector3 position, out Quaternion rotation)
     {
         var nextIndex = closeLoop ? (index + 1) % points.Length : index + 1;
-        return Tuple.Create(
-           Vector3.Lerp(
+        position = Vector3.Lerp(
                a: points[index].position,
                b: points[nextIndex].position,
-               t: t),
-           Quaternion.Lerp(
+               t: t);
+        rotation = Quaternion.Lerp(
                a: points[index].rotation,
                b: points[nextIndex].rotation,
-               t: t));
+               t: t);
     }
 
     private void OnDrawGizmos()
@@ -42,6 +41,19 @@ public class Path : MonoBehaviour
                 Gizmos.DrawLine(points[i].position, points[closeLoop ? (i + 1) % points.Length : i - 1].position);
             }
         }
+    }
 
+    [ContextMenu("Generate Path from Children")]
+    private void UseChildren()
+    {
+        var transforms = GetComponentsInChildren<Transform>().Where(t => t != this.transform).ToArray();
+        if (transforms.Length > 0)
+        {
+            points = transforms;
+        }
+        else
+        {
+            Debug.Log("Could not generate path.");
+        }
     }
 }

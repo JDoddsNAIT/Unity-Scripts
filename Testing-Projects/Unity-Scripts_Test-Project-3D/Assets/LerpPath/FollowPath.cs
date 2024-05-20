@@ -1,8 +1,7 @@
-using System.Linq;
-using UnityEngine;
 using JDoddsNAIT.Unity.CommonLib;
+using UnityEngine;
 
-public class LerpPath : MonoBehaviour
+public class FollowPath : MonoBehaviour
 {
     public enum EndAction
     {
@@ -62,14 +61,19 @@ public class LerpPath : MonoBehaviour
         }
 
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        
+    }
     #endregion
 
     private void MoveAlongPath()
     {
         try
         {
-            var point = path.LerpPosition(pathIndex, moveTimer.Value);
-            transform.SetPositionAndRotation(point.Item1, point.Item2);
+            path.LerpPath(pathIndex, moveTimer.Value, out var position, out var rotation);
+            transform.SetPositionAndRotation(position, rotation);
         }
         catch (System.IndexOutOfRangeException)
         {
