@@ -31,55 +31,66 @@ public class LerpPath : MonoBehaviour
     private int pathIndex = 0;
 
     private int Reverse => reverse ? -1 : 1;
-    private bool PathIsValid => path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
+
     private readonly string INVALID_PATH = $"Length of {nameof(path)} cannot be less than 2 or contain any nulls.";
+    private bool PathIsValid()
+    {
+        var result = path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
+        if (!result)
+        {
+            Debug.LogError(INVALID_PATH);
+            enabled = false;
+        }
+        return result;
+    }
     #endregion
 
     #region Unity Messages
     private void Start()
     {
-        if (PathIsValid)
+        if (PathIsValid())
         {
-
-            moveTimer = new Timer(moveTime, timeOffset % moveTime);
-            pathIndex = (int)(timeOffset % moveTime) % path.Length;
+            var offset = timeOffset % moveTime;
+            moveTimer = new Timer(moveTime, offset);
+            pathIndex = (int)offset % path.Length;
 
             enabled = moveOnStart;
         }
-        else
-        {
-            Debug.LogError(INVALID_PATH);
-            enabled = false;
-        }
+        
     }
 
     private void OnDrawGizmos()
     {
-        if (PathIsValid)
+        if (PathIsValid())
         {
             Gizmos.color = Color.yellow;
             for (int i = closeLoop ? 0 : 1; i < path.Length; i++)
             {
-                Gizmos.DrawLine(
-                    path[i].position,
-                    path[closeLoop ? (i + 1) % path.Length : i - 1].position);
+                Gizmos.DrawLine(path[i].position, path[closeLoop ? (i + 1) % path.Length : i - 1].position);
+            }
+        }
+        
+    }
 
+    private void OnDrawGizmosSelected()
+    {
+        if (PathIsValid())
+        {
+            for (int i = closeLoop ? 0 : 1; i < path.Length; i++)
+            {
                 if (new Range(i, i + 1).Contains(timeOffset % path.Length))
                 {
                     Gizmos.DrawSphere(Vector3.Lerp(path[i].position, path[(i + 1) % path.Length].position, timeOffset % moveTime), 0.2f);
                 }
             }
         }
-        else
-        {
-            Debug.LogError(INVALID_PATH);
-        }
+        
     }
 
     private void Update()
     {
         moveTimer = new Timer(moveTime, moveTimer.Time);
-        if (!PathIsValid)
+        if (!PathIsValid())
         {
             Debug.LogError(INVALID_PATH);
             enabled = false;
