@@ -11,19 +11,17 @@ public class LerpPath : MonoBehaviour
         Continue,   // return to start
     }
     #region Public members
-    [Tooltip("Connects the start and end points of the path.")]
-    public bool closeLoop;
-    [Tooltip("The path will begin on Start.")]
-    public bool moveOnStart = true;
     public bool reverse = false;
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Space]
+    [Tooltip("The path will begin on Start.")]
+    public bool moveOnStart = true;
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
-    public Transform[] path = new Transform[2];
+    public Path path;
     #endregion
 
     #region Private members
@@ -31,68 +29,31 @@ public class LerpPath : MonoBehaviour
     private int pathIndex = 0;
 
     private int Reverse => reverse ? -1 : 1;
-
-    private readonly string INVALID_PATH = $"Length of {nameof(path)} cannot be less than 2 or contain any nulls.";
-    private bool PathIsValid()
-    {
-        var result = path != null && (path.Length >= 2) && !path.Where(p => p == null).Any();
-        if (!result)
-        {
-            Debug.LogError(INVALID_PATH);
-            enabled = false;
-        }
-        return result;
-    }
     #endregion
 
     #region Unity Messages
     private void Start()
     {
-        if (PathIsValid())
+        if (path.PathIsValid())
         {
+            path.PathIsValid();
             var offset = timeOffset % moveTime;
             moveTimer = new Timer(moveTime, offset);
-            pathIndex = (int)offset % path.Length;
+            pathIndex = (int)offset % path.points.Length;
 
             enabled = moveOnStart;
         }
-        
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (PathIsValid())
+        else
         {
-            Gizmos.color = Color.yellow;
-            for (int i = closeLoop ? 0 : 1; i < path.Length; i++)
-            {
-                Gizmos.DrawLine(path[i].position, path[closeLoop ? (i + 1) % path.Length : i - 1].position);
-            }
+            enabled = false;
         }
-        
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (PathIsValid())
-        {
-            for (int i = closeLoop ? 0 : 1; i < path.Length; i++)
-            {
-                if (new Range(i, i + 1).Contains(timeOffset % path.Length))
-                {
-                    Gizmos.DrawSphere(Vector3.Lerp(path[i].position, path[(i + 1) % path.Length].position, timeOffset % moveTime), 0.2f);
-                }
-            }
-        }
-        
     }
 
     private void Update()
     {
         moveTimer = new Timer(moveTime, moveTimer.Time);
-        if (!PathIsValid())
+        if (!path.PathIsValid())
         {
-            Debug.LogError(INVALID_PATH);
             enabled = false;
         }
         else
@@ -107,17 +68,8 @@ public class LerpPath : MonoBehaviour
     {
         try
         {
-            var nextIndex = closeLoop ? (pathIndex + 1) % path.Length : pathIndex + 1;
-            transform.SetPositionAndRotation(
-               Vector3.Lerp(
-                   a: path[pathIndex].position,
-                   b: path[nextIndex].position,
-                   t: moveTimer.Value),
-               Quaternion.Lerp(
-                   a: path[pathIndex].rotation,
-                   b: path[nextIndex].rotation,
-                   t: moveTimer.Value));
-
+            var point = path.LerpPosition(pathIndex, moveTimer.Value);
+            transform.SetPositionAndRotation(point.Item1, point.Item2);
         }
         catch (System.IndexOutOfRangeException)
         {
@@ -131,7 +83,7 @@ public class LerpPath : MonoBehaviour
                     reverse = !reverse;
                     break;
                 case EndAction.Continue:
-                    pathIndex = reverse ? path.Length - 1 : 0;
+                    pathIndex = reverse ? path.points.Length - 1 : 0;
                     break;
                 default:
                     throw;
