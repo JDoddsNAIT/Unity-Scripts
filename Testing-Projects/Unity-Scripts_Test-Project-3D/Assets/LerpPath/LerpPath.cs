@@ -1,6 +1,6 @@
-using System;
 using System.Linq;
 using UnityEngine;
+using JDoddsNAIT.Unity.CommonLib;
 
 public class LerpPath : MonoBehaviour
 {
@@ -21,7 +21,8 @@ public class LerpPath : MonoBehaviour
     [Space]
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
-    //[Range(0, 1)] public float startTime = 0.0f;
+    [Tooltip("The time offset in seconds.")]
+    [Min(0)] public float timeOffset = 0.0f;
     public Transform[] path = new Transform[2];
     #endregion
 
@@ -39,7 +40,10 @@ public class LerpPath : MonoBehaviour
     {
         if (PathIsValid)
         {
-            moveTimer = new Timer(moveTime);
+
+            moveTimer = new Timer(moveTime, timeOffset % moveTime);
+            pathIndex = (int)(timeOffset % moveTime) % path.Length;
+
             enabled = moveOnStart;
         }
         else
@@ -59,6 +63,11 @@ public class LerpPath : MonoBehaviour
                 Gizmos.DrawLine(
                     path[i].position,
                     path[closeLoop ? (i + 1) % path.Length : i - 1].position);
+
+                if (new RangeD(i, i + 1).Contains(timeOffset % moveTime))
+                {
+                    
+                }
             }
         }
         else
@@ -99,7 +108,7 @@ public class LerpPath : MonoBehaviour
                    t: moveTimer.Value));
 
         }
-        catch (IndexOutOfRangeException)
+        catch (System.IndexOutOfRangeException)
         {
             Debug.Log($"End of path reached. {pathIndex}");
             switch (endAction)
@@ -129,25 +138,4 @@ public class LerpPath : MonoBehaviour
         }
     }
 
-}
-
-public struct Timer
-{
-    private float time;
-
-    public float Length { get; set; }
-    public float Time
-    {
-        readonly get => time;
-        set => time = value >= Length ? Length : value <= 0 ? 0 : value;
-    }
-
-    public Timer(float length) : this() => Length = length;
-
-    public Timer(float length, float time) : this(length) => Time = time;
-
-    /// <summary> Returns <see cref="Time"/> divided by <see cref="Length"/>. </summary>
-    public readonly float Value => Time / Length;
-    /// <summary> Returns true when <see cref="Time"/> is 0 or <see cref="Length"/>. </summary>
-    public readonly bool Alarm => Time >= Length | Time <= 0;
 }
