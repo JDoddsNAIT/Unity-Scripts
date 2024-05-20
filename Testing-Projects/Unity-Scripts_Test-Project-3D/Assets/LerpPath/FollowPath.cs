@@ -10,17 +10,19 @@ public class FollowPath : MonoBehaviour
         Continue,   // return to start
     }
     #region Public members
-    public bool reverse = false;
-    [Tooltip("What to do when the end of the path is reached.")]
-    public EndAction endAction;
     [Space]
-    [Tooltip("The path will begin on Start.")]
-    public bool moveOnStart = true;
+    public Path path;
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
-    public Path path;
+    [Header("Settings")]
+    [Tooltip("What to do when the end of the path is reached.")]
+    public EndAction endAction;
+    [Tooltip("The path will begin on Start if true.")]
+    public bool moveOnStart = true;
+    [Tooltip("Reverses direction.")]
+    public bool reverse = false;
     #endregion
 
     #region Private members
@@ -36,9 +38,8 @@ public class FollowPath : MonoBehaviour
         if (path.PathIsValid())
         {
             path.PathIsValid();
-            var offset = timeOffset % moveTime;
-            moveTimer = new Timer(moveTime, offset);
-            pathIndex = (int)offset % path.points.Length;
+            moveTimer = new Timer(moveTime, timeOffset % moveTime);
+            pathIndex = (int)timeOffset % path.points.Length;
 
             enabled = moveOnStart;
         }
@@ -63,8 +64,7 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        var offset = timeOffset % moveTime;
-        path.LerpPath((int)offset % path.points.Length, offset, out var position, out _);
+        path.LerpPath((int)timeOffset % path.points.Length, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(position, 0.2f);
     }

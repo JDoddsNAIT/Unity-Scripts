@@ -401,8 +401,8 @@ MonoBehaviour:
   endAction: 2
   moveOnStart: 1
   moveTime: 1
-  timeOffset: 10.05
-  path: {fileID: 0}
+  timeOffset: 1.64
+  path: {fileID: 1100987096}
 --- !u!1 &1100987094
 GameObject:
   m_ObjectHideFlags: 0
