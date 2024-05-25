@@ -60,21 +60,25 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
+        //path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
+        path.FindPath(timeOffset % moveTime, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion
 
     private void MoveAlongPath()
     {
-        try
+        moveTimer.Time += Reverse * Time.deltaTime;
+
+        path.FindPath(moveTimer.Value, out var position, out var rotation);
+        transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
+
+        if (moveTimer.Alarm)
         {
-            path.LerpPath(pathIndex, moveTimer.Value, out var position, out var rotation);
-            transform.SetPositionAndRotation(position, rotation);
-        }
-        catch (System.ArgumentOutOfRangeException)
-        {
+            moveTimer.Time = reverse ? moveTime : 0;
+            pathIndex += Reverse;
+
             switch (endAction)
             {
                 case EndAction.Stop:
@@ -88,17 +92,7 @@ public class FollowPath : MonoBehaviour
                     pathIndex = reverse ? path.points.Count - 1 : 0;
                     break;
                 default:
-                    throw;
-            }
-        }
-        finally
-        {
-            moveTimer.Time += Reverse * Time.deltaTime;
-
-            if (moveTimer.Alarm)
-            {
-                moveTimer.Time = reverse ? moveTime : 0;
-                pathIndex += Reverse;
+                    throw new System.ArgumentOutOfRangeException();
             }
         }
     }
