@@ -1,10 +1,10 @@
-# Follow Path
+# Spline Path
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
 |*2024/05/20*|*2024/05/20*|
 
-- [Follow Path](#follow-path)
+- [Spline Path](#spline-path)
   - [🛠️ Requirements](#️-requirements)
   - [📖 Description](#-description)
 - [FollowPath Script](#followpath-script)
@@ -23,13 +23,10 @@
 ## 🛠️ Requirements
 
 These scripts make use of the following components and assets:
-- `CommonLib` (included library)
 - [`Transform`][transform] (component)
 
 ## 📖 Description
 Follow Path allows you to create a `Path` consisting of multiple transforms, and have a object travel between their positions. To use the [`FollowPath`](#followpath-script) script, you must first create a path for it to follow using the [`Path`](#path-script) script.
-
-This script requires the use of `CommonLib`, a namespace that contains utility classes. The latest version of the required classes are included under a folder of the same name in the `📄.unitypackage`.
 
 ---
 # FollowPath Script
@@ -171,8 +168,10 @@ The `Path` script allows you to create a path to follow. To create a path, fill 
 ## ✒️ Signatures
 | Property | Summary |
 |-|-|
-| `points` | The list of points that make up the path. `FollowPath` will move to each point in order. |
+| `pathColor` | The path's drawn colour. |
+| `curveSegments` | The amount of segements drawn in the curve. Only affects the Bezier and Catmull-Rom path types. |
 | `closeLoop` | If checked, the first and last `points` in the path will be connected. |
+| `points` | The list of points that make up the path. `FollowPath` will move to each point in order. |
 | `UseChildren` | Generates a path using child transforms. |
 
 ## ⚙️ Gizmos
