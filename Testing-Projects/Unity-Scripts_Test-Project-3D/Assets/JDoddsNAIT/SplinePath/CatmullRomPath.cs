@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[AddComponentMenu("Spline Path/Catmull-Rom")]
+[AddComponentMenu("Spline Path/Catmull-Rom Path")]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class CatmullRomPath : Path
 {

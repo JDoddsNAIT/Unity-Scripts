@@ -2,7 +2,7 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/05/20*|*2024/05/20*|
+|*2024/05/20*|*2024/05/25*|
 
 - [Spline Path](#spline-path)
   - [🛠️ Requirements](#️-requirements)
@@ -18,7 +18,7 @@
   - [⚙️ Gizmos](#️-gizmos-1)
   - [💾 Source Code](#-source-code-1)
 
-> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package](./followPath.unitypackage) into the assets folder.
+> :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package][package] into the assets folder.
 
 ## 🛠️ Requirements
 
@@ -48,9 +48,9 @@ When the script is selected, a yellow sphere will show where the object will sta
 
 ## 💾 Source Code
 ```cs
-using JDoddsNAIT.Unity.CommonLib;
 using UnityEngine;
 
+[AddComponentMenu("Spline Path/Follow Path")]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class FollowPath : MonoBehaviour
 {
@@ -60,14 +60,15 @@ public class FollowPath : MonoBehaviour
         Reverse,    // Reverse direction
         Continue,   // return to start
     }
-    #region Public members
+
+    #region Inspector Values
     [Space]
     public Path path;
+    [Header("Settings")]
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
-    [Header("Settings")]
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Tooltip("Reverses direction.")]
@@ -75,9 +76,7 @@ public class FollowPath : MonoBehaviour
     #endregion
 
     #region Private members
-    private Timer moveTimer;
-    private int pathIndex = 0;
-
+    private Timer _moveTimer;
     private int Reverse => reverse ? -1 : 1;
     #endregion
 
@@ -86,8 +85,7 @@ public class FollowPath : MonoBehaviour
     {
         if (path.PathIsValid)
         {
-            moveTimer = new Timer(moveTime, timeOffset % moveTime);
-            pathIndex = (int)timeOffset % path.points.Count;
+            _moveTimer = new Timer(moveTime, timeOffset % moveTime);
         }
         else
         {
@@ -97,7 +95,7 @@ public class FollowPath : MonoBehaviour
 
     private void Update()
     {
-        moveTimer = new Timer(moveTime, moveTimer.Time);
+        _moveTimer = new Timer(moveTime, _moveTimer.Time);
         if (!path.PathIsValid)
         {
             enabled = false;
@@ -110,20 +108,20 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
+        path.GetPoint(timeOffset % moveTime, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion
 
     private void MoveAlongPath()
     {
-        try
-        {
-            path.LerpPath(pathIndex, moveTimer.Value, out var position, out var rotation);
-            transform.SetPositionAndRotation(position, rotation);
-        }
-        catch (System.ArgumentOutOfRangeException)
+        _moveTimer.Time += Reverse * Time.deltaTime;
+
+        path.GetPoint(_moveTimer.Value, out var position, out var rotation);
+        transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
+
+        if (_moveTimer.Alarm)
         {
             switch (endAction)
             {
@@ -134,28 +132,37 @@ public class FollowPath : MonoBehaviour
                 case EndAction.Reverse:
                     reverse = !reverse;
                     break;
-                case EndAction.Continue:
-                    pathIndex = reverse ? path.points.Count - 1 : 0;
-                    break;
                 default:
-                    throw;
+                    break;
             }
-        }
-        finally
-        {
-            moveTimer.Time += Reverse * Time.deltaTime;
 
-            if (moveTimer.Alarm)
-            {
-                moveTimer.Time = reverse ? moveTime : 0;
-                pathIndex += Reverse;
-            }
+            _moveTimer.Time = reverse ? moveTime : 0;
         }
     }
 
     public void Toggle() => enabled = !enabled;
 }
 
+public struct Timer
+{
+    private float time;
+
+    public float Length { get; set; }
+    public float Time
+    {
+        readonly get => time;
+        set => time = value >= Length ? Length : value <= 0 ? 0 : value;
+    }
+
+    public Timer(float length) : this() => Length = length;
+
+    public Timer(float length, float time) : this(length) => Time = time;
+
+    /// <summary> Returns <see cref="Time"/> divided by <see cref="Length"/>. </summary>
+    public readonly float Value => Time / Length;
+    /// <summary> Returns true when <see cref="Time"/> is 0 or <see cref="Length"/>. </summary>
+    public readonly bool Alarm => Time >= Length | Time <= 0;
+}
 ```
 
 # Path Script
@@ -168,6 +175,10 @@ The `Path` script allows you to create a path to follow. To create a path, fill 
 There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`. 
 
 `Linear` paths are simple, connecting each `Transform` to the next in a stright line.
+
+`Bezier` creates a path that is smooth. The path will pass only through the start an end points.
+
+`Catmull-Rom` is simmilar to `Bezier`, being a smooth path, the only difference is that `Catmull-Rom` will pass through all points on the path if  `closeLoop` is checked. If not, the first and last `Transform` in the `points` list are excluded from the path, acting instead as control points.
 
 ## ✒️ Signatures
 | Property | Summary |
@@ -183,6 +194,7 @@ There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`.
 Lines depicting the path.
 
 ## 💾 Source Code
+> :paperclip: This section only contains the source code for the abstract class `Path`. You can view the source code for `Linear`, `Bezier`, and `Catmull-Rom` path types by importing the [Unity Package][package] into any project.
 ```cs
 using System.Collections.Generic;
 using System.Linq;
@@ -195,7 +207,7 @@ public abstract class Path : MonoBehaviour
     [Header("Gizmo settings")]
     public Color pathColor = Color.white;
     [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
-    [Range(1, 100)] public int curveSegments; 
+    [Range(1, 100)] public int curveSegments = 20; 
     [Header("Path settings")]
     public bool closeLoop;
     public List<Transform> points = new();
@@ -230,22 +242,11 @@ public abstract class Path : MonoBehaviour
             Debug.Log("Could not generate path as no children were found");
         }
     }
-
-    public static int Combination(int n, int r) => Factorial(n) / (Factorial(r) * Factorial(n - r));
-    public static int Factorial(int n)
-    {
-        int nf = 1;
-        while (n > 1)
-        {
-            nf *= n;
-            n--;
-        }
-        return nf;
-    }
 }
 
 ```
 ---
 > :paperclip: Done looking? Check out more scripts [here](../).
 
+[package]: ./splinePath.unitypackage
 [transform]: https://docs.unity3d.com/ScriptReference/Transform.html

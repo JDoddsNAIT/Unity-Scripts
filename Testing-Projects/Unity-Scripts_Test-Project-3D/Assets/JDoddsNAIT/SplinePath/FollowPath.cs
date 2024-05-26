@@ -26,7 +26,7 @@ public class FollowPath : MonoBehaviour
     #endregion
 
     #region Private members
-    private Timer moveTimer;
+    private Timer _moveTimer;
     private int Reverse => reverse ? -1 : 1;
     #endregion
 
@@ -35,7 +35,7 @@ public class FollowPath : MonoBehaviour
     {
         if (path.PathIsValid)
         {
-            moveTimer = new Timer(moveTime, timeOffset % moveTime);
+            _moveTimer = new Timer(moveTime, timeOffset % moveTime);
         }
         else
         {
@@ -45,7 +45,7 @@ public class FollowPath : MonoBehaviour
 
     private void Update()
     {
-        moveTimer = new Timer(moveTime, moveTimer.Time);
+        _moveTimer = new Timer(moveTime, _moveTimer.Time);
         if (!path.PathIsValid)
         {
             enabled = false;
@@ -66,12 +66,12 @@ public class FollowPath : MonoBehaviour
 
     private void MoveAlongPath()
     {
-        moveTimer.Time += Reverse * Time.deltaTime;
+        _moveTimer.Time += Reverse * Time.deltaTime;
 
-        path.GetPoint(moveTimer.Value, out var position, out var rotation);
+        path.GetPoint(_moveTimer.Value, out var position, out var rotation);
         transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
 
-        if (moveTimer.Alarm)
+        if (_moveTimer.Alarm)
         {
             switch (endAction)
             {
@@ -86,7 +86,7 @@ public class FollowPath : MonoBehaviour
                     break;
             }
 
-            moveTimer.Time = reverse ? moveTime : 0;
+            _moveTimer.Time = reverse ? moveTime : 0;
         }
     }
 

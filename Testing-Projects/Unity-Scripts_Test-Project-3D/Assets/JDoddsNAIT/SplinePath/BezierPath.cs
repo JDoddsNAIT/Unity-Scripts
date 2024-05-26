@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[AddComponentMenu("Spline Path/Bezier")]
+[AddComponentMenu("Spline Path/Bezier Path")]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class BezierPath : Path
 {
@@ -33,5 +33,17 @@ public class BezierPath : Path
                 Gizmos.DrawLine(from, to);
             }
         }
+    }
+
+    public static int Combination(int n, int r) => Factorial(n) / (Factorial(r) * Factorial(n - r));
+    public static int Factorial(int n)
+    {
+        int nf = 1;
+        while (n > 1)
+        {
+            nf *= n;
+            n--;
+        }
+        return nf;
     }
 }
