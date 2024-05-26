@@ -36,6 +36,7 @@ public class CatmullRomPath : Path
     {
         if (PathIsValid)
         {
+            Gizmos.color = pathColor;
             float t2 = 0f;
             for (int i = 0; i < curveSegments; i++)
             {

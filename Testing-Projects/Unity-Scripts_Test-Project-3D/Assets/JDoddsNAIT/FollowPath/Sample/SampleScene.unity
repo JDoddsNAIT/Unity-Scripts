@@ -149,7 +149,7 @@ Transform:
   m_GameObject: {fileID: 3637664}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d51bc0909ac87d147aba7170497a9c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathColor: {r: 1, g: 1, b: 1, a: 1}
+  pathColor: {r: 0, g: 0, b: 1, a: 1}
   curveSegments: 0
   closeLoop: 0
   points:
@@ -465,7 +465,7 @@ MonoBehaviour:
   path: {fileID: 1721828720}
   moveTime: 5
   timeOffset: 0
-  endAction: 0
+  endAction: 1
   reverse: 0
 --- !u!65 &541032344
 BoxCollider:
@@ -547,7 +547,7 @@ Transform:
   m_GameObject: {fileID: 541032342}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -653,7 +653,7 @@ Transform:
   m_GameObject: {fileID: 632819478}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -733,7 +733,7 @@ Transform:
   m_GameObject: {fileID: 720416994}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -756,7 +756,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58690f7eaf11c024a89141429d93ed1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathColor: {r: 1, g: 1, b: 1, a: 1}
+  pathColor: {r: 0, g: 1, b: 0, a: 1}
   curveSegments: 20
   closeLoop: 0
   points:
@@ -980,8 +980,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1524ca01f65f8e741bab5241d11fed3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathColor: {r: 1, g: 1, b: 1, a: 1}
-  curveSegments: 100
+  pathColor: {r: 1, g: 0, b: 0, a: 1}
+  curveSegments: 20
   closeLoop: 0
   points:
   - {fileID: 168723457}
@@ -989,8 +989,6 @@ MonoBehaviour:
   - {fileID: 1963033540}
   - {fileID: 1116276567}
   - {fileID: 54679307}
-  tension: 0
-  t: 0
 --- !u!4 &1721828721
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,7 +998,7 @@ Transform:
   m_GameObject: {fileID: 1721828719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.5, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1128,7 +1126,7 @@ Transform:
   m_GameObject: {fileID: 1773133143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

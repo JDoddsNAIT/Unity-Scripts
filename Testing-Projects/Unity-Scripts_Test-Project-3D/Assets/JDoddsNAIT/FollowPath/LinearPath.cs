@@ -39,10 +39,14 @@ public class LinearPath : Path
 
     private void OnDrawGizmos()
     {
-        int n = points.Count + (closeLoop ? 1 : 0);
-        for (int i = 1; i < n; i++)
+        if (PathIsValid)
         {
-            Gizmos.DrawLine(points[i - 1].position, points[i % points.Count].position);
+            Gizmos.color = pathColor;
+            int n = points.Count + (closeLoop ? 1 : 0);
+            for (int i = 1; i < n; i++)
+            {
+                Gizmos.DrawLine(points[i - 1].position, points[i % points.Count].position);
+            } 
         }
     }
 }

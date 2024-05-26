@@ -22,6 +22,7 @@ public class BezierPath : Path
     {
         if (PathIsValid)
         {
+            Gizmos.color = pathColor;
             float t = 0f;
             for (int i = 0; i < curveSegments; i++)
             {
