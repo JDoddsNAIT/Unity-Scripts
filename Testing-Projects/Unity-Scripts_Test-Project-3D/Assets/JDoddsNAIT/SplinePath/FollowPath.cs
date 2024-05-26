@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[AddComponentMenu("Spline Path/Follow Path")]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class FollowPath : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class FollowPath : MonoBehaviour
         Reverse,    // Reverse direction
         Continue,   // return to start
     }
+
     #region Inspector Values
     [Space]
     public Path path;
@@ -56,7 +58,6 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        //path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
         path.GetPoint(timeOffset % moveTime, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);

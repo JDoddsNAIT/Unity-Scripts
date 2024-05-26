@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-[AddComponentMenu("Path/Bezier")]
+[AddComponentMenu("Spline Path/Bezier")]
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class BezierPath : Path
 {
     public override void GetPoint(float t, out Vector3 position, out Quaternion? rotation)

@@ -165,6 +165,10 @@ The `Path` script allows you to create a path to follow. To create a path, fill 
 
 > :paperclip: You can also easily create a path by setting all the `Transforms` as children of the script in the heirarchy, the selecting "Generate Path" in the context menu. (Access the context menu by right-clicking the component.)
 
+There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`. 
+
+`Linear` paths are simple, connecting each `Transform` to the next in a stright line.
+
 ## ✒️ Signatures
 | Property | Summary |
 |-|-|
@@ -176,7 +180,7 @@ The `Path` script allows you to create a path to follow. To create a path, fill 
 
 ## ⚙️ Gizmos
 
-Yellow lines conneting each point to visualize the path.
+Lines depicting the path.
 
 ## 💾 Source Code
 ```cs
@@ -184,13 +188,21 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Path : MonoBehaviour
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
+public abstract class Path : MonoBehaviour
 {
-    public List<Transform> points = new();
+    #region Inspector Values
+    [Header("Gizmo settings")]
+    public Color pathColor = Color.white;
+    [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
+    [Range(1, 100)] public int curveSegments; 
+    [Header("Path settings")]
     public bool closeLoop;
+    public List<Transform> points = new();
+    #endregion
 
     private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
-    public bool PathIsValid
+    public virtual bool PathIsValid
     {
         get
         {
@@ -203,30 +215,7 @@ public class Path : MonoBehaviour
         }
     }
 
-    public void LerpPath(int index, float t, out Vector3 position, out Quaternion rotation)
-    {
-        var nextIndex = closeLoop ? (index + 1) % points.Count : index + 1;
-        position = Vector3.Lerp(
-               a: points[index].position,
-               b: points[nextIndex].position,
-               t: t);
-        rotation = Quaternion.Lerp(
-               a: points[index].rotation,
-               b: points[nextIndex].rotation,
-               t: t);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (PathIsValid)
-        {
-            Gizmos.color = Color.yellow;
-            for (int i = closeLoop ? 0 : 1; i < points.Count; i++)
-            {
-                Gizmos.DrawLine(points[i].position, points[closeLoop ? (i + 1) % points.Count : i - 1].position);
-            }
-        }
-    }
+    public abstract void GetPoint(float t, out Vector3 position, out Quaternion? rotation);
 
     [ContextMenu("Generate Path from Children")]
     private void UseChildren()
@@ -240,6 +229,18 @@ public class Path : MonoBehaviour
         {
             Debug.Log("Could not generate path as no children were found");
         }
+    }
+
+    public static int Combination(int n, int r) => Factorial(n) / (Factorial(r) * Factorial(n - r));
+    public static int Factorial(int n)
+    {
+        int nf = 1;
+        while (n > 1)
+        {
+            nf *= n;
+            n--;
+        }
+        return nf;
     }
 }
 
