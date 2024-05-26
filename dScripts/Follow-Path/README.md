@@ -170,7 +170,7 @@ public struct Timer
 ## 📖 Description
 The `Path` script allows you to create a path to follow. To create a path, fill the `points` array with `Transforms`. `FollowPath` will traverse these points in order, inheriting their position and rotation. To connect the first and last points of the array, check the `closeLoop` box.
 
-> :paperclip: You can also easily create a path by setting all the `Transforms` as children of the script in the heirarchy, the selecting "Generate Path" in the context menu. (Access the context menu by right-clicking the component.)
+> :paperclip: You can also easily create a path by setting all the `Transforms` as children of the script in the heirarchy, then selecting "Generate Path" in the context menu. (Access the context menu by right-clicking the component.)
 
 There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`. 
 
