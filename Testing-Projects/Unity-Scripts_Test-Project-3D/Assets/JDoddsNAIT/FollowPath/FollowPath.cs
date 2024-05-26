@@ -10,14 +10,14 @@ public class FollowPath : MonoBehaviour
         Reverse,    // Reverse direction
         Continue,   // return to start
     }
-    #region Public members
+    #region Inspector Values
     [Space]
     public Path path;
+    [Header("Settings")]
     [Tooltip("The time in seconds to travel between each node.")]
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
-    [Header("Settings")]
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Tooltip("Reverses direction.")]
@@ -62,7 +62,7 @@ public class FollowPath : MonoBehaviour
     {
         //path.LerpPath((int)timeOffset % path.points.Count, timeOffset % moveTime, out var position, out _);
         Gizmos.color = Color.yellow;
-        path.FindPath(timeOffset % moveTime, out var position, out _);
+        path.GetPoint(timeOffset % moveTime, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion
@@ -71,14 +71,11 @@ public class FollowPath : MonoBehaviour
     {
         moveTimer.Time += Reverse * Time.deltaTime;
 
-        path.FindPath(moveTimer.Value, out var position, out var rotation);
+        path.GetPoint(moveTimer.Value, out var position, out var rotation);
         transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
 
         if (moveTimer.Alarm)
         {
-            moveTimer.Time = reverse ? moveTime : 0;
-            pathIndex += Reverse;
-
             switch (endAction)
             {
                 case EndAction.Stop:
@@ -94,6 +91,9 @@ public class FollowPath : MonoBehaviour
                 default:
                     throw new System.ArgumentOutOfRangeException();
             }
+
+            moveTimer.Time = reverse ? moveTime : 0;
+            pathIndex += Reverse;
         }
     }
 

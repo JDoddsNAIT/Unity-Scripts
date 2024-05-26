@@ -2,21 +2,20 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Path : MonoBehaviour
+public abstract class Path : MonoBehaviour
 {
-    public enum PathType { Linear, Bezier, Catmull, }
-
-    [Header("Path settings")]
-    public List<Transform> points = new();
-    public bool closeLoop;
-    public PathType type = PathType.Linear;
+    #region Inspector Values
     [Header("Gizmo settings")]
-    public Color gizmoColor = Color.white;
+    public Color pathColor = Color.white;
     [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
-    [Min(1)] public int curveSegments;
+    [Range(1, 100)] public int curveSegments; 
+    [Header("Path settings")]
+    public bool closeLoop;
+    public List<Transform> points = new();
+    #endregion
 
     private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
-    public bool PathIsValid
+    public virtual bool PathIsValid
     {
         get
         {
@@ -29,36 +28,22 @@ public class Path : MonoBehaviour
         }
     }
 
-    public void LerpPath(int idx, float t, out Vector3 position, out Quaternion rotation)
-    {
-        var idx2 = closeLoop ? (idx + 1) % points.Count : idx + 1;
-        position = Vector3.Lerp(
-               a: points[idx].position,
-               b: points[idx2].position,
-               t: t);
-        rotation = Quaternion.Lerp(
-               a: points[idx].rotation,
-               b: points[idx2].rotation,
-               t: t);
-    }
+    public abstract void GetPoint(float t, out Vector3 position, out Quaternion? rotation);
 
-    public void FindPath(float t, out Vector3 position, out Quaternion? rotation)
-    {
-        switch (type)
-        {
-            case PathType.Linear:
-                Lerp(t, out position, out rotation);
-                break;
-            case PathType.Bezier:
-                Bezier(t, out position); rotation = null;
-                break;
-            case PathType.Catmull:
-                Catmull(t, out position, out rotation);
-                break;
-            default:
-                throw new System.ArgumentOutOfRangeException();
-        }
-    }
+    //public void FindPath(float t, out Vector3 position, out Quaternion? rotation)
+    //{
+    //    switch (type)
+    //    {
+    //        case PathType.Linear:
+    //            Lerp(t, out position, out rotation);
+    //            break;
+    //        case PathType.Bezier:
+    //            Bezier(t, out position); rotation = null;
+    //            break;
+    //        default:
+    //            throw new System.ArgumentOutOfRangeException();
+    //    }
+    //}
 
     private void Lerp(float t, out Vector3 position, out Quaternion? rotation)
     {
@@ -83,24 +68,15 @@ public class Path : MonoBehaviour
         }
         pl -= sl;
 
-        try
-        {
-            float lt = (l - pl) / sl; // lerp value
-            position = Vector3.Lerp(
-                  a: points[idx - 1].position,
-                  b: points[idx % points.Count].position,
-                  t: lt);
-            rotation = Quaternion.Lerp(
-                   a: points[idx - 1].rotation,
-                   b: points[idx % points.Count].rotation,
-                   t: lt);
-        }
-        catch (System.Exception)
-        {
-            Debug.LogError($"{nameof(points.Count)} = {points.Count}, " +
-                $"{nameof(idx)} = {idx}");
-            throw;
-        }
+        float lt = (l - pl) / sl; // lerp value
+        position = Vector3.Lerp(
+              a: points[idx - 1].position,
+              b: points[idx % points.Count].position,
+              t: lt);
+        rotation = Quaternion.Lerp(
+               a: points[idx - 1].rotation,
+               b: points[idx % points.Count].rotation,
+               t: lt);
     }
 
     private void Bezier(float t, out Vector3 position)
@@ -117,37 +93,32 @@ public class Path : MonoBehaviour
         position = b;
     }
 
-    private void Catmull(float t, out Vector3 position, out Quaternion? rotation)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (PathIsValid)
-        {
-            Gizmos.color = gizmoColor;
-            if (type != PathType.Linear)
-            {
-                float t = 0f;
-                for (int i = 0; i < curveSegments; i++)
-                {
-                    FindPath(t, out var from, out _);
-                    t += 1 / (float)curveSegments;
-                    FindPath(t, out var to, out _);
-                    Gizmos.DrawLine(from, to);
-                }
-            }
-            else
-            {
-                int n = points.Count + (closeLoop ? 1 : 0);
-                for (int i = 1; i < n; i++)
-                {
-                    Gizmos.DrawLine(points[i - 1].position, points[i % points.Count].position);
-                }
-            }
-        }
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (PathIsValid)
+    //    {
+    //        Gizmos.color = gizmoColor;
+    //        if (type != PathType.Linear)
+    //        {
+    //            float t = 0f;
+    //            for (int i = 0; i < curveSegments; i++)
+    //            {
+    //                FindPath(t, out var from, out _);
+    //                t += 1 / (float)curveSegments;
+    //                FindPath(t, out var to, out _);
+    //                Gizmos.DrawLine(from, to);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            int n = points.Count + (closeLoop ? 1 : 0);
+    //            for (int i = 1; i < n; i++)
+    //            {
+    //                Gizmos.DrawLine(points[i - 1].position, points[i % points.Count].position);
+    //            }
+    //        }
+    //    }
+    //}
 
     [ContextMenu("Generate Path from Children")]
     private void UseChildren()
