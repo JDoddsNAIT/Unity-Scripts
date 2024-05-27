@@ -35,20 +35,20 @@ public class FollowPath : MonoBehaviour
     #endregion
 
     #region Private members
-    private float _moveTimer;
+    protected float _moveTimer;
 
-    private float T => endAction switch
+    protected float T => endAction switch
     {
-        EndAction.Stop => Mathf.Clamp01(timeOffset + (_moveTimer / moveTime)),
-        EndAction.Reverse => Mathf.PingPong(timeOffset + (_moveTimer / moveTime), 1),
-        _ => Mathf.Repeat(timeOffset + (_moveTimer / moveTime), 1),
+        EndAction.Stop => Mathf.Clamp01((timeOffset + _moveTimer) / moveTime),
+        EndAction.Reverse => Mathf.PingPong((timeOffset + _moveTimer) / moveTime, 1),
+        _ => Mathf.Repeat((timeOffset + _moveTimer) / moveTime, 1),
     };
 
-    private Vector3 _previousPosition;
+    protected Vector3 _previousPosition;
     #endregion
 
     #region Unity Messages
-    private void Start()
+    private void Awake()
     {
         _previousPosition = transform.position;
         if (!path.PathIsValid)

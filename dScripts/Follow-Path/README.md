@@ -2,21 +2,19 @@
 
 | 📆 Date Added | 📆 Updated On |
 |-|-|
-|*2024/05/20*|*2024/05/25*|
+|*2024/05/20*|*2024/05/27*|
 
 - [Spline Path](#spline-path)
   - [🛠️ Requirements](#️-requirements)
   - [📖 Description](#-description)
-- [FollowPath Script](#followpath-script)
+- [FollowPath Scripts](#followpath-scripts)
   - [📖 Description](#-description-1)
   - [🔧 Properties](#-properties)
   - [⚙️ Gizmos](#️-gizmos)
-  - [💾 Source Code](#-source-code)
 - [Path Script](#path-script)
   - [📖 Description](#-description-2)
   - [✒️ Signatures](#️-signatures)
   - [⚙️ Gizmos](#️-gizmos-1)
-  - [💾 Source Code](#-source-code-1)
 
 > :paperclip: This requires multiple scripts in order to function. To add them to your Unity project, simply import the [Unity Package][package] into the assets folder.
 
@@ -24,15 +22,21 @@
 
 These scripts make use of the following components and assets:
 - [`Transform`][transform] (component)
+- [`Rigidbody`][rigidbody] (component)
+- [`Rigidbody2D`][rigidbody2d] (component)
 
 ## 📖 Description
-Follow Path allows you to create a `Path` consisting of multiple transforms, and have a object travel between their positions. To use the [`FollowPath`](#followpath-script) script, you must first create a path for it to follow using the [`Path`](#path-script) script.
+Follow Path allows you to create a `Path` consisting of multiple transforms, and have a object travel between their positions. To use the [`FollowPath`](#followpath-script) scripts, you must first create a path for it to follow using the [`Path`](#path-script) script.
 
 ---
-# FollowPath Script
+# FollowPath Scripts
 
 ## 📖 Description
-Attaching the `FollowPath` script to an object will make it move along the assigned `path` while the script is `enabled`. The `moveTime` property determines how long it will take for the object reach the end of path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
+There are three variations to this script. `FollowPath` follows the path by setting the position to a point along the path. `FollowPath3D` and `FollowPath2D` work by setting the `velocity` of a `Rigidbody` and `Rigidbody2D` component respectively.
+
+Adding either `FollowPath` script to an object will make it move along the assigned `path` while the script is `enabled`. The `moveTime` property determines how long it will take for the object reach the end of path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
+
+Avoid adding multiple `FollowPath` scripts to a single object as the results are unpredictable.
 
 ## 🔧 Properties
 | Property | Summary |
@@ -46,125 +50,6 @@ Attaching the `FollowPath` script to an object will make it move along the assig
 
 ## ⚙️ Gizmos
 When the script is selected, a yellow sphere will show where the object will start from, which can be changed  using `timeOffset`.
-
-## 💾 Source Code
-```cs
-using UnityEngine;
-
-[AddComponentMenu("Spline Path/Follow Path")]
-[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
-public class FollowPath : MonoBehaviour
-{
-    public enum EndAction
-    {
-        Stop,       // Stop moving
-        Reverse,    // Reverse direction
-        Continue,   // return to start
-    }
-
-    #region Inspector Values
-    [Space]
-    public Path path;
-    [Header("Settings")]
-    [Tooltip("The time in seconds to travel between each node.")]
-    [Min(0)] public float moveTime = 1.0f;
-    [Tooltip("The time offset in seconds.")]
-    [Min(0)] public float timeOffset = 0.0f;
-    [Tooltip("What to do when the end of the path is reached.")]
-    public EndAction endAction;
-    [Tooltip("Reverses direction.")]
-    public bool reverse = false;
-    #endregion
-
-    #region Private members
-    private Timer _moveTimer;
-    private int Reverse => reverse ? -1 : 1;
-    #endregion
-
-    #region Unity Messages
-    private void Start()
-    {
-        if (path.PathIsValid)
-        {
-            _moveTimer = new Timer(moveTime, timeOffset % moveTime);
-        }
-        else
-        {
-            enabled = false;
-        }
-    }
-
-    private void Update()
-    {
-        _moveTimer = new Timer(moveTime, _moveTimer.Time);
-        if (!path.PathIsValid)
-        {
-            enabled = false;
-        }
-        else
-        {
-            MoveAlongPath();
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        path.GetPoint(timeOffset % moveTime, out var position, out _);
-        Gizmos.DrawSphere(position, 0.2f);
-    }
-    #endregion
-
-    private void MoveAlongPath()
-    {
-        _moveTimer.Time += Reverse * Time.deltaTime;
-
-        path.GetPoint(_moveTimer.Value, out var position, out var rotation);
-        transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
-
-        if (_moveTimer.Alarm)
-        {
-            switch (endAction)
-            {
-                case EndAction.Stop:
-                    reverse = !reverse;
-                    enabled = false;
-                    break;
-                case EndAction.Reverse:
-                    reverse = !reverse;
-                    break;
-                default:
-                    break;
-            }
-
-            _moveTimer.Time = reverse ? moveTime : 0;
-        }
-    }
-
-    public void Toggle() => enabled = !enabled;
-}
-
-public struct Timer
-{
-    private float time;
-
-    public float Length { get; set; }
-    public float Time
-    {
-        readonly get => time;
-        set => time = value >= Length ? Length : value <= 0 ? 0 : value;
-    }
-
-    public Timer(float length) : this() => Length = length;
-
-    public Timer(float length, float time) : this(length) => Time = time;
-
-    /// <summary> Returns <see cref="Time"/> divided by <see cref="Length"/>. </summary>
-    public readonly float Value => Time / Length;
-    /// <summary> Returns true when <see cref="Time"/> is 0 or <see cref="Length"/>. </summary>
-    public readonly bool Alarm => Time >= Length | Time <= 0;
-}
-```
 
 # Path Script
 
@@ -194,60 +79,10 @@ There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`.
 
 Lines depicting the path.
 
-## 💾 Source Code
-> :paperclip: This section only contains the source code for the abstract class `Path`. You can view the source code for `Linear`, `Bezier`, and `Catmull-Rom` path types by importing the [Unity Package][package] into any project.
-```cs
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
-public abstract class Path : MonoBehaviour
-{
-    #region Inspector Values
-    [Header("Gizmo settings")]
-    public Color pathColor = Color.white;
-    [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
-    [Range(1, 100)] public int curveSegments = 20; 
-    [Header("Path settings")]
-    public bool closeLoop;
-    public List<Transform> points = new();
-    #endregion
-
-    private readonly string INVALID_PATH = $"Length of {nameof(points)} cannot be less than 2 or contain any nulls.";
-    public virtual bool PathIsValid
-    {
-        get
-        {
-            var result = points != null && (points.Count >= 2) && !points.Where(p => p == null).Any();
-            if (!result)
-            {
-                Debug.LogError(INVALID_PATH);
-            }
-            return result;
-        }
-    }
-
-    public abstract void GetPoint(float t, out Vector3 position, out Quaternion? rotation);
-
-    [ContextMenu("Generate Path from Children")]
-    private void UseChildren()
-    {
-        List<Transform> transforms = GetComponentsInChildren<Transform>(includeInactive: false).Where(t => t != transform).ToList();
-        if (transforms.Count > 0)
-        {
-            points = transforms;
-        }
-        else
-        {
-            Debug.Log("Could not generate path as no children were found");
-        }
-    }
-}
-
-```
 ---
 > :paperclip: Done looking? Check out more scripts [here](../).
 
 [package]: ./splinePath.unitypackage
 [transform]: https://docs.unity3d.com/ScriptReference/Transform.html
+[rigidbody]: https://docs.unity3d.com/ScriptReference/Rigidbody.html
+[rigidbody2d]: https://docs.unity3d.com/ScriptReference/Rigidbody2D.html
