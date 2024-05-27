@@ -32,7 +32,7 @@ Follow Path allows you to create a `Path` consisting of multiple transforms, and
 # FollowPath Script
 
 ## 📖 Description
-Attaching the `FollowPath` script to an object will make it translate along the assigned `path`. You may stop movement by modifying the `enabled` member. The `moveTime` property determines how long it will take for the object reach the end of path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
+Attaching the `FollowPath` script to an object will make it move along the assigned `path` while the script is `enabled`. The `moveTime` property determines how long it will take for the object reach the end of path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
 
 ## 🔧 Properties
 | Property | Summary |
@@ -42,6 +42,7 @@ Attaching the `FollowPath` script to an object will make it translate along the 
 | `timeOffset` | Allows you to offset the object further along the path. |
 | `endAction` | Determines the behavior when the object reaches the end of the `path`. `Stop` means the object will stop moving, `Reverse` means the direction will be reversed and movement will continue, and `Continue` means the object will loop around the path without stopping. |
 | `reverse` | The object will travel in the opposite direction if checked. |
+| `rotationMode` | Dictates how the script will rotate the body. Use `None` for no ratation, `Keyframe` to interpolate between the rotation of each point, and `Path` to make the body look in the direction it is moving.
 
 ## ⚙️ Gizmos
 When the script is selected, a yellow sphere will show where the object will start from, which can be changed  using `timeOffset`.

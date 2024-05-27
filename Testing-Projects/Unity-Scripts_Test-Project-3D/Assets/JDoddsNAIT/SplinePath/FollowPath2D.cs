@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[AddComponentMenu("Spline Path/Follow Path"), RequireComponent(typeof(Rigidbody2D))]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
+[AddComponentMenu("Spline Path/Follow Path (Rigidbody2D)"), RequireComponent(typeof(Rigidbody2D))]
 public class FollowPath2D : MonoBehaviour
 {
     public enum EndAction
@@ -14,7 +14,7 @@ public class FollowPath2D : MonoBehaviour
     {
         None,       // No rotation
         Keyframe,   // The script will interpolate between the rotation of the points
-        Path,       // The script will look int the direction it is moving
+        Path,       // The script will look in the direction it is moving
     }
 
     #region Inspector Values
@@ -26,10 +26,10 @@ public class FollowPath2D : MonoBehaviour
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
     [Space]
-    [Tooltip("What to do when the end of the path is reached.")]
-    public EndAction endAction;
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
+    [Tooltip("What to do when the end of the path is reached.")]
+    public EndAction endAction;
     [Tooltip("Dictates how the script will rotate the body.")]
     public RotationMode rotationMode = RotationMode.None;
     #endregion

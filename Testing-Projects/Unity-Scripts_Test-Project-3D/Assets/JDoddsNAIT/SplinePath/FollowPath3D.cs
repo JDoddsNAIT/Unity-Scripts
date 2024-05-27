@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
-[AddComponentMenu("Spline Path/Follow Path (Transform)")]
-public class FollowPath : MonoBehaviour
+[AddComponentMenu("Spline Path/Follow Path (Rigidbody)"), RequireComponent(typeof(Rigidbody))]
+public class FollowPath3D : MonoBehaviour
 {
     public enum EndAction
     {
@@ -36,7 +36,7 @@ public class FollowPath : MonoBehaviour
 
     #region Private members
     private float _moveTimer;
-
+    
     private float T => endAction switch
     {
         EndAction.Stop => Mathf.Clamp01(timeOffset + (_moveTimer / moveTime)),
@@ -44,13 +44,15 @@ public class FollowPath : MonoBehaviour
         _ => Mathf.Repeat(timeOffset + (_moveTimer / moveTime), 1),
     };
 
+    public Rigidbody Body { get; private set; }
     private Vector3 _previousPosition;
     #endregion
 
     #region Unity Messages
     private void Start()
     {
-        _previousPosition = transform.position;
+        Body = GetComponent<Rigidbody>();
+        _previousPosition = Body.position;
         if (!path.PathIsValid)
         {
             enabled = false;
@@ -84,13 +86,23 @@ public class FollowPath : MonoBehaviour
         var t = T;
 
         path.GetPointAlongPath(t, out var position, out var rotation);
-        Quaternion newRotation = rotationMode switch
+        Body.position = _previousPosition;
+        Body.velocity = (position - _previousPosition) / Time.deltaTime;
+
+        switch (rotationMode)
         {
-            RotationMode.Keyframe => rotation,
-            RotationMode.Path => Quaternion.LookRotation(position - _previousPosition),
-            _ => transform.rotation,
-        };
-        transform.SetPositionAndRotation(position, newRotation);
+            case RotationMode.Keyframe:
+                Body.MoveRotation(rotation);
+                break;
+            case RotationMode.Path:
+                if (Body.velocity != Vector3.zero)
+                {
+                    Body.MoveRotation(Quaternion.LookRotation(Body.velocity));
+                }
+                break;
+            default:
+                break;
+        }
 
         if (endAction == EndAction.Stop && t == 1 || t == 0)
         {
