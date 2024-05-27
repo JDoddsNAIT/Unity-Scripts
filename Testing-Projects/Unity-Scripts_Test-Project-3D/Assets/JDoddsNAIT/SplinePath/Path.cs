@@ -29,7 +29,7 @@ public abstract class Path : MonoBehaviour
         }
     }
 
-    public abstract void GetPoint(float t, out Vector3 position, out Quaternion? rotation);
+    public abstract void GetPointAlongPath(float t, out Vector3 position, out Quaternion? rotation);
 
     [ContextMenu("Generate Path from Children")]
     private void UseChildren()

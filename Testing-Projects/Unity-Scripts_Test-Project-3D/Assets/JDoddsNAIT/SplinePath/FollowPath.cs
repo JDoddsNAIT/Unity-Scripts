@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[AddComponentMenu("Spline Path/Follow Path")]
+[AddComponentMenu("Spline Path/Follow Path"), RequireComponent(typeof(Rigidbody))]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class FollowPath : MonoBehaviour
 {
@@ -26,21 +26,26 @@ public class FollowPath : MonoBehaviour
     #endregion
 
     #region Private members
-    private Timer _moveTimer;
+    private float _moveTimer;
     private int Reverse => reverse ? -1 : 1;
 
-    private Rigidbody _rb;
+    private float T => endAction switch
+    {
+        EndAction.Stop => Mathf.Clamp01(timeOffset + (_moveTimer / moveTime)),
+        EndAction.Reverse => Mathf.PingPong(timeOffset + (_moveTimer / moveTime), 1),
+        _ => Mathf.Repeat(timeOffset + (_moveTimer / moveTime), 1),
+    };
+
+    public Rigidbody Body { get; private set; }
     private Vector3 _previousPosition;
     #endregion
 
     #region Unity Messages
     private void Start()
     {
-        if (path.PathIsValid)
-        {
-            _moveTimer = new Timer(moveTime, timeOffset * moveTime);
-        }
-        else
+        Body = GetComponent<Rigidbody>();
+        _previousPosition = Body.position;
+        if (!path.PathIsValid)
         {
             enabled = false;
         }
@@ -48,7 +53,6 @@ public class FollowPath : MonoBehaviour
 
     private void Update()
     {
-        _moveTimer.Length = moveTime;
         if (!path.PathIsValid)
         {
             enabled = false;
@@ -62,66 +66,23 @@ public class FollowPath : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        float point = endAction switch
-        {
-            EndAction.Stop => Mathf.Clamp01(timeOffset/* / moveTime*/),
-            EndAction.Reverse => Mathf.PingPong(timeOffset / moveTime, 1),
-            EndAction.Continue => Mathf.Repeat(timeOffset / moveTime, 1),
-            _ => Mathf.Clamp01(timeOffset / moveTime),
-        };
-
-
-        path.GetPoint(point, out var position, out _);
+        
+        path.GetPointAlongPath(T, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion
 
     private void MoveAlongPath()
     {
-        _moveTimer.Time += Reverse * Time.deltaTime;
+        _moveTimer += Reverse * Time.deltaTime;
 
-        path.GetPoint(_moveTimer.Value, out var position, out var rotation);
-        transform.SetPositionAndRotation(position, rotation ?? transform.rotation);
+        path.GetPointAlongPath(T, out var position, out var rotation);
+        Body.position = _previousPosition;
+        Body.velocity = (position - _previousPosition) / Time.deltaTime;
+        
 
-        if (_moveTimer.Alarm)
-        {
-            switch (endAction)
-            {
-                case EndAction.Stop:
-                    reverse = !reverse;
-                    enabled = false;
-                    break;
-                case EndAction.Reverse:
-                    reverse = !reverse;
-                    break;
-                default:
-                    break;
-            }
-
-            _moveTimer.Time = reverse ? moveTime : 0;
-        }
+        _previousPosition = position;
     }
 
     public void Toggle() => enabled = !enabled;
-}
-
-public struct Timer
-{
-    private float time;
-
-    public float Length { get; set; }
-    public float Time
-    {
-        readonly get => time;
-        set => time = value >= Length ? Length : value <= 0 ? 0 : value;
-    }
-
-    public Timer(float length) : this() => Length = length;
-
-    public Timer(float length, float time) : this(length) => Time = time;
-
-    /// <summary> Returns <see cref="Time"/> divided by <see cref="Length"/>. </summary>
-    public readonly float Value => Time / Length;
-    /// <summary> Returns true when <see cref="Time"/> is 0 or <see cref="Length"/>. </summary>
-    public readonly bool Alarm => Time >= Length | Time <= 0;
 }

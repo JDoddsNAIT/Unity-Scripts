@@ -4,7 +4,7 @@
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class BezierPath : Path
 {
-    public override void GetPoint(float t, out Vector3 position, out Quaternion? rotation)
+    public override void GetPointAlongPath(float t, out Vector3 position, out Quaternion? rotation)
     {
         t = Mathf.Clamp01(t);
 
@@ -27,9 +27,9 @@ public class BezierPath : Path
             float t = 0f;
             for (int i = 0; i < curveSegments; i++)
             {
-                GetPoint(t, out var from, out _);
+                GetPointAlongPath(t, out var from, out _);
                 t += 1 / (float)curveSegments;
-                GetPoint(t, out var to, out _);
+                GetPointAlongPath(t, out var to, out _);
                 Gizmos.DrawLine(from, to);
             }
         }

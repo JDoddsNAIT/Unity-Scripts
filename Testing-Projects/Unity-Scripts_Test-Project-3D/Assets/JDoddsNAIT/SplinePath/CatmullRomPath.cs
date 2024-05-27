@@ -18,7 +18,7 @@ public class CatmullRomPath : Path
         }
     }
 
-    public override void GetPoint(float t, out Vector3 position, out Quaternion? rotation)
+    public override void GetPointAlongPath(float t, out Vector3 position, out Quaternion? rotation)
     {
         rotation = null;
 
@@ -41,9 +41,9 @@ public class CatmullRomPath : Path
             float t2 = 0f;
             for (int i = 0; i < curveSegments; i++)
             {
-                GetPoint(t2, out var from, out _);
+                GetPointAlongPath(t2, out var from, out _);
                 t2 += 1 / (float)curveSegments;
-                GetPoint(t2, out var to, out _);
+                GetPointAlongPath(t2, out var to, out _);
                 Gizmos.DrawLine(from, to);
             }
         }

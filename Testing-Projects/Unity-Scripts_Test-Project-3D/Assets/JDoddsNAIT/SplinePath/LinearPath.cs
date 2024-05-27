@@ -4,7 +4,7 @@
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class LinearPath : Path
 {
-    public override void GetPoint(float t, out Vector3 position, out Quaternion? rotation)
+    public override void GetPointAlongPath(float t, out Vector3 position, out Quaternion? rotation)
     {
         t = Mathf.Clamp01(t);
         int max = points.Count + (closeLoop ? 1 : 0);
