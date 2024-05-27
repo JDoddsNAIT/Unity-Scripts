@@ -1,8 +1,8 @@
 using UnityEngine;
 
-[AddComponentMenu("Spline Path/Follow Path"), RequireComponent(typeof(Rigidbody))]
+[AddComponentMenu("Spline Path/Follow Path"), RequireComponent(typeof(Rigidbody2D))]
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
-public class FollowPath : MonoBehaviour
+public class FollowPath2D : MonoBehaviour
 {
     public enum EndAction
     {
@@ -36,7 +36,7 @@ public class FollowPath : MonoBehaviour
 
     #region Private members
     private float _moveTimer;
-    
+
     private float T => endAction switch
     {
         EndAction.Stop => Mathf.Clamp01(timeOffset + (_moveTimer / moveTime)),
@@ -44,14 +44,14 @@ public class FollowPath : MonoBehaviour
         _ => Mathf.Repeat(timeOffset + (_moveTimer / moveTime), 1),
     };
 
-    public Rigidbody Body { get; private set; }
+    public Rigidbody2D Body { get; private set; }
     private Vector3 _previousPosition;
     #endregion
 
     #region Unity Messages
     private void Start()
     {
-        Body = GetComponent<Rigidbody>();
+        Body = GetComponent<Rigidbody2D>();
         _previousPosition = Body.position;
         if (!path.PathIsValid)
         {
@@ -95,7 +95,7 @@ public class FollowPath : MonoBehaviour
                 Body.MoveRotation(rotation);
                 break;
             case RotationMode.Path:
-                if (Body.velocity != Vector3.zero)
+                if (Body.velocity != Vector2.zero)
                 {
                     Body.MoveRotation(Quaternion.LookRotation(Body.velocity));
                 }
