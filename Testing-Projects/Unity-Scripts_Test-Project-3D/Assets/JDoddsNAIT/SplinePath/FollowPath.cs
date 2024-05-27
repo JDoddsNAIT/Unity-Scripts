@@ -28,6 +28,9 @@ public class FollowPath : MonoBehaviour
     #region Private members
     private Timer _moveTimer;
     private int Reverse => reverse ? -1 : 1;
+
+    private Rigidbody _rb;
+    private Vector3 _previousPosition;
     #endregion
 
     #region Unity Messages
@@ -35,7 +38,7 @@ public class FollowPath : MonoBehaviour
     {
         if (path.PathIsValid)
         {
-            _moveTimer = new Timer(moveTime, timeOffset % moveTime);
+            _moveTimer = new Timer(moveTime, timeOffset * moveTime);
         }
         else
         {
@@ -45,7 +48,7 @@ public class FollowPath : MonoBehaviour
 
     private void Update()
     {
-        _moveTimer = new Timer(moveTime, _moveTimer.Time);
+        _moveTimer.Length = moveTime;
         if (!path.PathIsValid)
         {
             enabled = false;
@@ -59,7 +62,16 @@ public class FollowPath : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        path.GetPoint(timeOffset % moveTime, out var position, out _);
+        float point = endAction switch
+        {
+            EndAction.Stop => Mathf.Clamp01(timeOffset/* / moveTime*/),
+            EndAction.Reverse => Mathf.PingPong(timeOffset / moveTime, 1),
+            EndAction.Continue => Mathf.Repeat(timeOffset / moveTime, 1),
+            _ => Mathf.Clamp01(timeOffset / moveTime),
+        };
+
+
+        path.GetPoint(point, out var position, out _);
         Gizmos.DrawSphere(position, 0.2f);
     }
     #endregion

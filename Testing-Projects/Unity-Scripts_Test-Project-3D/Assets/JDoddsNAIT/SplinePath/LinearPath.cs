@@ -14,7 +14,7 @@ public class LinearPath : Path
         {
             fl += Vector3.Distance(points[i - 1].position, points[i % points.Count].position);
         }
-        float l = t % 1 * fl; // length
+        float l = t * fl; // length
 
         int idx = -1;
         float sl = 0; // segment length
@@ -23,18 +23,18 @@ public class LinearPath : Path
         {
             sl = Vector3.Distance(points[i - 1].position, points[i % points.Count].position);
             pl += sl;
-            idx = (l - pl < 0) ? i : -1;
+            idx = l - pl > 0 ? -1 : i;
         }
-        pl -= sl;
 
-        float lt = (l - pl) / sl; // lerp value
+        float lt = (l - (pl - sl)) / sl; // lerp value
+        int idx2 = idx % points.Count;
         position = Vector3.Lerp(
               a: points[idx - 1].position,
-              b: points[idx % points.Count].position,
+              b: points[idx2].position,
               t: lt);
         rotation = Quaternion.Lerp(
                a: points[idx - 1].rotation,
-               b: points[idx % points.Count].rotation,
+               b: points[idx2].rotation,
                t: lt);
     }
 
