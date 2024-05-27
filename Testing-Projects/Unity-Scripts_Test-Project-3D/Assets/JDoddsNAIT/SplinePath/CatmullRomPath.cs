@@ -18,9 +18,9 @@ public class CatmullRomPath : Path
         }
     }
 
-    public override void GetPointAlongPath(float t, out Vector3 position, out Quaternion? rotation)
+    public override void GetPointAlongPath(float t, out Vector3 position, out Quaternion rotation)
     {
-        rotation = null;
+        rotation = GetLinearRotation(t, out _, out _, out _);
 
         float l = t * (points.Count - (closeLoop ? 0 : 3));
         int index = (closeLoop ? 0 : 1) + (int)l;

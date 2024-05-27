@@ -10,6 +10,12 @@ public class FollowPath : MonoBehaviour
         Reverse,    // Reverse direction
         Continue,   // return to start
     }
+    public enum RotationMode
+    {
+        None,       // No rotation
+        Keyframe,   // The script will interpolate between the rotation of the points
+        Path,       // The script will look int the direction it is moving
+    }
 
     #region Inspector Values
     [Space]
@@ -19,10 +25,13 @@ public class FollowPath : MonoBehaviour
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
+    [Space]
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
+    [Tooltip("Dictates how the script will rotate the body.")]
+    public RotationMode rotationMode = RotationMode.None;
     #endregion
 
     #region Private members
@@ -79,7 +88,18 @@ public class FollowPath : MonoBehaviour
         path.GetPointAlongPath(T, out var position, out var rotation);
         Body.position = _previousPosition;
         Body.velocity = (position - _previousPosition) / Time.deltaTime;
-        
+
+        switch (rotationMode)
+        {
+            case RotationMode.Keyframe:
+                Body.MoveRotation(rotation);
+                break;
+            case RotationMode.Path:
+                Body.MoveRotation(Quaternion.LookRotation(Body.velocity));
+                break;
+            default:
+                break;
+        }
 
         _previousPosition = position;
     }
