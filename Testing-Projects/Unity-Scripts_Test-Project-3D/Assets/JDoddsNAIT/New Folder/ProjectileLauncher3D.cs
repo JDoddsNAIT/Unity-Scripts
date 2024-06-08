@@ -13,7 +13,7 @@ public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
                 throw new System.ArgumentNullException(nameof(projectile));
             }
 
-            _projectilePool = new ObjectPool<Rigidbody>(
+            _projectilePool = new(
                 size: maxProjectiles,
                 initialize: p => { p = Instantiate(projectile, spawnParent); p.gameObject.SetActive(false); },
                 activeCriteria: p => p.gameObject.activeInHierarchy)

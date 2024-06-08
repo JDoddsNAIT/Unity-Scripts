@@ -45,7 +45,9 @@ public abstract class ProjectileLauncher<TBody> : MonoBehaviour
 
         var p = _projectilePool.NextInactive;
         _projectilePool.Activate(p);
+
         yield return new WaitForSeconds(lifeTime);
+
         _projectilePool.Deactivate(p);
 
         _spawning = true;
