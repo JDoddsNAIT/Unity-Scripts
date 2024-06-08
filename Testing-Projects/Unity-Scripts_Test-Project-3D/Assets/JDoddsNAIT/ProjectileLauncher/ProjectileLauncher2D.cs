@@ -15,21 +15,21 @@ public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
 
             _projectilePool = new(
                 size: maxProjectiles,
-                initialize: p => { p = Instantiate(projectile, spawnParent); p.gameObject.SetActive(false); },
+                initialize: p => { p = Instantiate(projectile, spawnParent); p.gameObject.SetActive(false); return p; },
                 activeCriteria: p => p.gameObject.activeInHierarchy)
             {
-                Activate = projectile =>
+                Activate = p =>
                 {
-                    projectile.gameObject.SetActive(true);
-                    projectile.transform.SetPositionAndRotation(
+                    p.gameObject.SetActive(true);
+                    p.transform.SetPositionAndRotation(
                         transform.position,
-                        Quaternion.Euler(projectile.transform.rotation.eulerAngles + transform.rotation.eulerAngles));
-                    projectile.AddForce(LaunchDirection * launchForce, ForceMode2D.Impulse);
+                        Quaternion.Euler(p.transform.rotation.eulerAngles + transform.rotation.eulerAngles));
+                    p.AddForce(LaunchDirection * launchForce, ForceMode2D.Impulse);
                 },
-                Deactivate = projectile =>
+                Deactivate = p =>
                 {
-                    projectile.Sleep();
-                    projectile.gameObject.SetActive(false);
+                    p.Sleep();
+                    p.gameObject.SetActive(false);
                 }
             };
 
@@ -56,6 +56,9 @@ public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
             StartCoroutine(SpawnProjectile(spawnDelay));
         }
     }
+
+    [ContextMenu("Auto set maxProjectiles")]
+    public void SetMax() => maxProjectiles = Mathf.CeilToInt(lifeTime / spawnDelay) + 1;
 
     #region Gizmos
     private void OnDrawGizmosSelected()

@@ -16,7 +16,7 @@ public class Cannon : MonoBehaviour
 
         _pool = new ObjectPool<Missile>(
             size: maxMissiles,
-            initialize: m => { m = Instantiate(missile); m.gameObject.SetActive(false); },
+            initialize: m => { m = Instantiate(missile); m.gameObject.SetActive(false); return m; },
             activeCriteria: m => m.gameObject.activeInHierarchy);
 
         if (spawnPoint == null)

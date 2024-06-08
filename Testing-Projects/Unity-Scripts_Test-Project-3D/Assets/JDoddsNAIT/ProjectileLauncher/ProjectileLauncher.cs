@@ -34,23 +34,19 @@ public abstract class ProjectileLauncher<TBody> : MonoBehaviour
     protected ObjectPool<TBody> _projectilePool;
     protected bool _spawning;
 
-    [ContextMenu("Auto set maxProjectiles")]
-    protected void SetMax() => maxProjectiles = Mathf.CeilToInt(lifeTime / spawnDelay) + 1;
-
     public IEnumerator SpawnProjectile(float seconds)
     {
         _spawning = false;
-
+        var projectile = _projectilePool.NextInactive;
         yield return new WaitForSeconds(seconds);
-
-        var p = _projectilePool.NextInactive;
-        _projectilePool.Activate(p);
-
-        yield return new WaitForSeconds(lifeTime);
-
-        _projectilePool.Deactivate(p);
-
         _spawning = true;
+
+        if (projectile != null)
+        {
+            _projectilePool.Activate(projectile);
+            yield return new WaitForSeconds(lifeTime);
+            _projectilePool.Deactivate(projectile);
+        }
     }
 
     public static Vector3 ProjectileMotion3D(Rigidbody projectile, float t, Vector3 vi, Vector3 di)

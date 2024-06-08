@@ -57,7 +57,7 @@ public class PrefabPool : MonoBehaviour
         {
             _pool = new ObjectPool<GameObject>(
                 size: poolSize,
-                initialize: obj => { obj = Instantiate(prefab, prefabParent); obj.SetActive(false); },
+                initialize: obj => { obj = Instantiate(prefab, prefabParent); obj.SetActive(false); return obj; },
                 activeCriteria: obj => obj.activeInHierarchy)
             {
                 Activate = obj => obj.SetActive(true),
