@@ -14,6 +14,18 @@ public class ObjectPool<TObject>
     public Func<TObject, bool> IsActive { get; set; } = x => x != null;
 
     /// <summary>
+    /// All objects in the pool that are active.
+    /// </summary>
+    public TObject[] ActiveObjects => Pool.Where(IsActive).ToArray();
+    public TObject NextActive => ActiveObjects.FirstOrDefault();
+
+    /// <summary>
+    /// All objects in the pool that are not active.
+    /// </summary>
+    public TObject[] InactiveObjects => Pool.Where(x => !IsActive(x)).ToArray();
+    public TObject NextInactive => InactiveObjects.FirstOrDefault();
+
+    /// <summary>
     /// Creates an <see cref="object"/> pool of length <paramref name="size"/>.
     /// </summary>
     public ObjectPool(int size) => Pool = new TObject[size];
@@ -55,18 +67,6 @@ public class ObjectPool<TObject>
     public ObjectPool(int size, Action<TObject, int> initialize, Func<TObject, bool> activeCriteria) : this(size, initialize) => IsActive = activeCriteria;
 
     /// <summary>
-    /// All objects in the pool that are active.
-    /// </summary>
-    public TObject[] ActiveObjects => Pool.Where(IsActive).ToArray();
-    public TObject NextActive => ActiveObjects.FirstOrDefault();
-
-    /// <summary>
-    /// All objects in the pool that are not active.
-    /// </summary>
-    public TObject[] InactiveObjects => Pool.Where(x => !IsActive(x)).ToArray();
-    public TObject NextInactive => InactiveObjects.FirstOrDefault();
-
-    /// <summary>
     /// <paramref name="activate"/>s the <see cref="object"/> returned by <see cref="NextInactive"/>.
     /// </summary>
     public void ActivateNext(Action<TObject> activate, out TObject obj)
@@ -75,4 +75,3 @@ public class ObjectPool<TObject>
         activate(obj);
     }
 }
-// nice 
