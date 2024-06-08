@@ -42,6 +42,7 @@ public class ObjectPool<TObject>
         }
     }
 
+    public ObjectPool(int size, Action<TObject> initialize, Func<TObject, bool> activeCriteria) : this(size, initialize) => IsActive = activeCriteria;
     public ObjectPool(int size, Action<TObject, int> initialize, Func<TObject, bool> activeCriteria) : this(size, initialize) => IsActive = activeCriteria;
 
     /// <summary>
@@ -65,3 +66,4 @@ public class ObjectPool<TObject>
         activate(obj);
     }
 }
+// nice
