@@ -13,6 +13,9 @@ public class ObjectPool<TObject>
     /// </summary>
     public Func<TObject, bool> IsActive { get; set; }
 
+    public Action<TObject> Activate { get; set; }
+    public Action<TObject> Deactivate { get; set; }
+
     /// <summary>
     /// All objects in the pool that are active.
     /// </summary>
@@ -51,16 +54,6 @@ public class ObjectPool<TObject>
         IsActive = activeCriteria;
     }
 
-    /// <summary>
-    /// <paramref name="activate"/>s the <see cref="object"/> returned by <see cref="NextInactive"/>.
-    /// </summary>
-    public void ActivateNext(Action<TObject> activate) => ActivateNext(activate, out _);
-    /// <summary>
-    /// <paramref name="activate"/>s the <see cref="object"/> returned by <see cref="NextInactive"/>.
-    /// </summary>
-    public void ActivateNext(Action<TObject> activate, out TObject obj)
-    {
-        obj = NextInactive != null ? NextInactive : throw new Exception("No inactive objects were found.");
-        activate(obj);
-    }
+    public void ActivateObject(TObject obj, Action<TObject> activate) => activate(obj);
+    public void DeactivateObject(TObject obj, Action<TObject> deactivate) => deactivate(obj);
 }
