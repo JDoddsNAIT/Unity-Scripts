@@ -36,7 +36,7 @@ public abstract class ProjectileLauncher<TBody> : MonoBehaviour
 
     public IEnumerator SpawnProjectile(float seconds)
     {
-        var projectile = _projectilePool.NextInactive;
+        TBody projectile = _projectilePool.NextInactive;
 
         _spawning = false;
         yield return new WaitForSeconds(seconds);
