@@ -4,7 +4,7 @@ using UnityEngine;
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class FollowPath : MonoBehaviour
 {
-    public enum EndAction
+    enum EndAction
     {
         Stop,       // Stop moving
         Reverse,    // Reverse direction
@@ -12,7 +12,6 @@ public class FollowPath : MonoBehaviour
     }
 
     #region Inspector Values
-    [Space]
     public Path path;
     [Header("Settings")]
     [Tooltip("The time in seconds to travel between each node.")]
@@ -20,7 +19,7 @@ public class FollowPath : MonoBehaviour
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
     [Tooltip("What to do when the end of the path is reached.")]
-    public EndAction endAction;
+    [SerializeField] EndAction endAction;
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
     #endregion

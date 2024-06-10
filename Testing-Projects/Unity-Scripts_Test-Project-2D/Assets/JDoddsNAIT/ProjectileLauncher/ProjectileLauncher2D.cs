@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
+public class ProjectileLauncher2D : ProjectileLauncher
 {
     protected override Vector3 LaunchDirection => transform.right;
 

@@ -2,11 +2,11 @@
 using System.Linq;
 using UnityEngine;
 
-public abstract class ProjectileLauncher<TBody> : MonoBehaviour
+public abstract class ProjectileLauncher : MonoBehaviour
 {
     #region Inspector
     [Header("Projectile Settings")]
-    [SerializeReference] public TBody projectile;
+    [SerializeReference] public Rigidbody2D projectile;
     [Min(1)] public int maxProjectiles = 10;
     [SerializeReference] public Transform spawnParent;
     [Tooltip("Time in seconds until the projectile de-spawns.")]
@@ -20,24 +20,24 @@ public abstract class ProjectileLauncher<TBody> : MonoBehaviour
     [Header("Gizmo Settings")]
     [SerializeField] protected Color _color = Color.yellow;
     [Space]
-    [SerializeField] protected bool _showLaunchVelocity = false;
+    public bool _showLaunchVelocity = false;
     [Space]
-    [SerializeField] protected bool _showTrajectory = true;
+    public bool _showTrajectory = true;
     [SerializeField, Range(1, 100)] protected int _resolution = 25;
     [Space]
-    [SerializeField] protected bool _showFinalPosition = true;
+    public bool _showFinalPosition = true;
     [SerializeField, Range(0, 1)] protected float _radius = 0.2f;
     #endregion
 
     protected abstract Vector3 LaunchDirection { get; }
 
-    protected ObjectPool<TBody> _projectilePool;
+    protected ObjectPool<Rigidbody2D> _projectilePool;
     protected bool _spawning;
     protected GizmoPen _pen = new();
 
     public IEnumerator SpawnProjectile(float seconds)
     {
-        TBody projectile = _projectilePool.NextInactive;
+        Rigidbody2D projectile = _projectilePool.NextInactive;
 
         _spawning = false;
         yield return new WaitForSeconds(seconds);
