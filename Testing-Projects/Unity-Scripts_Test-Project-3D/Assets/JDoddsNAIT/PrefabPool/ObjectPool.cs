@@ -58,6 +58,42 @@ public class ObjectPool<TObject>
         }
     }
 
+    /// <summary>
+    /// A variation of <see cref="NextActive"/> that returns the next active object without allocating new memory.
+    /// </summary>
+    public TObject GetNextActive()
+    {
+        TObject nextActive = default;
+        bool found = false;
+        for (int i = 0; i < Pool.Length & !found; i++)
+        {
+            if (IsActive(Pool[i]))
+            {
+                found = true;
+                nextActive = Pool[i];
+            }
+        }
+        return nextActive;
+    }
+
+    /// <summary>
+    /// A variation of <see cref="NextInactive"/> that returns the next inactive object without allocating new memory.
+    /// </summary>
+    public TObject GetNextInactive()
+    {
+        TObject nextInactive = default;
+        bool found = false;
+        for (int i = 0; i < Pool.Length & !found; i++)
+        {
+            if (!IsActive(Pool[i]))
+            {
+                found = true;
+                nextInactive = Pool[i];
+            }
+        }
+        return nextInactive;
+    }
+
     public void ActivateObject(TObject obj) => Activate(obj);
     public void ActivateObject(TObject obj, Action<TObject> activate) => activate(obj);
 
