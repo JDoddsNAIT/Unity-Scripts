@@ -4,6 +4,8 @@
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
 public class LinearPath : Path
 {
+    public Vector2 tempField;
+
     public override void GetPoint(float t, out Vector3 position, out Quaternion? rotation)
     {
         t = Mathf.Clamp01(t);

@@ -68,18 +68,18 @@ public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
             ? force / projectile.mass
             : force;
 
-        Gizmos.color = _color;
+        Gizmos.color = color;
         // Direction
-        if (_showLaunchVelocity)
+        if (showLaunchVelocity)
         {
             Gizmos.DrawRay(transform.position, velocity);
         }
         // Trajectory
-        if (_showTrajectory)
+        if (showTrajectory)
         {
-            float timeStep = lifeTime * (1f / _resolution);
+            float timeStep = lifeTime * (1f / resolution);
             Vector3 previousPosition = ProjectileMotion2D(projectile, 0, velocity, transform.position);
-            for (int i = 1; i <= _resolution; i++)
+            for (int i = 1; i <= resolution; i++)
             {
                 Vector3 position = ProjectileMotion2D(projectile, timeStep * i, velocity, transform.position);
                 Gizmos.DrawLine(previousPosition, position);
@@ -87,9 +87,9 @@ public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
             }
         }
 
-        if (_showFinalPosition)
+        if (showFinalPosition)
         {
-            Gizmos.DrawWireSphere(ProjectileMotion2D(projectile, lifeTime, velocity, transform.position), _radius);
+            Gizmos.DrawWireSphere(ProjectileMotion2D(projectile, lifeTime, velocity, transform.position), radius);
         }
     }
     #endregion

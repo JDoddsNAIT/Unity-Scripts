@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 146650352}
-  - component: {fileID: 146650351}
+  - component: {fileID: 146650353}
   m_Layer: 0
   m_Name: launcher
   m_TagString: Untagged
@@ -139,7 +139,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &146650351
+--- !u!4 &146650352
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146650350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: -2, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+--- !u!114 &146650353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,10 +166,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19a353d5a0f060479e182eb82291f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 1117570506}
+  projectile: {fileID: 0}
   maxProjectiles: 10
-  spawnParent: {fileID: 0}
   lifeTime: 1.15
+  spawnParent: {fileID: 0}
   spawnOnStart: 0
   spawnDelay: 1.15
   launchForce: 8
@@ -164,21 +179,6 @@ MonoBehaviour:
   _resolution: 25
   _showFinalPosition: 1
   _radius: 0.2
---- !u!4 &146650352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146650350}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -6, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
 --- !u!1 &237144310
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +377,7 @@ Transform:
   m_GameObject: {fileID: 1117570505}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -4, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -392,6 +392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1562486434}
+  - component: {fileID: 1562486435}
   m_Layer: 0
   m_Name: launcher (1)
   m_TagString: Untagged
@@ -408,12 +409,37 @@ Transform:
   m_GameObject: {fileID: 1562486433}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.45531183, w: 0.89033204}
-  m_LocalPosition: {x: -6, y: -3, z: 0}
+  m_LocalPosition: {x: 2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 54.17}
+--- !u!114 &1562486435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562486433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a7f0286516d8ca478376fd08c92bc97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  maxProjectiles: 10
+  lifeTime: 1.15
+  spawnParent: {fileID: 0}
+  spawnOnStart: 0
+  spawnDelay: 1.15
+  launchForce: 8
+  _color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  _showLaunchVelocity: 0
+  _showTrajectory: 1
+  _resolution: 25
+  _showFinalPosition: 1
+  _radius: 0.2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

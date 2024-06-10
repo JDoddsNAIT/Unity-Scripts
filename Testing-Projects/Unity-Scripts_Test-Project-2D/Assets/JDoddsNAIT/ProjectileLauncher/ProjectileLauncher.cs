@@ -5,28 +5,25 @@ using UnityEngine;
 public abstract class ProjectileLauncher<TBody> : MonoBehaviour
 {
     #region Inspector
-    [Header("Projectile Settings")]
     [SerializeReference] public TBody projectile;
     [Min(1)] public int maxProjectiles = 10;
     [Tooltip("Time in seconds until the projectile de-spawns.")]
     [Min(0)] public float lifeTime = 1.15f;
 
-    [Header("Launch Settings")]
     [SerializeReference] public Transform spawnParent;
     public bool spawnOnStart = false;
     [Min(0.01f)] public float spawnDelay = 1.15f;
     [Min(0)] public float launchForce = 8.0f;
 
-    [Header("Gizmo Settings")]
-    [SerializeField] protected Color _color = Color.yellow;
+    [SerializeField] protected Color color = Color.yellow;
     [Space]
-    [SerializeField] public bool _showLaunchVelocity = false;
+    [SerializeField] public bool showLaunchVelocity = false;
     [Space]
-    [SerializeField] public bool _showTrajectory = true;
-    [SerializeField, Range(1, 100)] protected int _resolution = 25;
+    [SerializeField] public bool showTrajectory = true;
+    [SerializeField, Range(1, 100)] protected int resolution = 25;
     [Space]
-    [SerializeField] public bool _showFinalPosition = true;
-    [SerializeField, Range(0, 1)] protected float _radius = 0.2f;
+    [SerializeField] public bool showFinalPosition = true;
+    [SerializeField, Range(0, 1)] protected float radius = 0.2f;
     #endregion
 
     protected abstract Vector3 LaunchDirection { get; }
