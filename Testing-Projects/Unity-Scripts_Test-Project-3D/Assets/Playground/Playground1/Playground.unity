@@ -592,9 +592,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 361204531405322639, guid: 44212c8680b643b4faa6e234be4bc90c, type: 3}
-  maxProjectiles: 19
+  maxProjectiles: 10
   spawnParent: {fileID: 1337422435}
-  lifeTime: 1.71
+  lifeTime: 0.88
   spawnOnStart: 1
   spawnDelay: 0.1
   launchForce: 6.32

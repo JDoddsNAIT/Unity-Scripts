@@ -58,6 +58,9 @@ public class ObjectPool<TObject>
         }
     }
 
+    public void ActivateObject(TObject obj) => Activate(obj);
     public void ActivateObject(TObject obj, Action<TObject> activate) => activate(obj);
+
+    public void DeactivateObject(TObject obj) => Deactivate(obj);
     public void DeactivateObject(TObject obj, Action<TObject> deactivate) => deactivate(obj);
 }
