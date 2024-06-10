@@ -2,17 +2,17 @@
 using System.Linq;
 using UnityEngine;
 
-public abstract class ProjectileLauncher : MonoBehaviour
+public abstract class ProjectileLauncher<TBody> : MonoBehaviour
 {
     #region Inspector
     [Header("Projectile Settings")]
-    [SerializeReference] public Rigidbody2D projectile;
+    [SerializeReference] public TBody projectile;
     [Min(1)] public int maxProjectiles = 10;
-    [SerializeReference] public Transform spawnParent;
     [Tooltip("Time in seconds until the projectile de-spawns.")]
     [Min(0)] public float lifeTime = 1.15f;
 
     [Header("Launch Settings")]
+    [SerializeReference] public Transform spawnParent;
     public bool spawnOnStart = false;
     [Min(0.01f)] public float spawnDelay = 1.15f;
     [Min(0)] public float launchForce = 8.0f;
@@ -20,24 +20,23 @@ public abstract class ProjectileLauncher : MonoBehaviour
     [Header("Gizmo Settings")]
     [SerializeField] protected Color _color = Color.yellow;
     [Space]
-    public bool _showLaunchVelocity = false;
+    [SerializeField] public bool _showLaunchVelocity = false;
     [Space]
-    public bool _showTrajectory = true;
+    [SerializeField] public bool _showTrajectory = true;
     [SerializeField, Range(1, 100)] protected int _resolution = 25;
     [Space]
-    public bool _showFinalPosition = true;
+    [SerializeField] public bool _showFinalPosition = true;
     [SerializeField, Range(0, 1)] protected float _radius = 0.2f;
     #endregion
 
     protected abstract Vector3 LaunchDirection { get; }
 
-    protected ObjectPool<Rigidbody2D> _projectilePool;
+    protected ObjectPool<TBody> _projectilePool;
     protected bool _spawning;
-    protected GizmoPen _pen = new();
 
     public IEnumerator SpawnProjectile(float seconds)
     {
-        Rigidbody2D projectile = _projectilePool.NextInactive;
+        TBody projectile = _projectilePool.NextInactive;
 
         _spawning = false;
         yield return new WaitForSeconds(seconds);
