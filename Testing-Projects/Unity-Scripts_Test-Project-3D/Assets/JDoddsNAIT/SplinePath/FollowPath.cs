@@ -18,20 +18,23 @@ public class FollowPath : MonoBehaviour
     }
 
     #region Inspector Values
-    [Space]
     public Path path;
-    [Header("Settings")]
-    [Tooltip("The time in seconds to travel between each node.")]
+    
+    [Tooltip("The time in seconds to travel the length of the path.")]
     [Min(0)] public float moveTime = 1.0f;
     [Tooltip("The time offset in seconds.")]
     [Min(0)] public float timeOffset = 0.0f;
-    [Space]
+    
     [Tooltip("Reverses direction.")]
     public bool reverse = false;
     [Tooltip("What to do when the end of the path is reached.")]
     public EndAction endAction;
     [Tooltip("Dictates how the script will rotate the body.")]
     public RotationMode rotationMode = RotationMode.None;
+
+    public bool showStartPoint = true;
+    [SerializeField] Color startPointColor = Color.white;
+    [SerializeField] float startPointRadius = 0.2f;
     #endregion
 
     #region Private members
@@ -71,9 +74,9 @@ public class FollowPath : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = startPointColor;
 
-        Gizmos.DrawSphere(path.GetPointAlongPath(T, out _), path.pointRadius);
+        Gizmos.DrawSphere(path.GetPointAlongPath(T, out _), startPointRadius);
     }
     #endregion
 

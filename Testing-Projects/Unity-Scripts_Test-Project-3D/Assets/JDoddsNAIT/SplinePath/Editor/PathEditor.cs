@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Path))]
 public class PathEditor : Editor
@@ -9,6 +10,8 @@ public class PathEditor : Editor
     bool gizmoGroup = false;
     SerializedProperty showPath, pathColor, curveSegments;
     SerializedProperty showPoints, pointColor, pointRadius;
+
+    readonly GUIContent empty = new("");
     #endregion
 
     private void OnEnable()
@@ -39,22 +42,39 @@ public class PathEditor : Editor
         gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
         if (gizmoGroup)
         {
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(showPath);
-            if (path.showPath)
+            if (showPath.boolValue)
             {
-                EditorGUILayout.PropertyField(pathColor);
+                EditorGUILayout.PropertyField(pathColor, empty);
+                EditorGUILayout.EndHorizontal();
                 if (path.pathType != Path.PathType.Linear)
                 {
+                    EditorGUI.indentLevel++;
                     EditorGUILayout.PropertyField(curveSegments);
+                    EditorGUI.indentLevel--;
                 }
             }
-            
-            EditorGUILayout.Space();
-            EditorGUILayout.PropertyField (showPoints);
-            if (path.showPoints)
+            else
             {
-                EditorGUILayout.PropertyField(pointColor);
-                EditorGUILayout.PropertyField(pointRadius);
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.Space();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PropertyField(showPoints);
+            if (showPoints.boolValue)
+            {
+                EditorGUILayout.PropertyField(pointColor, empty);
+                EditorGUILayout.EndHorizontal();
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(pointRadius, new GUIContent("Radius"));
+                EditorGUI.indentLevel--;
+            }
+            else
+            {
+                EditorGUILayout.EndHorizontal();
             }
         }
 

@@ -8,16 +8,14 @@ public class Path : MonoBehaviour
 {
     public enum PathType { Linear, Bezier, [InspectorName("Catmull-Rom")] CatmullRom }
     #region Inspector Values
-    [Header("Path settings")]
     public PathType pathType;
     public bool closeLoop;
     public List<Transform> points = new();
 
     public bool showPath = true;
     [SerializeField] Color pathColor = Color.white;
-    [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
     [SerializeField, Range(1, 100)] int curveSegments = 20;
-    [Space]
+
     public bool showPoints = true;
     [SerializeField] Color pointColor = Color.white;
     [Range(0, 2)] public float pointRadius = 0.2f;
@@ -194,6 +192,15 @@ public class Path : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (showPoints)
+        {
+            Gizmos.color = pointColor;
+            foreach (Transform t in points)
+            {
+                Gizmos.DrawSphere(t.position, pointRadius);
+            }
+        }
+
         if (showPath)
         {
             Gizmos.color = pathColor;
@@ -208,15 +215,6 @@ public class Path : MonoBehaviour
                 case PathType.CatmullRom:
                     DrawSpline(CatmullRomPath);
                     break;
-            }
-        }
-
-        if (showPoints)
-        {
-            Gizmos.color = pointColor;
-            foreach (Transform t in points)
-            {
-                Gizmos.DrawSphere(t.position, pointRadius);
             }
         }
     }
