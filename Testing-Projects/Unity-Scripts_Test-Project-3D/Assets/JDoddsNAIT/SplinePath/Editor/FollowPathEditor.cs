@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileLauncherEditor : MonoBehaviour
+public class FollowPathEditor : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
