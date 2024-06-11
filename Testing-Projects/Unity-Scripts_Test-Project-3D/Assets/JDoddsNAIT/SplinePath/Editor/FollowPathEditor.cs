@@ -5,10 +5,10 @@ using UnityEngine;
 public class FollowPathEditor : Editor
 {
     #region Properties
-    SerializedProperty path, moveTime, timeOffset, reverse, endAction, rotationMode;
+    protected SerializedProperty path, moveTime, timeOffset, reverse, endAction, rotationMode;
 
-    bool gizmoGroup = false;
-    SerializedProperty showStartPoint, startPointColor, startPointRadius;
+    protected bool gizmoGroup = false;
+    protected SerializedProperty showStartPoint, startPointColor, startPointRadius;
     #endregion
 
     private void OnEnable()
@@ -73,3 +73,9 @@ public class FollowPathEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+
+[CustomEditor(typeof(FollowPath2D))]
+public class FollowPath2DEditor : FollowPathEditor { }
+
+[CustomEditor(typeof(FollowPath3D))]
+public class FollowPath3DEditor : FollowPathEditor { }
