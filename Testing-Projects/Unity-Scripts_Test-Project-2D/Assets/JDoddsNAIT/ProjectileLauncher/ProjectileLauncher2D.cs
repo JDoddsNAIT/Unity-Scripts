@@ -89,7 +89,7 @@ public class ProjectileLauncher2D : ProjectileLauncher<Rigidbody2D>
 
         if (showFinalPosition)
         {
-            Gizmos.DrawWireSphere(ProjectileMotion2D(projectile, lifeTime, velocity, transform.position), radius);
+            _pen.DrawCircle(ProjectileMotion2D(projectile, lifeTime, velocity, transform.position), radius);
         }
     }
     #endregion

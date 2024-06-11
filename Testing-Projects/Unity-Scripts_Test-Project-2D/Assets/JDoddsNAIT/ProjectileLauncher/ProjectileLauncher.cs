@@ -26,6 +26,8 @@ public abstract class ProjectileLauncher<TBody> : MonoBehaviour
     [SerializeField, Range(0, 1)] protected float radius = 0.2f;
     #endregion
 
+    protected GizmoPen _pen = new();
+
     protected abstract Vector3 LaunchDirection { get; }
 
     protected ObjectPool<TBody> _projectilePool;

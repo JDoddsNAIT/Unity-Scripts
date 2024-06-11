@@ -301,9 +301,9 @@ MonoBehaviour:
   spawnDelay: 1.15
   launchForce: 8
   color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  showLaunchVelocity: 1
+  showLaunchVelocity: 0
   showTrajectory: 1
-  resolution: 25
+  resolution: 20
   showFinalPosition: 1
   radius: 0.2
 --- !u!4 &826809189

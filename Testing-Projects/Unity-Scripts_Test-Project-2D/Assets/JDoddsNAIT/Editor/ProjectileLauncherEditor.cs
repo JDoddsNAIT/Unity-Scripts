@@ -42,7 +42,7 @@ public class ProjectileLauncher2DEditor : Editor
         DrawProjectileInspector(projectileLauncher2D);
     }
 
-    protected void DrawProjectileInspector<Tbody>(ProjectileLauncher<Tbody> projectileLauncher)
+    protected void DrawProjectileInspector(ProjectileLauncher2D projectileLauncher)
     {
         serializedObject.Update();
 
@@ -80,7 +80,7 @@ public class ProjectileLauncher2DEditor : Editor
                 EditorGUILayout.PropertyField(radius);
             }
         }
-        EditorGUILayout.EndFoldoutHeaderGroup();
+        EditorGUILayout.EndFoldoutHeaderGroup(); 
 
         serializedObject.ApplyModifiedProperties();
     }
