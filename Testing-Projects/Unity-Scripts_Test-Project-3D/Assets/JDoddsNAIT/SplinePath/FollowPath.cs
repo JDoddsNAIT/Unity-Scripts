@@ -73,8 +73,7 @@ public class FollowPath : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
 
-        path.GetPointAlongPath(T, out var position, out _);
-        Gizmos.DrawSphere(position, 0.2f);
+        Gizmos.DrawSphere(path.GetPointAlongPath(T, out _), path.pointRadius);
     }
     #endregion
 
@@ -83,7 +82,7 @@ public class FollowPath : MonoBehaviour
         _moveTimer += (reverse ? -1 : 1) * Time.deltaTime;
         var t = T;
 
-        path.GetPointAlongPath(t, out var position, out var rotation);
+        Vector3 position = path.GetPointAlongPath(t, out var rotation);
         Quaternion newRotation = rotationMode switch
         {
             RotationMode.Keyframe => rotation,

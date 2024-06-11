@@ -12,7 +12,7 @@ public class Path : MonoBehaviour
     public PathType pathType;
     public bool closeLoop;
     public List<Transform> points = new();
-    [Header("Gizmo settings")]
+
     public bool showPath = true;
     [SerializeField] Color pathColor = Color.white;
     [Tooltip("The amount of segments drawn. Ignored if Path Type is Linear.")]
@@ -20,7 +20,7 @@ public class Path : MonoBehaviour
     [Space]
     public bool showPoints = true;
     [SerializeField] Color pointColor = Color.white;
-    [SerializeField, Range(0, 2)] float pointRadius = 0.2f;
+    [Range(0, 2)] public float pointRadius = 0.2f;
     #endregion
 
     private const int MIN_POINTS = 3;
@@ -223,15 +223,15 @@ public class Path : MonoBehaviour
 
     private void DrawSpline(Func<float, Vector3> splineFunction)
     {
-        if (spline.Length != curveSegments)
+        if (spline.Length != curveSegments + 1)
         {
-            spline = new Vector3[curveSegments];
-        }
+            spline = new Vector3[curveSegments + 1];
 
-        float step = 1 / spline.Length;
-        for (int i = 0; i < spline.Length; i++)
-        {
-            spline[i] = splineFunction(i * step);
+            float step = 1f / curveSegments;
+            for (int i = 0; i < spline.Length; i++)
+            {
+                spline[i] = splineFunction(step * i);
+            }
         }
 
         DrawLineArray(spline);

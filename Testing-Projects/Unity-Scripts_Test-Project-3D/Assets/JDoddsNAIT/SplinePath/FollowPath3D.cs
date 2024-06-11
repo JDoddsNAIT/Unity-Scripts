@@ -33,8 +33,7 @@ public class FollowPath3D : FollowPath
     {
         Gizmos.color = Color.yellow;
 
-        path.GetPointAlongPath(T, out var position, out _);
-        Gizmos.DrawSphere(position, 0.2f);
+        Gizmos.DrawSphere(path.GetPointAlongPath(T, out _), 0.2f);
     }
 
     private void OnEnable()
@@ -52,7 +51,7 @@ public class FollowPath3D : FollowPath
         _moveTimer += (reverse ? -1 : 1) * Time.deltaTime;
         var t = T;
 
-        path.GetPointAlongPath(t, out var position, out var rotation);
+        Vector3 position =  path.GetPointAlongPath(t, out var rotation);
         Body.position = _previousPosition;
         Body.velocity = (position - _previousPosition) / Time.deltaTime;
 
