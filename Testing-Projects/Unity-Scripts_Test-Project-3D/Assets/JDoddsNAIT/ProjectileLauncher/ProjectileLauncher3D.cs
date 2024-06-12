@@ -2,7 +2,9 @@
 
 public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
 {
-    protected override Vector3 LaunchDirection => transform.forward;
+    [SerializeField] Vector3 launchAngle = Vector3.zero;
+
+    protected override Vector3 LaunchDirection => Quaternion.Euler(launchAngle) * transform.forward;
 
     private void Start()
     {
@@ -23,7 +25,7 @@ public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
                     p.gameObject.SetActive(true);
                     p.transform.SetPositionAndRotation(
                         transform.position,
-                        Quaternion.Euler(p.transform.rotation.eulerAngles + transform.rotation.eulerAngles));
+                        Quaternion.Euler(p.transform.rotation.eulerAngles + transform.rotation.eulerAngles + launchAngle));
                     p.AddForce(LaunchDirection * launchForce, ForceMode.Impulse);
                 },
                 Deactivate = p =>
@@ -68,18 +70,19 @@ public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
             ? force / projectile.mass
             : force;
 
-        Gizmos.color = _color;
         // Direction
-        if (_showLaunchVelocity)
+        if (showLaunchVelocity)
         {
+            Gizmos.color = launchVelocityColor;
             Gizmos.DrawRay(transform.position, velocity);
         }
         // Trajectory
-        if (_showTrajectory)
+        if (showTrajectory)
         {
-            float timeStep = lifeTime * (1f / _resolution);
+            Gizmos.color = trajectoryColor;
+            float timeStep = lifeTime * (1f / trajectoryResolution);
             Vector3 previousPosition = ProjectileMotion3D(projectile, 0, velocity, transform.position);
-            for (int i = 1; i <= _resolution; i++)
+            for (int i = 1; i <= trajectoryResolution; i++)
             {
                 Vector3 position = ProjectileMotion3D(projectile, timeStep * i, velocity, transform.position);
                 Gizmos.DrawLine(previousPosition, position);
@@ -87,9 +90,10 @@ public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
             }
         }
 
-        if (_showFinalPosition)
+        if (showFinalPosition)
         {
-            Gizmos.DrawWireSphere(ProjectileMotion3D(projectile, lifeTime, velocity, transform.position), _radius);
+            Gizmos.color = finalPositionColor;
+            Gizmos.DrawWireSphere(ProjectileMotion3D(projectile, lifeTime, velocity, transform.position), finalPositionRadius);
         }
     }
     #endregion

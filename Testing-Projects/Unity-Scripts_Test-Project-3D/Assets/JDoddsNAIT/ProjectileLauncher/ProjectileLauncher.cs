@@ -4,29 +4,27 @@ using UnityEngine;
 
 public abstract class ProjectileLauncher<TBody> : MonoBehaviour
 {
-    #region Inspector
-    [Header("Projectile Settings")]
+    #region Serialized Fields
     [SerializeReference] public TBody projectile;
     [Min(1)] public int maxProjectiles = 10;
-    [SerializeReference] public Transform spawnParent;
-    [Tooltip("Time in seconds until the projectile de-spawns.")]
-    [Min(0)] public float lifeTime = 1.15f;
-
-    [Header("Launch Settings")]
-    public bool spawnOnStart = false;
-    [Min(0.01f)] public float spawnDelay = 1.15f;
     [Min(0)] public float launchForce = 8.0f;
+    [Tooltip("Time in seconds until the projectile de-spawns.")]
+    [Min(0)] public float lifeTime = 1f;
 
-    [Header("Gizmo Settings")]
-    [SerializeField] protected Color _color = Color.yellow;
-    [Space]
-    [SerializeField] protected bool _showLaunchVelocity = false;
-    [Space]
-    [SerializeField] protected bool _showTrajectory = true;
-    [SerializeField, Range(1, 100)] protected int _resolution = 25;
-    [Space]
-    [SerializeField] protected bool _showFinalPosition = true;
-    [SerializeField, Range(0, 1)] protected float _radius = 0.2f;
+    [SerializeReference] public Transform spawnParent;
+    [SerializeField] protected bool spawnOnStart = false;
+    [Min(0.01f)] public float spawnDelay = 1f;
+
+    [SerializeField] protected bool showLaunchVelocity = false;
+    [SerializeField] protected Color launchVelocityColor = Color.white;
+    
+    [SerializeField] protected bool showTrajectory = true;
+    [SerializeField] protected Color trajectoryColor = Color.white;
+    [SerializeField, Range(1, 100)] protected int trajectoryResolution = 25;
+
+    [SerializeField] protected bool showFinalPosition = true;
+    [SerializeField] protected Color finalPositionColor = Color.white;
+    [SerializeField, Range(0, 1)] protected float finalPositionRadius = 0.2f;
     #endregion
 
     protected abstract Vector3 LaunchDirection { get; }
