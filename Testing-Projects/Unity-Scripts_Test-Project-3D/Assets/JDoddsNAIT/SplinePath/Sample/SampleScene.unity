@@ -195,7 +195,7 @@ MonoBehaviour:
   showPath: 1
   pathColor: {r: 0, g: 0, b: 1, a: 1}
   curveSegments: 20
-  showPoints: 1
+  showPoints: 0
   pointColor: {r: 0, g: 0, b: 1, a: 1}
   pointRadius: 0.1
 --- !u!4 &404906404
@@ -702,6 +702,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 840039613}
+  - component: {fileID: 840039614}
   m_Layer: 0
   m_Name: pathPoint (3)
   m_TagString: Untagged
@@ -724,6 +725,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2080070880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &840039614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 840039612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &879073755
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,6 +760,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 879073756}
+  - component: {fileID: 879073757}
   m_Layer: 0
   m_Name: pathPoint (0)
   m_TagString: Untagged
@@ -755,6 +783,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1721828721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &879073757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879073755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &890011803
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 890011804}
+  - component: {fileID: 890011805}
   m_Layer: 0
   m_Name: pathPoint (1)
   m_TagString: Untagged
@@ -786,6 +841,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1721828721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &890011805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890011803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &916855877
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 992257503}
+  - component: {fileID: 992257504}
   m_Layer: 0
   m_Name: pathPoint (3)
   m_TagString: Untagged
@@ -848,6 +930,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404906404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &992257504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 992257502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 1, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1028187303
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,6 +965,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1028187304}
+  - component: {fileID: 1028187305}
   m_Layer: 0
   m_Name: pathPoint (2)
   m_TagString: Untagged
@@ -879,6 +988,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1721828721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1028187305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028187303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1150777093
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +1023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1150777094}
+  - component: {fileID: 1150777095}
   m_Layer: 0
   m_Name: pathPoint (2)
   m_TagString: Untagged
@@ -910,6 +1046,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404906404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1150777095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150777093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 1, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1240553667
 GameObject:
   m_ObjectHideFlags: 0
@@ -919,6 +1081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1240553668}
+  - component: {fileID: 1240553669}
   m_Layer: 0
   m_Name: pathPoint (0)
   m_TagString: Untagged
@@ -941,6 +1104,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404906404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1240553669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240553667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 1, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1330137343
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +1139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1330137344}
+  - component: {fileID: 1330137345}
   m_Layer: 0
   m_Name: pathPoint (0)
   m_TagString: Untagged
@@ -972,6 +1162,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2080070880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1330137345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330137343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1337143620
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +1197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1337143621}
+  - component: {fileID: 1337143622}
   m_Layer: 0
   m_Name: pathPoint (1)
   m_TagString: Untagged
@@ -1003,6 +1220,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 404906404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1337143622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337143620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 1, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1417136075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1012,6 +1255,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1417136076}
+  - component: {fileID: 1417136077}
   m_Layer: 0
   m_Name: pathPoint (2)
   m_TagString: Untagged
@@ -1034,6 +1278,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2080070880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1417136077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417136075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1466244726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,7 +1376,7 @@ MonoBehaviour:
   showPath: 1
   pathColor: {r: 1, g: 0, b: 0, a: 1}
   curveSegments: 100
-  showPoints: 1
+  showPoints: 0
   pointColor: {r: 1, g: 0, b: 0, a: 1}
   pointRadius: 0.1
 --- !u!4 &1721828721
@@ -1421,6 +1691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1929954962}
+  - component: {fileID: 1929954963}
   m_Layer: 0
   m_Name: pathPoint (3)
   m_TagString: Untagged
@@ -1443,6 +1714,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1721828721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1929954963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1929954961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &1976265783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1452,6 +1749,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1976265784}
+  - component: {fileID: 1976265785}
   m_Layer: 0
   m_Name: pathPoint (1)
   m_TagString: Untagged
@@ -1474,6 +1772,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2080070880}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976265785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976265783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  wire: 0
+  shape: 0
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.1
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
 --- !u!1 &2080070878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1515,7 +1839,7 @@ MonoBehaviour:
   showPath: 1
   pathColor: {r: 0, g: 1, b: 0, a: 1}
   curveSegments: 100
-  showPoints: 1
+  showPoints: 0
   pointColor: {r: 0, g: 1, b: 0, a: 1}
   pointRadius: 0.1
 --- !u!4 &2080070880
