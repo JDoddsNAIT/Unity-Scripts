@@ -213,7 +213,7 @@ public class Path : MonoBehaviour
             switch (pathType)
             {
                 case PathType.Linear:
-                    DrawLineArray(points, t => t.position);
+                    DrawLineArray(points, t => t.position, points.Count + (closeLoop ? 1 : 0));
                     break;
                 case PathType.Bezier:
                     DrawSpline(BezierPath);
@@ -230,7 +230,6 @@ public class Path : MonoBehaviour
         if (spline.Length != curveSegments + 1)
         {
             spline = new Vector3[curveSegments + 1];
-
         }
 
         float step = 1f / curveSegments;

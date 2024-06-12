@@ -48,14 +48,12 @@ public class AddGizmoEditor : Editor
         EditorGUILayout.BeginHorizontal();
         if (addGizmo.shape != AddGizmo.Shape.Ray & addGizmo.shape != AddGizmo.Shape.Line)
         {
-            EditorGUILayout.PropertyField(wire, new GUIContent("Shape"));
-            EditorGUILayout.PropertyField(shape, GUIContent.none);
+            EditorUtils.CompoundProperty(wire, shape);
         }
         else
         {
             addGizmo.wire = AddGizmo.WireState.Wire;
-            EditorGUILayout.PropertyField(wire, new GUIContent("Shape"));
-            EditorGUILayout.PropertyField(shape, GUIContent.none);
+            EditorUtils.CompoundProperty(wire, shape);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -105,9 +103,13 @@ public class AddGizmoEditor : Editor
 
     void BoolVector3(SerializedProperty boolProperty, SerializedProperty vectorProperty)
     {
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(boolProperty, new GUIContent(vectorProperty.displayName, $"The gizmo's {vectorProperty.name}. Use the checkbox to switch between local and world space."));
-        EditorGUILayout.PropertyField(vectorProperty, GUIContent.none);
-        EditorGUILayout.EndHorizontal();
+        EditorUtils.CompoundProperty(
+            new GUIContent(vectorProperty.displayName, $"The gizmo's {vectorProperty.name}. Use the checkbox to switch between local and world space."),
+            boolProperty,
+            vectorProperty);
+        //EditorGUILayout.BeginHorizontal();
+        //EditorGUILayout.PropertyField(boolProperty, new GUIContent(vectorProperty.displayName, $"The gizmo's {vectorProperty.name}. Use the checkbox to switch between local and world space."));
+        //EditorGUILayout.PropertyField(vectorProperty, GUIContent.none);
+        //EditorGUILayout.EndHorizontal();
     }
 }

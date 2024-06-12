@@ -47,4 +47,15 @@ public static class EditorUtils
             EditorGUILayout.EndHorizontal();
         }
     }
+
+    public static void CompoundProperty(SerializedProperty first, SerializedProperty second) => CompoundProperty(second.displayName, first, second);
+    public static void CompoundProperty(string label, SerializedProperty first, SerializedProperty second) => CompoundProperty(new GUIContent(label), first, second);
+    public static void CompoundProperty(GUIContent label, SerializedProperty first, SerializedProperty second)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PropertyField(first, label);
+        EditorGUILayout.PropertyField(second, GUIContent.none);
+        EditorGUILayout.EndHorizontal();
+    }
+
 }

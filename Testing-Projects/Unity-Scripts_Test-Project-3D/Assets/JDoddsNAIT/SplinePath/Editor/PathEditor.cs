@@ -51,40 +51,17 @@ public class PathEditor : Editor
         gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
         if (gizmoGroup)
         {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(showPath);
-            if (showPath.boolValue)
-            {
-                EditorGUILayout.PropertyField(pathColor, empty);
-                EditorGUILayout.EndHorizontal();
-                if (path.pathType != Path.PathType.Linear)
-                {
-                    EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(curveSegments);
-                    EditorGUI.indentLevel--;
-                }
-            }
-            else
-            {
-                EditorGUILayout.EndHorizontal();
-            }
+            EditorUtils.GizmoToggle(
+                showPath,
+                pathColor,
+                curveSegments);
 
             EditorGUILayout.Space();
 
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(showPoints);
-            if (showPoints.boolValue)
-            {
-                EditorGUILayout.PropertyField(pointColor, empty);
-                EditorGUILayout.EndHorizontal();
-                EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(pointRadius, new GUIContent("Radius"));
-                EditorGUI.indentLevel--;
-            }
-            else
-            {
-                EditorGUILayout.EndHorizontal();
-            }
+            EditorUtils.GizmoToggle(
+                showPoints,
+                pointColor,
+                () => EditorGUILayout.PropertyField(pointRadius, new GUIContent("Radius")));
         }
 
         serializedObject.ApplyModifiedProperties();

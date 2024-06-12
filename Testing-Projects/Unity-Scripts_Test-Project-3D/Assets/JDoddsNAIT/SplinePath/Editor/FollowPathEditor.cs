@@ -58,34 +58,25 @@ public class FollowPathEditor : Editor
             gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
             if (gizmoGroup)
             {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PropertyField(showStartPoint);
-                if (showStartPoint.boolValue)
-                {
-                    EditorGUILayout.PropertyField(startPointColor, GUIContent.none);
-                    EditorGUILayout.EndHorizontal();
-
-                    EditorGUI.indentLevel++;
-                    EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.PropertyField(startPointShape, new GUIContent("Shape"));
-                    EditorGUILayout.PropertyField(startPointWireframe, new GUIContent("Wireframe"));
-                    EditorGUILayout.EndHorizontal();
-
-                    Tuple<SerializedProperty, string> startPointProperty = followPath.startPointShape switch
+                EditorUtils.GizmoToggle(
+                    showStartPoint,
+                    startPointColor,
+                    () =>
                     {
-                        FollowPath.Shape.Sphere => Tuple.Create(startPointRadius, "Radius"),
-                        FollowPath.Shape.Cube => Tuple.Create(startPointSize, "Size"),
-                        FollowPath.Shape.Mesh => Tuple.Create(startPointMesh, "Mesh"),
-                        _ => throw new Exception("Nuh-Uh")
-                    };
-                    EditorGUILayout.PropertyField(startPointProperty.Item1, new GUIContent(startPointProperty.Item2));
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PropertyField(startPointShape, new GUIContent("Shape"));
+                        EditorGUILayout.PropertyField(startPointWireframe, new GUIContent("Wireframe"));
+                        EditorGUILayout.EndHorizontal();
 
-                    EditorGUI.indentLevel--;
-                }
-                else
-                {
-                    EditorGUILayout.EndHorizontal();
-                }
+                        Tuple<SerializedProperty, string> startPointProperty = followPath.startPointShape switch
+                        {
+                            FollowPath.Shape.Sphere => Tuple.Create(startPointRadius, "Radius"),
+                            FollowPath.Shape.Cube => Tuple.Create(startPointSize, "Size"),
+                            FollowPath.Shape.Mesh => Tuple.Create(startPointMesh, "Mesh"),
+                            _ => throw new Exception("Nuh-Uh")
+                        };
+                        EditorGUILayout.PropertyField(startPointProperty.Item1, new GUIContent(startPointProperty.Item2));
+                    });
             }
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
