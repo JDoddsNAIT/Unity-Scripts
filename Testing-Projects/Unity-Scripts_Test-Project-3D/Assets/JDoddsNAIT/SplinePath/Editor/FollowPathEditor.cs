@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class FollowPathEditor : Editor
     protected SerializedProperty path, moveTime, timeOffset, reverse, endAction, rotationMode;
 
     protected bool gizmoGroup = false;
-    protected SerializedProperty showStartPoint, startPointColor, startPointRadius;
+    protected SerializedProperty showStartPoint, startPointColor, startPointShape, startPointWireframe,
+        startPointRadius, startPointSize, startPointMesh;
     #endregion
 
     private void OnEnable()
@@ -22,7 +24,12 @@ public class FollowPathEditor : Editor
 
         showStartPoint = serializedObject.FindProperty(nameof(showStartPoint));
         startPointColor = serializedObject.FindProperty(nameof(startPointColor));
+        startPointShape = serializedObject.FindProperty(nameof(startPointShape));
+        startPointWireframe = serializedObject.FindProperty(nameof(startPointWireframe));
+
         startPointRadius = serializedObject.FindProperty(nameof(startPointRadius));
+        startPointSize = serializedObject.FindProperty(nameof(startPointSize));
+        startPointMesh = serializedObject.FindProperty(nameof(startPointMesh));
     }
 
     public override void OnInspectorGUI()
@@ -54,20 +61,40 @@ public class FollowPathEditor : Editor
                 EditorGUILayout.PropertyField(showStartPoint);
                 if (showStartPoint.boolValue)
                 {
-                    
-                    EditorGUILayout.PropertyField(startPointColor, new GUIContent(""));
+                    EditorGUILayout.PropertyField(startPointColor, GUIContent.none);
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUI.indentLevel++;
-                    EditorGUILayout.PropertyField(startPointRadius, new GUIContent("Radius"));
-                    EditorGUI.indentLevel--;
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.PropertyField(startPointShape, new GUIContent("Shape"));
+                    EditorGUILayout.PropertyField(startPointWireframe, new GUIContent("Wireframe"));
+                    EditorGUILayout.EndHorizontal();
 
+                    Tuple<SerializedProperty, string> startPointProperty = followPath.startPointShape switch
+                    {
+                        FollowPath.Shape.Sphere => Tuple.Create(startPointRadius, "Radius"),
+                        FollowPath.Shape.Cube => Tuple.Create(startPointSize, "Size"),
+                        FollowPath.Shape.Mesh => Tuple.Create(startPointMesh, "Mesh"),
+                        _ => throw new Exception("Nuh-Uh")
+                    };
+                    EditorGUILayout.PropertyField(startPointProperty.Item1, new GUIContent(startPointProperty.Item2));
+
+                    EditorGUI.indentLevel--;
                 }
                 else
                 {
                     EditorGUILayout.EndHorizontal();
                 }
             }
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
+        else
+        {
+            if (EditorGUILayout.LinkButton("Find Nearest Path"))
+            {
+                followPath.FindPath();
+            }
+
         }
 
         serializedObject.ApplyModifiedProperties();

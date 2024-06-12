@@ -38,6 +38,15 @@ public class PathEditor : Editor
         EditorGUILayout.PropertyField(closeLoop);
         EditorGUILayout.PropertyField(points);
 
+        if (!path.PathIsValid)
+        {
+            string buttonText = (path.points == null || path.points.Count == 0) ? "Generate Path" : "Regenerate Path";
+            if (EditorGUILayout.LinkButton(buttonText))
+            {
+                path.UseChildren();
+            }
+        }
+
         EditorGUILayout.Space();
         gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
         if (gizmoGroup)

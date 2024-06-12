@@ -10,29 +10,6 @@ public class FollowPath2D : FollowPath
     private void Awake()
     {
         Body = GetComponent<Rigidbody2D>();
-        _previousPosition = Body.position;
-        if (!path.PathIsValid)
-        {
-            enabled = false;
-        }
-    }
-
-    private void Update()
-    {
-        if (!path.PathIsValid)
-        {
-            enabled = false;
-        }
-        else
-        {
-            MoveAlongPath();
-        }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(path.GetPointAlongPath(T, out _), path.pointRadius);
     }
 
     private void OnEnable()
@@ -45,7 +22,7 @@ public class FollowPath2D : FollowPath
     }
     #endregion
 
-    private void MoveAlongPath()
+    protected override void MoveAlongPath()
     {
         _moveTimer += (reverse ? -1 : 1) * Time.deltaTime;
         var t = T;
@@ -62,7 +39,7 @@ public class FollowPath2D : FollowPath
             case RotationMode.Path:
                 if (Body.velocity != Vector2.zero)
                 {
-                    Body.MoveRotation(Quaternion.LookRotation(Body.velocity));
+                    Body.rotation = Quaternion.LookRotation(Body.velocity).eulerAngles.z;
                 }
                 break;
             default:

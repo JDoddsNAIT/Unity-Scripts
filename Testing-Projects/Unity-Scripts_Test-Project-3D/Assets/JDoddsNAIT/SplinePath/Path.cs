@@ -112,8 +112,8 @@ public class Path : MonoBehaviour
 
     private Vector3 CatmullRomPath(float t)
     {
-        float l = t * (points.Count - (closeLoop ? 0 : 3));
-        int index = (closeLoop ? 0 : 1) + (int)l;
+        float l = t * (points.Count - (closeLoop ? 0 : 1));
+        int index = (int)l;
         float n = l % 1;
 
         return GetCatmullRomPosition(n,
@@ -126,12 +126,18 @@ public class Path : MonoBehaviour
     private int ClampIndex(int index)
     {
         if (index < 0)
-        { index = points.Count - 1; }
+        {
+            index = closeLoop ? points.Count - 1 : 0;
+        }
 
         if (index > points.Count)
-        { index = 1; }
+        {
+            index = closeLoop ? 1 : 0;
+        }
         else if (index > points.Count - 1)
-        { index = 0; }
+        {
+            index = closeLoop ? 0 : points.Count - 1;
+        }
 
         return index;
     }
@@ -177,7 +183,7 @@ public class Path : MonoBehaviour
     }
 
     [ContextMenu("Generate Path from Children")]
-    private void UseChildren()
+    public void UseChildren()
     {
         List<Transform> transforms = GetComponentsInChildren<Transform>(includeInactive: false).Where(t => t != transform).ToList();
         if (transforms.Count > 0)
@@ -225,23 +231,24 @@ public class Path : MonoBehaviour
         {
             spline = new Vector3[curveSegments + 1];
 
-            float step = 1f / curveSegments;
-            for (int i = 0; i < spline.Length; i++)
-            {
-                spline[i] = splineFunction(step * i);
-            }
         }
 
+        float step = 1f / curveSegments;
+        for (int i = 0; i < spline.Length; i++)
+        {
+            spline[i] = splineFunction(step * i);
+        }
         DrawLineArray(spline);
     }
 
     private void DrawLineArray(Vector3[] points) => DrawLineArray(points, v => v);
-    private void DrawLineArray<T>(IEnumerable<T> points, Func<T, Vector3> convertToVector3)
+    private void DrawLineArray<T>(IEnumerable<T> points, Func<T, Vector3> convertToVector3) => DrawLineArray(points, convertToVector3, points.Count());
+    private void DrawLineArray<T>(IEnumerable<T> points, Func<T, Vector3> convertToVector3, int length)
     {
         Vector3 previousPosition = convertToVector3(points.ElementAt(0));
-        for (int i = 1; i < points.Count(); i++)
+        for (int i = 1; i < length; i++)
         {
-            Vector3 position = convertToVector3(points.ElementAt(i));
+            Vector3 position = convertToVector3(points.ElementAt(i % points.Count()));
             Gizmos.DrawLine(previousPosition, position);
             previousPosition = position;
         }
