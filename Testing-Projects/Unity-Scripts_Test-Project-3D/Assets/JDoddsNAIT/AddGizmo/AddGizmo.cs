@@ -44,6 +44,8 @@ public class AddGizmo : MonoBehaviour
         }
     }
 
+    private void Update() { }
+
     private void DrawGizmo()
     {
         static Vector3 multiplyVector3(Vector3 a, Vector3 b) => new(a.x * b.x, a.y * b.y, a.z * b.z);

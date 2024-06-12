@@ -59,7 +59,12 @@ public class AddGizmoEditor : Editor
         }
         EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.PropertyField(drawMode, new GUIContent("Draw:"));
+        if (addGizmo.shape == AddGizmo.Shape.Mesh)
+        {
+            EditorGUILayout.PropertyField(mesh);
+        }
+        EditorGUILayout.PropertyField(drawMode, new GUIContent("Draw"));
+
 
         switch (addGizmo.shape)
         {
@@ -74,7 +79,6 @@ public class AddGizmoEditor : Editor
                 BoolVector3(useTransformScale, scale);
                 break;
             case AddGizmo.Shape.Mesh:
-                EditorGUILayout.PropertyField(mesh);
                 EditorGUILayout.Space();
                 BoolVector3(useTransformPosition, position);
                 BoolVector3(useTransformRotation, rotation);
