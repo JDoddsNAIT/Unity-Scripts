@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(AddGizmo))]
+[CustomEditor(typeof(AddGizmo)), CanEditMultipleObjects]
 public class AddGizmoEditor : Editor
 {
     SerializedProperty color, wire, shape, drawMode, mesh;

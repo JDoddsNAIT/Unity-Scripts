@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo")]
+[HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo"), AddComponentMenu("Miscellaneous/Gizmo")]
 public class AddGizmo : MonoBehaviour
 {
     public enum WireState { Solid, Wire, }
