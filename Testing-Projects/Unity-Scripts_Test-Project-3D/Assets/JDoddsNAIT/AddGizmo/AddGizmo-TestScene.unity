@@ -123,6 +123,64 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1099124044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099124046}
+  - component: {fileID: 1099124045}
+  m_Layer: 0
+  m_Name: Mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1099124045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099124044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  wire: 0
+  shape: 2
+  drawMode: 0
+  mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
+--- !u!4 &1099124046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099124044}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1270766209
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +268,118 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1398026751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1398026755}
+  - component: {fileID: 1398026754}
+  - component: {fileID: 1398026753}
+  - component: {fileID: 1398026752}
+  m_Layer: 0
+  m_Name: Line
+  m_TagString: Untagged
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1398026752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398026751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 1, a: 1}
+  wire: 1
+  shape: 4
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
+  from: {x: 0, y: 0, z: -1}
+  to: {x: 0, y: 0, z: 1}
+--- !u!114 &1398026753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398026751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 1, b: 0, a: 1}
+  wire: 1
+  shape: 4
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
+  from: {x: 0, y: -1, z: 0}
+  to: {x: 0, y: 1, z: 0}
+--- !u!114 &1398026754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398026751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  wire: 1
+  shape: 4
+  drawMode: 0
+  mesh: {fileID: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
+  from: {x: -1, y: 0, z: 0}
+  to: {x: 1, y: 0, z: 0}
+--- !u!4 &1398026755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398026751}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -338,16 +508,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   wire: 1
   shape: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
-  position: {x: 0, y: 0, z: 0}
   drawMode: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
   mesh: {fileID: 0}
-  rotate: 1
-  direction: {x: 0, y: 0, z: 1}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
 --- !u!4 &1555201955
@@ -359,7 +531,7 @@ Transform:
   m_GameObject: {fileID: 1555201953}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 2, z: -3}
+  m_LocalPosition: {x: -1, y: 1, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -394,16 +566,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   wire: 0
   shape: 0
-  color: {r: 1, g: 1, b: 1, a: 1}
-  position: {x: 0, y: 0, z: 0}
   drawMode: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
   mesh: {fileID: 0}
-  rotate: 1
-  direction: {x: 0, y: 0, z: 1}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
 --- !u!4 &1649989569
@@ -415,7 +589,7 @@ Transform:
   m_GameObject: {fileID: 1649989567}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 2, z: -0.75}
+  m_LocalPosition: {x: 1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -450,16 +624,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   wire: 1
   shape: 0
-  color: {r: 1, g: 1, b: 1, a: 1}
-  position: {x: 0, y: 0, z: 0}
   drawMode: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
   mesh: {fileID: 0}
-  rotate: 1
-  direction: {x: 0, y: 0, z: 1}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
 --- !u!4 &1651031940
@@ -471,7 +647,7 @@ Transform:
   m_GameObject: {fileID: 1651031938}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.75, y: 2, z: -3}
+  m_LocalPosition: {x: -1, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -506,16 +682,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
   wire: 0
   shape: 1
-  color: {r: 1, g: 1, b: 1, a: 1}
-  position: {x: 0, y: 0, z: 0}
   drawMode: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
   mesh: {fileID: 0}
-  rotate: 1
-  direction: {x: 0, y: 0, z: 1}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
 --- !u!4 &1721810016
@@ -527,9 +705,67 @@ Transform:
   m_GameObject: {fileID: 1721810014}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 2, z: -0.75}
+  m_LocalPosition: {x: 1, y: 1, z: -2}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1737016594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1737016596}
+  - component: {fileID: 1737016595}
+  m_Layer: 0
+  m_Name: WireMesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1737016595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737016594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 1, b: 1, a: 1}
+  wire: 1
+  shape: 2
+  drawMode: 0
+  mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 1, y: 1, z: 1}
+  radius: 0.5
+  from: {x: 0, y: 0, z: 0}
+  to: {x: 0, y: 0, z: 0}
+--- !u!4 &1737016596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737016594}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 1, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -562,16 +798,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f5adfca4de3c64c818be0bced9fa98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wire: 0
-  shape: 0
   color: {r: 1, g: 1, b: 1, a: 1}
-  position: {x: 0, y: 0, z: 0}
+  wire: 1
+  shape: 3
   drawMode: 0
-  radius: 0.5
-  size: {x: 1, y: 1, z: 1}
   mesh: {fileID: 0}
-  rotate: 1
-  direction: {x: 0, y: 0, z: 1}
+  useTransformPosition: 1
+  position: {x: 0, y: 0, z: 0}
+  useTransformRotation: 1
+  rotation: {x: 0, y: 0, z: 0}
+  useTransformScale: 1
+  scale: {x: 0, y: 0, z: 1}
+  radius: 0.5
   from: {x: 0, y: 0, z: 0}
   to: {x: 0, y: 0, z: 0}
 --- !u!4 &2078812173
@@ -583,7 +821,7 @@ Transform:
   m_GameObject: {fileID: 2078812169}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.75, y: 2, z: -1.75}
+  m_LocalPosition: {x: -3, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -597,6 +835,9 @@ SceneRoots:
   - {fileID: 1495694722}
   - {fileID: 1721810016}
   - {fileID: 1555201955}
+  - {fileID: 1737016596}
+  - {fileID: 1099124046}
   - {fileID: 1649989569}
   - {fileID: 1651031940}
   - {fileID: 2078812173}
+  - {fileID: 1398026755}

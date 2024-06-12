@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/Scripts/Add-Gizmo")]
@@ -8,17 +9,22 @@ public class AddGizmo : MonoBehaviour
     public enum DrawMode { Always, WhileSelected, }
 
     #region Inspector
+    [SerializeField] Color color = Color.white;
     public WireState wire;
     public Shape shape = Shape.Sphere;
-    [SerializeField] Color color = Color.white;
-    [SerializeField] Vector3 position = Vector3.zero;
     [SerializeField] DrawMode drawMode = DrawMode.Always;
-
-    [SerializeField] float radius = .5f;
-    [SerializeField] Vector3 size = Vector3.one;
     [SerializeField] Mesh mesh;
-    [SerializeField] bool rotate = true;
-    [SerializeField] Vector3 direction = Vector3.forward;
+
+    [SerializeField] bool useTransformPosition = true;
+    [SerializeField] Vector3 position = Vector3.zero;
+
+    [SerializeField] bool useTransformRotation = true;
+    [SerializeField] Vector3 rotation = Vector3.zero;
+
+    [SerializeField] bool useTransformScale = true;
+    [SerializeField] Vector3 scale = Vector3.one;
+    [SerializeField] float radius = .5f;
+
     [SerializeField] Vector3 from, to;
     #endregion
 
@@ -40,8 +46,17 @@ public class AddGizmo : MonoBehaviour
 
     private void DrawGizmo()
     {
+        static Vector3 multiplyVector3(Vector3 a, Vector3 b) => new(a.x * b.x, a.y * b.y, a.z * b.z);
+
         Gizmos.color = color;
-        Vector3 gizmoPosition = transform.position + position;
+        var transformPosition = useTransformPosition ? transform.position : Vector3.zero;
+        var transformRotation = useTransformRotation ? transform.rotation.eulerAngles : Vector3.zero;
+        var transformScale = useTransformScale ? transform.localScale : Vector3.one;
+
+        Vector3 gizmoPosition = transformPosition + position;
+        Quaternion gizmoRotation = Quaternion.Euler(transformRotation + rotation);
+        Vector3 gizmoScale = multiplyVector3(transformScale, scale);
+
         switch (shape)
         {
             case Shape.Sphere:
@@ -57,32 +72,30 @@ public class AddGizmo : MonoBehaviour
             case Shape.Cube:
                 if (wire == WireState.Wire)
                 {
-                    Gizmos.DrawWireCube(gizmoPosition, size);
+                    Gizmos.DrawWireCube(gizmoPosition, scale);
                 }
                 else
                 {
-                    Gizmos.DrawCube(gizmoPosition, size);
+                    Gizmos.DrawCube(gizmoPosition, scale);
                 }
                 break;
             case Shape.Mesh:
                 if (wire == WireState.Wire)
                 {
-                    Gizmos.DrawWireMesh(mesh, gizmoPosition);
+                    Gizmos.DrawWireMesh(mesh, gizmoPosition, gizmoRotation, gizmoScale);
                 }
                 else
                 {
-                    Gizmos.DrawMesh(mesh, gizmoPosition);
+                    Gizmos.DrawMesh(mesh, gizmoPosition, gizmoRotation, gizmoScale);
                 }
                 break;
             case Shape.Ray:
-                if (rotate)
-                {
-                    direction = transform.rotation * direction;
-                }
-                Gizmos.DrawRay(gizmoPosition, direction);
+                Gizmos.DrawRay(gizmoPosition, gizmoRotation * gizmoScale);
                 break;
             case Shape.Line:
-                Gizmos.DrawLine((rotate ? transform.rotation * from : from) + gizmoPosition, (rotate ? transform.rotation * to : to) + gizmoPosition);
+                Gizmos.DrawLine(
+                    gizmoRotation * from + gizmoPosition,
+                    gizmoRotation * to + gizmoPosition);
                 break;
         }
     }

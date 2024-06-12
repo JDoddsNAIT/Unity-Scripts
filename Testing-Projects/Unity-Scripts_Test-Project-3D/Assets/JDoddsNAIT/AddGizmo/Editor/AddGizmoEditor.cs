@@ -4,23 +4,32 @@ using UnityEngine;
 [CustomEditor(typeof(AddGizmo))]
 public class AddGizmoEditor : Editor
 {
-    SerializedProperty shape, color, wire, position, drawMode;
+    SerializedProperty color, wire, shape, drawMode, mesh;
 
-    SerializedProperty radius, size, mesh, rotate, direction, from, to;
+    SerializedProperty useTransformPosition, position;
+    SerializedProperty useTransformRotation, rotation;
+    SerializedProperty useTransformScale, scale;
+
+    SerializedProperty radius, from, to;
 
     private void OnEnable()
     {
-        shape = serializedObject.FindProperty(nameof(shape));
         color = serializedObject.FindProperty(nameof(color));
         wire = serializedObject.FindProperty(nameof(wire));
-        position = serializedObject.FindProperty(nameof(position));
+        shape = serializedObject.FindProperty(nameof(shape));
         drawMode = serializedObject.FindProperty(nameof(drawMode));
+        mesh = serializedObject.FindProperty(nameof(mesh));
+
+        useTransformPosition = serializedObject.FindProperty(nameof(useTransformPosition));
+        position = serializedObject.FindProperty(nameof(position));
+
+        useTransformRotation = serializedObject.FindProperty(nameof(useTransformRotation));
+        rotation = serializedObject.FindProperty(nameof(rotation));
+
+        useTransformScale = serializedObject.FindProperty(nameof(useTransformScale));
+        scale = serializedObject.FindProperty(nameof(scale));
 
         radius = serializedObject.FindProperty(nameof(radius));
-        size = serializedObject.FindProperty(nameof(size));
-        mesh = serializedObject.FindProperty(nameof(mesh));
-        rotate = serializedObject.FindProperty(nameof(rotate));
-        direction = serializedObject.FindProperty(nameof(direction));
         from = serializedObject.FindProperty(nameof(from));
         to = serializedObject.FindProperty(nameof(to));
     }
@@ -34,8 +43,9 @@ public class AddGizmoEditor : Editor
         EditorGUIUtility.labelWidth = 90;
 
         EditorGUILayout.PropertyField(color, GUIContent.none);
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.Space();
 
+        EditorGUILayout.BeginHorizontal();
         if (addGizmo.shape != AddGizmo.Shape.Ray & addGizmo.shape != AddGizmo.Shape.Line)
         {
             EditorGUILayout.PropertyField(wire, new GUIContent("Shape"));
@@ -50,31 +60,52 @@ public class AddGizmoEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.PropertyField(drawMode, new GUIContent("Draw:"));
-        EditorGUILayout.PropertyField(position);
 
-        EditorGUILayout.Space();
         switch (addGizmo.shape)
         {
             case AddGizmo.Shape.Sphere:
+                EditorGUILayout.Space();
+                BoolVector3(useTransformPosition, position);
                 EditorGUILayout.PropertyField(radius);
                 break;
             case AddGizmo.Shape.Cube:
-                EditorGUILayout.PropertyField(size);
+                EditorGUILayout.Space();
+                BoolVector3(useTransformPosition, position);
+                BoolVector3(useTransformScale, scale);
                 break;
             case AddGizmo.Shape.Mesh:
                 EditorGUILayout.PropertyField(mesh);
+                EditorGUILayout.Space();
+                BoolVector3(useTransformPosition, position);
+                BoolVector3(useTransformRotation, rotation);
+                BoolVector3(useTransformScale, scale);
                 break;
             case AddGizmo.Shape.Ray:
-                EditorGUILayout.PropertyField(rotate);
-                EditorGUILayout.PropertyField(direction);
+                EditorGUILayout.Space();
+                BoolVector3(useTransformPosition, position);
+                BoolVector3(useTransformRotation, rotation);
+                BoolVector3(useTransformScale, scale);
                 break;
             case AddGizmo.Shape.Line:
-                EditorGUILayout.PropertyField(rotate);
+                EditorGUILayout.Space();
+                BoolVector3(useTransformPosition, position);
+                BoolVector3(useTransformRotation, rotation);
+                EditorGUILayout.Space();
                 EditorGUILayout.PropertyField(from);
                 EditorGUILayout.PropertyField(to);
                 break;
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    void BoolVector3(SerializedProperty boolProperty, SerializedProperty vectorProperty)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUIUtility.fieldWidth = 30;
+        EditorGUILayout.PropertyField(boolProperty, new GUIContent(vectorProperty.displayName, $"The gizmo's {vectorProperty.name}. Use the checkbox to switch between local and world space."));
+        EditorGUIUtility.fieldWidth = 120;
+        EditorGUILayout.PropertyField(vectorProperty, GUIContent.none);
+        EditorGUILayout.EndHorizontal();
     }
 }
