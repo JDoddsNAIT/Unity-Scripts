@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
-public class ProjectileLauncherEditor<TBody> : Editor
+public class ProjectileLauncherEditor : Editor
 {
     SerializedProperty projectile, maxProjectiles, launchForce, lifeTime, launchAngle;
 
@@ -10,9 +8,9 @@ public class ProjectileLauncherEditor<TBody> : Editor
     SerializedProperty spawnParent, spawnOnStart, spawnDelay;
 
     bool gizmoGroup = false;
-    SerializedProperty showLaunchVelocity, launchVelocityColor;
-    SerializedProperty showTrajectory, trajectoryColor, trajectoryResolution;
-    SerializedProperty showFinalPosition, finalPositionColor, finalPositionRadius;
+    protected SerializedProperty showLaunchVelocity, launchVelocityColor;
+    protected SerializedProperty showTrajectory, trajectoryColor, trajectoryResolution;
+    protected SerializedProperty showFinalPosition, finalPositionColor, finalPositionRadius;
 
     private void OnEnable()
     {
@@ -43,12 +41,9 @@ public class ProjectileLauncherEditor<TBody> : Editor
     {
         float defaultLabelWidth = EditorGUIUtility.labelWidth;
         float defaultFieldWidth = EditorGUIUtility.fieldWidth;
-        var launcher = (ProjectileLauncher<TBody>)target;
         serializedObject.Update();
 
-        EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(projectile);
-        EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.PropertyField(lifeTime);
         EditorGUILayout.PropertyField(launchForce);
@@ -73,41 +68,24 @@ public class ProjectileLauncherEditor<TBody> : Editor
         gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
         if (gizmoGroup)
         {
-            GizmoToggle(showLaunchVelocity, launchVelocityColor, null);
+            EditorUtils.GizmoToggle(showLaunchVelocity, launchVelocityColor);
             EditorGUILayout.Space();
-            GizmoToggle(showTrajectory, trajectoryColor, trajectoryResolution);
+            EditorUtils.GizmoToggle(showTrajectory, trajectoryColor, trajectoryResolution, "Resolution");
             EditorGUILayout.Space();
-            GizmoToggle(showFinalPosition, finalPositionColor, finalPositionRadius);
+            EditorUtils.GizmoToggle(showFinalPosition, finalPositionColor, finalPositionRadius, "Radius");
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
         serializedObject.ApplyModifiedProperties();
     }
 
-    void GizmoToggle(SerializedProperty showGizmo, SerializedProperty gizmoColor, SerializedProperty property)
+    protected virtual void FinalPositionLayout()
     {
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(showGizmo);
-        if (showGizmo.boolValue)
-        {
-            EditorGUILayout.PropertyField(gizmoColor, GUIContent.none);
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUI.indentLevel++;
-            if (property != null)
-            {
-                EditorGUILayout.PropertyField(property, new GUIContent(property.displayName.Split(" ")[^1]));
-            }
-            EditorGUI.indentLevel--;
-        }
-        else
-        {
-            EditorGUILayout.EndHorizontal();
-        }
+        EditorGUILayout.PropertyField(finalPositionRadius);
     }
 }
 
 [CustomEditor(typeof(ProjectileLauncher3D))]
-public class ProjectileLauncher3DEditor : ProjectileLauncherEditor<Rigidbody> { }
+public class ProjectileLauncher3DEditor : ProjectileLauncherEditor { }
 [CustomEditor(typeof(ProjectileLauncher2D))]
-public class ProjectileLauncher2DEditor : ProjectileLauncherEditor<Rigidbody2D> { }
+public class ProjectileLauncher2DEditor : ProjectileLauncherEditor { }
