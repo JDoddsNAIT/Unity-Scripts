@@ -39,14 +39,15 @@ public class FollowPathEditor : Editor
 
         EditorGUILayout.PropertyField(path);
 
+        float defaultWidth = EditorGUIUtility.labelWidth;
         if (followPath.path != null)
         {
             EditorGUILayout.Space();
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PropertyField(moveTime);
-            EditorGUIUtility.labelWidth = 11;
-            EditorGUILayout.PropertyField(timeOffset, new GUIContent("-", "Offsets the start time."));
-            EditorGUIUtility.labelWidth = 120;
+            EditorGUIUtility.labelWidth = 60;
+            EditorGUILayout.PropertyField(timeOffset, new GUIContent("Offset"));
+            EditorGUIUtility.labelWidth = defaultWidth;
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.PropertyField(reverse);

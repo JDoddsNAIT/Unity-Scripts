@@ -12,6 +12,9 @@ public class AddGizmoEditor : Editor
 
     SerializedProperty radius, from, to;
 
+    readonly float defaultLabelWidth = EditorGUIUtility.labelWidth;
+    readonly float defaultFieldWidth = EditorGUIUtility.fieldWidth;
+
     private void OnEnable()
     {
         color = serializedObject.FindProperty(nameof(color));
@@ -37,10 +40,7 @@ public class AddGizmoEditor : Editor
     public override void OnInspectorGUI()
     {
         var addGizmo = (AddGizmo)target;
-
         serializedObject.Update();
-
-        EditorGUIUtility.labelWidth = 90;
 
         EditorGUILayout.PropertyField(color, GUIContent.none);
         EditorGUILayout.Space();
@@ -106,9 +106,7 @@ public class AddGizmoEditor : Editor
     void BoolVector3(SerializedProperty boolProperty, SerializedProperty vectorProperty)
     {
         EditorGUILayout.BeginHorizontal();
-        EditorGUIUtility.fieldWidth = 30;
         EditorGUILayout.PropertyField(boolProperty, new GUIContent(vectorProperty.displayName, $"The gizmo's {vectorProperty.name}. Use the checkbox to switch between local and world space."));
-        EditorGUIUtility.fieldWidth = 120;
         EditorGUILayout.PropertyField(vectorProperty, GUIContent.none);
         EditorGUILayout.EndHorizontal();
     }
