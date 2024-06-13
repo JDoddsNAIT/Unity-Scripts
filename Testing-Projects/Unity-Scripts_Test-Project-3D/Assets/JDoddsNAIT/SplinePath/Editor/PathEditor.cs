@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,18 +6,17 @@ using UnityEngine;
 public class PathEditor : Editor
 {
     #region Properties
-    SerializedProperty pathType, closeLoop, points;
+    SerializedProperty pathType, useControlPoints, closeLoop, points;
 
     bool gizmoGroup = false;
     SerializedProperty showPath, pathColor, curveSegments;
     SerializedProperty showPoints, pointColor, pointRadius;
-
-    readonly GUIContent empty = new("");
     #endregion
 
     private void OnEnable()
     {
         pathType = serializedObject.FindProperty(nameof(pathType));
+        useControlPoints = serializedObject.FindProperty(nameof(useControlPoints));
         closeLoop = serializedObject.FindProperty(nameof(closeLoop));
         points = serializedObject.FindProperty(nameof(points));
 
@@ -36,6 +36,10 @@ public class PathEditor : Editor
 
         EditorGUILayout.PropertyField(pathType);
         EditorGUILayout.PropertyField(closeLoop);
+        if (path.pathType == Path.PathType.CatmullRom && !closeLoop.boolValue)
+        {
+            EditorGUILayout.PropertyField(useControlPoints);
+        }
         EditorGUILayout.PropertyField(points);
 
         if (!path.PathIsValid)
@@ -51,19 +55,52 @@ public class PathEditor : Editor
         gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
         if (gizmoGroup)
         {
-            EditorUtils.GizmoToggle(
+            GizmoToggle(
                 showPath,
                 pathColor,
-                curveSegments);
+                curveSegments,
+                "Resolution");
 
             EditorGUILayout.Space();
 
-            EditorUtils.GizmoToggle(
+            GizmoToggle(
                 showPoints,
                 pointColor,
-                () => EditorGUILayout.PropertyField(pointRadius, new GUIContent("Radius")));
+                pointRadius,
+                "Radius");
         }
 
         serializedObject.ApplyModifiedProperties();
+    }
+
+    public static void GizmoToggle(
+        SerializedProperty showGizmo,
+        SerializedProperty gizmoColor,
+        SerializedProperty property,
+        string label) => GizmoToggle(
+            showGizmo,
+            gizmoColor,
+            () => EditorGUILayout.PropertyField(property, new GUIContent(label)));
+
+    public static void GizmoToggle(
+        SerializedProperty showGizmo,
+        SerializedProperty gizmoColor,
+        Action layout)
+    {
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PropertyField(showGizmo);
+        if (showGizmo.boolValue)
+        {
+            EditorGUILayout.PropertyField(gizmoColor, GUIContent.none);
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUI.indentLevel++;
+            layout();
+            EditorGUI.indentLevel--;
+        }
+        else
+        {
+            EditorGUILayout.EndHorizontal();
+        }
     }
 }

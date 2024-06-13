@@ -36,8 +36,6 @@ There are three variations to this script. `FollowPath` follows the path by sett
 
 Adding either `FollowPath` script to an object will make it move along the assigned `path` while the script is `enabled`. The `moveTime` property determines how long it will take for the object reach the end of path. Depending on `endAction`, the script will behave differently when the end of the path is reached. Either the script will be disabled, the movement direction will be reversed, or the object will return to the starting point in the `path`.
 
-Avoid adding multiple `FollowPath` scripts to a single object as the results are unpredictable.
-
 ## 🔧 Properties
 | Property | Summary |
 |-|-|

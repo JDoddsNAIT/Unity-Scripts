@@ -6,6 +6,15 @@ public class FollowPath2D : FollowPath
 {
     public Rigidbody2D Body { get; private set; }
 
+    protected override Vector3 Position
+    {
+        get => Body.position; set => Body.MovePosition(value);
+    }
+    protected override Quaternion Rotation
+    {
+        get => Quaternion.Euler(0, 0, Body.rotation); set => Body.MoveRotation(Rotation.eulerAngles.z);
+    }
+
     #region Unity Messages
     private void Awake()
     {
@@ -21,37 +30,4 @@ public class FollowPath2D : FollowPath
         Body.isKinematic = true;
     }
     #endregion
-
-    protected override void MoveAlongPath()
-    {
-        _moveTimer += (reverse ? -1 : 1) * Time.deltaTime;
-        var t = T;
-
-        Vector3 position = path.GetPointAlongPath(t, out var rotation);
-        Body.position = _previousPosition;
-        Body.velocity = (position - _previousPosition) / Time.deltaTime;
-
-        switch (rotationMode)
-        {
-            case RotationMode.Keyframe:
-                Body.MoveRotation(rotation);
-                break;
-            case RotationMode.Path:
-                if (Body.velocity != Vector2.zero)
-                {
-                    Body.rotation = Quaternion.LookRotation(Body.velocity).eulerAngles.z;
-                }
-                break;
-            default:
-                break;
-        }
-
-        if (endAction == EndAction.Stop && t == 1 || t == 0)
-        {
-            Reverse();
-            enabled = false;
-        }
-
-        _previousPosition = position;
-    }
 }

@@ -29,7 +29,6 @@ public class FollowPathEditor : Editor
 
         startPointRadius = serializedObject.FindProperty(nameof(startPointRadius));
         startPointSize = serializedObject.FindProperty(nameof(startPointSize));
-        startPointMesh = serializedObject.FindProperty(nameof(startPointMesh));
     }
 
     public override void OnInspectorGUI()
@@ -58,7 +57,7 @@ public class FollowPathEditor : Editor
             gizmoGroup = EditorGUILayout.BeginFoldoutHeaderGroup(gizmoGroup, "Gizmo Settings");
             if (gizmoGroup)
             {
-                EditorUtils.GizmoToggle(
+                PathEditor.GizmoToggle(
                     showStartPoint,
                     startPointColor,
                     () =>
@@ -72,8 +71,6 @@ public class FollowPathEditor : Editor
                         {
                             FollowPath.Shape.Sphere => Tuple.Create(startPointRadius, "Radius"),
                             FollowPath.Shape.Cube => Tuple.Create(startPointSize, "Size"),
-                            FollowPath.Shape.Mesh => Tuple.Create(startPointMesh, "Mesh"),
-                            _ => throw new Exception("Nuh-Uh")
                         };
                         EditorGUILayout.PropertyField(startPointProperty.Item1, new GUIContent(startPointProperty.Item2));
                     });

@@ -9,12 +9,13 @@ public class Path : MonoBehaviour
     public enum PathType { Linear, Bezier, [InspectorName("Catmull-Rom")] CatmullRom }
     #region Inspector Values
     public PathType pathType;
+    public bool useControlPoints = true;
     public bool closeLoop;
     public List<Transform> points = new();
 
     public bool showPath = true;
     [SerializeField] Color pathColor = Color.white;
-    [SerializeField, Range(1, 100)] int curveSegments = 20;
+    [SerializeField, Range(1, 100)] int curveSegments = 100;
 
     public bool showPoints = true;
     [SerializeField] Color pointColor = Color.white;
@@ -39,9 +40,9 @@ public class Path : MonoBehaviour
         }
     }
 
-    public Vector3 GetPointAlongPath(float t, out Quaternion rotation)
+    public Vector3 GetPointAlongPath(float t, out Quaternion keyframeRotation)
     {
-        rotation = GetLinearRotation(t);
+        keyframeRotation = GetLinearRotation(t);
 
         return pathType switch
         {
@@ -53,6 +54,7 @@ public class Path : MonoBehaviour
     }
 
     #region Spline Functions
+    #region Linear
     private Vector3 LinearPath(float t)
     {
         t = Mathf.Clamp01(t);
@@ -83,9 +85,23 @@ public class Path : MonoBehaviour
             points[indexModCount].position,
             lerp);
     }
+    #endregion
 
+    #region Bezier
     private Vector3 BezierPath(float t)
     {
+        static int Combination(int n, int r) => Factorial(n) / (Factorial(r) * Factorial(n - r));
+        static int Factorial(int n)
+        {
+            int nf = 1;
+            while (n > 1)
+            {
+                nf *= n;
+                n--;
+            }
+            return nf;
+        }
+
         t = Mathf.Clamp01(t);
 
         Vector3 b = new();
@@ -97,23 +113,13 @@ public class Path : MonoBehaviour
         }
         return b;
     }
+    #endregion
 
-    public static int Combination(int n, int r) => Factorial(n) / (Factorial(r) * Factorial(n - r));
-    public static int Factorial(int n)
-    {
-        int nf = 1;
-        while (n > 1)
-        {
-            nf *= n;
-            n--;
-        }
-        return nf;
-    }
-
+    #region Catmull-Rom
     private Vector3 CatmullRomPath(float t)
     {
-        float l = t * (points.Count - (closeLoop ? 0 : 1));
-        int index = (int)l;
+        float l = t * (points.Count - (closeLoop ? 0 : useControlPoints ? 3 : 1));
+        int index = (int)l + (useControlPoints ? 1 : 0);
         float n = l % 1;
 
         return GetCatmullRomPosition(n,
@@ -127,16 +133,16 @@ public class Path : MonoBehaviour
     {
         if (index < 0)
         {
-            index = closeLoop ? points.Count - 1 : 0;
+            index = closeLoop || useControlPoints ? points.Count - 1 : 0;
         }
 
         if (index > points.Count)
         {
-            index = closeLoop ? 1 : 0;
+            index = closeLoop || useControlPoints ? 1 : 0;
         }
         else if (index > points.Count - 1)
         {
-            index = closeLoop ? 0 : points.Count - 1;
+            index = closeLoop || useControlPoints ? 0 : points.Count - 1;
         }
 
         return index;
@@ -148,6 +154,7 @@ public class Path : MonoBehaviour
                 t3 = t2 * t;
         return 0.5f * ((2 * p1) + (p2 - p0) * t + (2 * p0 - 5 * p1 + 4 * p2 - p3) * t2 + (p3 - p0 + 3 * p1 - 3 * p2) * t3);
     }
+    #endregion
     #endregion
 
     private Quaternion GetLinearRotation(float t) => GetLinearRotation(t, out _, out _, out _);
@@ -209,18 +216,21 @@ public class Path : MonoBehaviour
 
         if (showPath)
         {
-            Gizmos.color = pathColor;
-            switch (pathType)
+            if (PathIsValid)
             {
-                case PathType.Linear:
-                    DrawLineArray(points, t => t.position, points.Count + (closeLoop ? 1 : 0));
-                    break;
-                case PathType.Bezier:
-                    DrawSpline(BezierPath);
-                    break;
-                case PathType.CatmullRom:
-                    DrawSpline(CatmullRomPath);
-                    break;
+                Gizmos.color = pathColor;
+                switch (pathType)
+                {
+                    case PathType.Linear:
+                        DrawLineArray(points, t => t.position, points.Count + (closeLoop ? 1 : 0));
+                        break;
+                    case PathType.Bezier:
+                        DrawSpline(BezierPath);
+                        break;
+                    case PathType.CatmullRom:
+                        DrawSpline(CatmullRomPath);
+                        break;
+                }
             }
         }
     }

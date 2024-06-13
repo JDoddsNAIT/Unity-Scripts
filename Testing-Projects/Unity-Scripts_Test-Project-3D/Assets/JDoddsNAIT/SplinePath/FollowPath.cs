@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [HelpURL("https://github.com/JDoddsNAIT/Unity-Scripts/tree/main/dScripts/Follow-Path")]
-[AddComponentMenu("Spline Path/Follow Path (Transform)")]
+[AddComponentMenu("Spline Path/Follow Path (Transform)"), DisallowMultipleComponent]
 public class FollowPath : MonoBehaviour
 {
     public enum EndAction
@@ -17,7 +17,7 @@ public class FollowPath : MonoBehaviour
         Keyframe,   // The script will interpolate between the rotation of the points
         Path,       // The script will look int the direction it is moving
     }
-    public enum Shape { Sphere, Cube, Mesh }
+    public enum Shape { Sphere, Cube }
 
     #region Inspector Values
     public Path path;
@@ -41,7 +41,19 @@ public class FollowPath : MonoBehaviour
 
     [SerializeField] float startPointRadius = 0.2f;
     [SerializeField] Vector3 startPointSize = Vector3.one;
-    [SerializeField] Mesh startPointMesh;
+    #endregion
+
+    #region Virtual Properties
+    protected virtual Vector3 Position
+    {
+        get => transform.position;
+        set => transform.position = value;
+    }
+    protected virtual Quaternion Rotation
+    {
+        get => transform.rotation;
+        set => transform.rotation = value;
+    }
     #endregion
 
     #region Private members
@@ -95,9 +107,6 @@ public class FollowPath : MonoBehaviour
                     case Shape.Cube:
                         Gizmos.DrawWireCube(pos, startPointSize);
                         break;
-                    case Shape.Mesh:
-                        Gizmos.DrawWireMesh(startPointMesh, pos);
-                        break;
                 }
             }
             else
@@ -110,28 +119,27 @@ public class FollowPath : MonoBehaviour
                     case Shape.Cube:
                         Gizmos.DrawCube(pos, startPointSize);
                         break;
-                    case Shape.Mesh:
-                        Gizmos.DrawMesh(startPointMesh, pos);
-                        break;
                 }
-            } 
+            }
         }
     }
     #endregion
 
-    protected virtual void MoveAlongPath()
+    protected void MoveAlongPath()
     {
         _moveTimer += (reverse ? -1 : 1) * Time.deltaTime;
         var t = T;
 
-        Vector3 position = path.GetPointAlongPath(t, out var rotation);
-        Quaternion newRotation = rotationMode switch
+        Position = path.GetPointAlongPath(t, out var keyframeRotation);
+
+        Rotation = rotationMode switch
         {
-            RotationMode.Keyframe => rotation,
-            RotationMode.Path => Quaternion.LookRotation(position - _previousPosition),
-            _ => transform.rotation,
+            RotationMode.Keyframe => keyframeRotation,
+            RotationMode.Path => Position - _previousPosition != Vector3.zero
+                ? Quaternion.LookRotation(Position - _previousPosition)
+                : Rotation,
+            _ => Rotation,
         };
-        transform.SetPositionAndRotation(position, newRotation);
 
         if (endAction == EndAction.Stop && t == 1 || t == 0)
         {
@@ -139,7 +147,7 @@ public class FollowPath : MonoBehaviour
             enabled = false;
         }
 
-        _previousPosition = position;
+        _previousPosition = Position;
     }
 
     public void Toggle() => enabled = !enabled;
