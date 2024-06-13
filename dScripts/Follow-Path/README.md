@@ -73,7 +73,7 @@ There are three types of paths: `Linear`, `Bezier`, and `Catmull-Rom`.
 | `pathColor` | The path's drawn colour. |
 | `curveSegments` | The amount of segements drawn in the curve. Only affects the Bezier and Catmull-Rom path types. |
 | `closeLoop` | If checked, the first and last `points` in the path will be connected. |
-| `useControllPoints` | This box only shows for `Catmull-Rom` paths. If checked, the script will use the first and last `points` as control points.
+| `useControlPoints` | This box only shows for `Catmull-Rom` paths. If checked, the script will use the first and last `points` as control points.
 | `points` | The list of points that make up the path. `FollowPath` will move to each point in order. |
 
 ## ⚙️ Gizmos
