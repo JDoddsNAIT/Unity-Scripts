@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-public class ObjectPool<TObject>
+public class ObjectPool<TObject> where TObject : class
 {
     /// <summary>
     /// The entire pool of <see cref="object"/>s.
@@ -28,7 +28,7 @@ public class ObjectPool<TObject>
     public TObject[] InactiveObjects => Pool.Where(x => !IsActive(x)).ToArray();
     public TObject NextInactive => InactiveObjects.FirstOrDefault();
 
-    /// <summary>
+     /// <summary>
     /// Creates an object pool of length <paramref name="size"/>, then will <paramref name="initialize"/> each <see cref="object"/>.
     /// </summary>
     /// <param name="initialize">The action performed to initialize the <see cref="object"/>.</param>

@@ -132,6 +132,8 @@ GameObject:
   m_Component:
   - component: {fileID: 153460571}
   - component: {fileID: 153460570}
+  - component: {fileID: 153460573}
+  - component: {fileID: 153460572}
   m_Layer: 0
   m_Name: Angles
   m_TagString: Untagged
@@ -154,11 +156,11 @@ MonoBehaviour:
   inputColor: {r: 0, g: 1, b: 1, a: 1}
   inputAngle: 0
   angles:
-  - 45
-  - 150
-  - 270
+  - 15
+  - 90
+  - 225
   angleColor: {r: 1, g: 0, b: 0, a: 1}
-  limitColor: {r: 1, g: 0, b: 1, a: 1}
+  limitColor: {r: 0, g: 0, b: 1, a: 1}
   onColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!4 &153460571
 Transform:
@@ -175,6 +177,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &153460572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153460569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 425e08e7a8625754286650cbf81ad48a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Battle>k__BackingField: {fileID: 0}
+  <Paths>k__BackingField: []
+  <Unlocked>k__BackingField: 0
+--- !u!114 &153460573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 153460569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf49266678da644392993f9d8f86ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <StartPoint>k__BackingField: {fileID: 0}
+  <MidPoints>k__BackingField: []
+  <EndPoint>k__BackingField: {fileID: 0}
+  <Unlocked>k__BackingField: 0
+  drawPath: 0
+  splineColor: {r: 0, g: 0, b: 0, a: 0}
+  resolution: 1000
 --- !u!1 &229379912
 GameObject:
   m_ObjectHideFlags: 0
