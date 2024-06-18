@@ -1,13 +1,14 @@
-using System.Linq;
 using UnityEngine;
 
 public abstract class Trigger : MonoBehaviour
 {
     [Min(0)] public int ChannelID;
-    protected Channel channel;
+
+    [field: SerializeField] protected ChannelManager ChannelManager { get; private set; }
+    protected Channel SignalChannel => ChannelManager.ChannelsDict[ChannelID];
 
     private void Awake()
     {
-        channel = FindObjectsOfType<Channel>().Where(c => c.ChannelId == ChannelID).FirstOrDefault();
+        ChannelManager = FindObjectOfType<ChannelManager>();
     }
 }

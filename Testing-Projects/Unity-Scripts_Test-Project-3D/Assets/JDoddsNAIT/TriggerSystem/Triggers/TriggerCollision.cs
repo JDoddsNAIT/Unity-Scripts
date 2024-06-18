@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CollisionTrigger : Trigger
+public class TriggerCollision : Trigger
 {
     enum Activation { Trigger, Collision, Both };
     [SerializeField] private Activation activation;
@@ -10,7 +10,7 @@ public class CollisionTrigger : Trigger
     {
         if (activation != Activation.Collision)
         {
-            channel.FloatValue += Time.deltaTime;
+            SignalChannel.FloatValue += Time.deltaTime;
         }
     }
 
@@ -18,7 +18,7 @@ public class CollisionTrigger : Trigger
     {
         if (activation != Activation.Collision)
         {
-            channel.FloatValue = 0; 
+            SignalChannel.FloatValue = 0; 
         }
     }
 
@@ -26,7 +26,7 @@ public class CollisionTrigger : Trigger
     {
         if (activation != Activation.Trigger)
         {
-            channel.FloatValue += Time.deltaTime;
+            SignalChannel.FloatValue += Time.deltaTime;
         }
     }
 
@@ -34,7 +34,7 @@ public class CollisionTrigger : Trigger
     {
         if (activation != Activation.Trigger)
         {
-            channel.FloatValue = 0;
+            SignalChannel.FloatValue = 0;
         }
     }
 }
