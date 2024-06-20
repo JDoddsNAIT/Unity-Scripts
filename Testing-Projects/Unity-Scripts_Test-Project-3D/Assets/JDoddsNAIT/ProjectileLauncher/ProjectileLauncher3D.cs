@@ -4,7 +4,7 @@ public class ProjectileLauncher3D : ProjectileLauncher<Rigidbody>
 {
     [SerializeField] Vector3 launchAngle = Vector3.zero;
 
-    protected override Vector3 LaunchDirection => Quaternion.Euler(launchAngle) * transform.forward;
+    protected override Vector3 LaunchDirection => (VXQ)transform.forward * Quaternion.Euler(launchAngle);
 
     private void Start()
     {

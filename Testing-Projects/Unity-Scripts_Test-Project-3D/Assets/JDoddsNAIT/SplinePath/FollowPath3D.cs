@@ -9,7 +9,7 @@ public class FollowPath3D : FollowPath
     protected override Vector3 Position {
         get => Body.position; set => Body.MovePosition(value);
     }
-    protected override Quaternion Rotation {
+    protected override OperableQuaternion Rotation {
         get => Body.rotation; set => Body.MoveRotation(Rotation);
     }
 
