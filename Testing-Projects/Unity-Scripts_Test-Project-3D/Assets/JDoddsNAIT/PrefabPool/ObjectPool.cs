@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-public class ObjectPool<TObject> where TObject : class
+public class ObjectPool<TObject> where TObject : UnityEngine.Object
 {
     /// <summary>
     /// The entire pool of <see cref="object"/>s.

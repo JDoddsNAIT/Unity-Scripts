@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-public abstract class ProjectileLauncher<TBody> : MonoBehaviour where TBody : class
+public abstract class ProjectileLauncher<TBody> : MonoBehaviour where TBody : Object
 {
     #region Serialized Fields
     [SerializeReference] public TBody projectile;
