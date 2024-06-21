@@ -85,9 +85,9 @@ public static class Utils
     // Transform Extension method
     public static void LookTowards(this Transform transform, Vector3 toDirection, Vector3 up, float maxDegrees)
     {
-        transform.rotation = OperableQuaternion.RotateTowards(
+        transform.rotation = Quaternion.RotateTowards(
             from: transform.rotation,
-            to: OperableQuaternion.LookRotation(toDirection, up),
+            to: Quaternion.LookRotation(toDirection, up),
             maxDegrees);
     }
 }

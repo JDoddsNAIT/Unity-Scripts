@@ -55,7 +55,7 @@ public class AddGizmo : MonoBehaviour
         var transformScale = useTransformScale ? transform.localScale : Vector3.one;
 
         Vector3 gizmoPosition = transformPosition + position;
-        OperableQuaternion gizmoRotation = OperableQuaternion.Euler(transformRotation + rotation);
+        Quaternion gizmoRotation = Quaternion.Euler(transformRotation + rotation);
         Vector3 gizmoScale = multiplyVector3(transformScale, scale);
 
         switch (shape)
